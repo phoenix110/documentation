@@ -704,7 +704,7 @@ table tr td, table th td { font-size: 1em; }
 
 #top #editSource { float: right; margin: 35px 40px 0 0; }
 #top #editSource a { color: #000; }
-#top #editSource a :hover { color: #0b6ec7; }
+#top #editSource a:hover { color: #0b6ec7; }
 #top #editSource .gh-icon { width: 16px; height: 16px; margin: -3px 5px 0 0; }
 
 #bottom #copyright { padding: 40px 0 20px 0; }
