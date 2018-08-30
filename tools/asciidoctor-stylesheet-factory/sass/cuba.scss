@@ -98,10 +98,6 @@ table {
     }
 }
 
-#bottom #copyright {
-    padding: 40px 0 20px 0;
-}
-
 #content {
     padding: 0 40px 0 100px;
     margin-bottom: 30px;
@@ -809,6 +805,11 @@ h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 {
     #single-page {
         text-align: center;
         margin-top: 35px;
+    }
+
+    #doc-home {
+        text-align: center;
+        margin-top: 15px;
     }
 
     #copyright {
