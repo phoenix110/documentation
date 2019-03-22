@@ -17,7 +17,7 @@ DataProvider: ::
 ** `MapDataItem` - 键值对集合。
 ** `SimpleDataItem` - 表示任意 `public` 类的实例。
 
-* `ContainerDataProvider` 用于给 `Chart` 组件分配一个{main_man_url}/gui_collection_container.html[CollectionContainer]。 这种方式需要一个实体来表示图表数据。 如果应用程序数据模型中已经存在这样的实体，并且图表数据是要显示为表格时，这种方式可能就比较方便。
+* `ContainerDataProvider` 用于给 `Chart` 组件分配一个 {main_man_url}/gui_collection_container.html[CollectionContainer]。 这种方式需要一个实体来表示图表数据。 如果应用程序数据模型中已经存在这样的实体，并且图表数据是要显示为表格时，这种方式可能就比较方便。
 
 `DataProvider` 的实例被传递给图表(chart configuration)配置的 `setDataProvider()` 方法。 这种提供图表数据的方法是最通用的，但它需要在界面控制器中创建 `DataProvider` 或 `DataItem` 的实例。
 

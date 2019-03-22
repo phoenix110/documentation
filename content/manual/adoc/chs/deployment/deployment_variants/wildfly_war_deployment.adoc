@@ -5,6 +5,13 @@
 
 CUBA 应用程序的 WAR 包可以部署在 *WildFly* 应用服务中。下面这个示例是部署使用 PostgreSQL 9.6 的 CUBA 应用程序到 Windows 的 WildFly 14.0.0。
 
+. 编辑 `build.gradle` 并在 *global* 模块的 `dependencies` 部分添加依赖：
++
+[source, groovy]
+----
+runtime 'org.reactivestreams:reactive-streams:1.0.1'
+----
+
 . 组装并且部署项目到默认的 Tomcat 服务，以便加载项目所有的依赖到本地。
 
 . 为程序配置<<app_home,应用程序主目录>>：

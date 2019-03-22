@@ -30,7 +30,7 @@ $ bower install PolymerElements/paper-toggle-button --save
 
 类库会被下载到 `bower_components/paper-toggle-button` 目录然后可以在代码中使用。
 
-默认情况下，Bower 使用请求的依赖的默认分之。如果需要使用其它版本，在 `#` 符号后指定：
+默认情况下，Bower 使用请求的依赖的默认分支。如果需要使用其它版本，在 `#` 符号后指定：
 
 [source,bash]
 ----
