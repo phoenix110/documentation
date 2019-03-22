@@ -1,0 +1,20 @@
+:sourcesdir: ../../../source
+
+[[logging]]
+=== 日志
+
+平台使用 *Logback* 框架来处理日志。
+
+日志的输出，采用 *SLF4J* API：取到当前类的一个 logger，然后调用 logger 的方法打印日志，示例：
+
+[source, java]
+----
+include::{sourcesdir}/development/logging_1.java[]
+----
+
+中间件，web 客户端和 web protal <<app_tiers,blocks>> 的日志在应用程序服务级别配置，<<fast_deployment,快速部署>>模式下，这个服务就是 Tomcat。
+
+include::logging/logging_setup_tomcat.adoc[]
+
+include::logging/logging_useful_loggers.adoc[]
+

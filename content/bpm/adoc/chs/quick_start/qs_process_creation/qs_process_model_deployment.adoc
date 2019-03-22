@@ -1,0 +1,24 @@
+:sourcesdir: ../../../../source
+
+[[qs_process_model_deployment]]
+==== 流程模型部署
+
+模型部署过程包括以下步骤：
+
+* 生成 BPMN 2.0 格式的流程模型 XML。
+
+* 将流程部署到 Activiti 引擎内部数据表中。
+
+* 创建与 Activiti 流程相关的 `ProcDefinition` 对象。
+
+* 为模型中定义的流程角色创建 `ProcRole` 对象。
+
+在 *Process Models* 界面上的列表中选择模型。点击 *Deploy* 按钮。将显示模型部署窗口。由于是首次部署模型，因此选择 *Create new process* 选项。也可以选择部署模型到现有流程来应用模型的更改。单击 *OK*，会创建流程定义。
+
+image::DeployModelScreen.png[align="center"]
+
+打开界面 *BPM -> Process Definitions*。打开 `Contract approval` 项进行编辑。*Code* 字段值是 `contractApproval`。记住这个值 - 我们将在本章后面用它来识别流程定义。
+
+.流程定义编辑
+image::ProcDefinitionEdit.png[align="center"]
+

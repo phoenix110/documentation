@@ -1,0 +1,84 @@
+:sourcesdir: ../../../../../source
+
+[[dynamic_attributes_mgmt]]
+===== 管理动态属性
+
+管理属性类别和描述是通过 *Administration>Dynamic Attributes* 菜单中提供的特定界面完成的。
+
+类别浏览界面显示所有已注册类别的列表。
+
+.类别浏览界面
+image::categoryBrowser.png[align="center"]
+
+
+类别编辑界面可以为实体创建新类别并定义一组动态属性。类别名称和相关实体类型字段是必填字段。*Default* 复选框表示将为实现了 `Categorized` 接口的新实体实例自动选择此类别。
+
+.类别编辑界面
+image::categoryEditor.png[align="center"]
+
+如果应用程序支持多种语言，则会显示 *Name localization* 分组框。它允许为每个可用的语言环境设置类别的本地化名称。
+
+.本地化类别名称
+image::categoryLocalization.png[align="center"]
+
+动态属性编辑界面可以设置属性的名称、系统代码、值类型和默认值。
+
+.动态属性编辑界面
+image::runtimePropertyEditor.png[align="center"]
+
+对于除 `Boolean` 以外的所有值类型，都有一个 *Width* 字段可用于设置 `FieldGroup` 中的字段宽度（以像素为单位或百分比）。如果 *Width* 字段为空，则假定其值为 100％。
+
+对于除 `Boolean` 和 `Enumeration` 之外的所有值类型，还有一个 *Is* *collection* 复选框。允许为所选类型创建多值动态属性。
+
+所有类型的动态属性都支持本地化：
+
+.动态属性本地化
+image::runtimePropertyLocalization.png[align="center"]
+
+对于 `Enumeration` 值类型，通过列表编辑器在 *Enumeration* 字段中定义命名值集合。
+
+.`Enumeration` 类型的动态属性编辑界面
+image::runtimePropertyEnum.png[align="center"]
+
+每个枚举值也可以进行本地化显示设置。
+
+.`Enumeration` 类型动态属性本地化设置
+image::runtimePropertyEnumLocalization.png[align="center"]
+
+动态属性还可以设置可见性，定义在哪些界面中显示。默认情况下，动态属性在任何界面上都是不可见的。
+
+
+.动态属性可见性设置
+image::runtimePropertyVisibility.png[align="center"]
+
+除了界面之外，还可以为属性指定显示组件（比如，可以在界面中，指定多个<<gui_FieldGroup,FieldGroup>>组件显示同一实体的字段）。
+
+如果该属性在界面上标记为可见，则在界面上用来展示相应实体的所有字段组(FieldGroup)和表格(Table)中会自动显示该属性。
+
+对动态属性的访问也受<<roles,用户角色>>设置的限制。动态属性的安全设置与常规属性的安全设置类似。
+
+要使属性和可见性设置的更改生效，请单击类别浏览界面中的 *Apply settings*。也可以通过在 *Administration>JMX Console* 中调用 `app-core.cuba：type = CachingFacade` 的 JMX bean 的 `clearDynamicAttributesCache()` 方法使更改生效。
+
+通过可见性配置能将动态属性自动添加到界面，如下所示：
+
+image::runtimePropsApplyChanges.png[align="center"]
+
+也可以手动将动态属性添加到界面。操作步骤如下：
+
+* 在界面 XML 描述的 `dsContext` 部分，为加载实体的数据源将 `loadDynamicAttributes` 属性设置为 `true`，例如：
++
+[source, xml]
+----
+<dsContext>
+    <datasource id="carDs" class="com.company.sample.entity.Car" view="_local" loadDynamicAttributes="true"/>
+</dsContext>
+----
+
+
+* 在组件定义的 `property` XML 属性中使用 `+++++` 前缀指定动态属性 code：
++
+[source, xml]
+----
+<textField id="numberOfSeats" datasource="carDs" property="+numberOfSeats"/>
+----
+

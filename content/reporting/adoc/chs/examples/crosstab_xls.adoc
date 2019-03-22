@@ -1,0 +1,81 @@
+:sourcesdir: ../../../source
+
+[[crosstab_xls]]
+=== 交叉报表示例
+
+
+要创建交叉报表，请在报表编辑界面的 <<structure,Report structure>> 标签页上选择 *Crosstab* 带区方向。此方向将自动添加三个数据集到报表带区：
+
+. `<band_name>`*_dynamic_header* - 这个数据集的数据将向右复制，类似于包含表格列标题的垂直带区。
+
+. `<band_name>`*_master_data* - 这个数据集的数据向下复制，类似于包含表格行标题的水平带区。
+
+. `<band_name>` - 与其所属带区名称相同的数据集。它是实现单元格矩阵的主内容带区。
+
+
+这些数据集可以是任何可用的数据集类型： <<structure_sql,SQL>>、<<structure_jpql,JPQL>>、<<structure_groovy,Groovy>> 等等。
+
+
+例如， https://github.com/cuba-platform/sample-sales-cuba7[Sales] 示例应用程序的 `Order` 实体的交叉报表可能具有以下结构：
+
+.交叉报表
+
+image::crosstab_structure.png[align="center"]
+
+
+* 这里，`orders_dynamic_header` 数据集将返回月份名称列表：
+
++
+[source, groovy]
+.orders_dynamic_header 数据集
+----
+include::{sourcesdir}/crosstab_dynamic_header.groovy[]
+----
+
+
+* `orders_master_data` 数据集返回根据外部 user 参数选择的客户名称和标识符：
+
++
+[source, sql]
+.orders_master_data 数据集
+----
+include::{sourcesdir}/crosstab_master_data.sql[]
+----
+
+
+* `orders` 数据集将提供单元格矩阵的数据，这个数据统计出特定用户在特定月份的订单金额总额。它将 `orders_master_data@customer_id` （客户 id）作为单元格的 Y-坐标,并将 `orders_dynamic_header@header_id` （月份名称）作为 X-坐标，使用 `amount` 值填充单元格矩阵。
+
+
++
+在下面的示例中，报表还有两个外部参数：`start_date` 和 `end_date` 用于定义订单日期的范围。通过 <<report_parameter_validation,参数交叉验证>> 来确保参数值在合理的范围是一个很好的主意。
+
++
+[source, sql]
+.orders dataset
+----
+include::{sourcesdir}/crosstab_orders.sql[]
+----
+
+最后可以使用 *Microsoft Office* 或 *LibreOffice* 创建报表模板。
+
+报表模板应包含交叉带区的所有三个数据集的<<template_xls_regions,命名区域>>以及列标题的命名区域： `<band_name>_header`。在这个例子中，它是 `orders_header`。
+
+下面是一个模板示例，它在垂直方向输出 `客户` 列表，在水平方向输出按下单日期汇总的每个月的 `订单` 金额。
+
+.交叉表模板
+
+image::crosstab_template_2.png[align="center"]
+
+.命名区域
+
+image::crosstab_names_regions.png[align="center"]
+
+这样，报表可以纵向和横向扩展，并汇总每个客户和每个月的订单金额：
+
+.交叉表输出
+
+image::crosstab_result.png[align="center"]
+
+
+如果想为报表添加总计，应该在单独带区中执实现，并且为这个带区定义汇总数据集。
+

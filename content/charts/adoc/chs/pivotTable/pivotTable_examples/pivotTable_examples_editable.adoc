@@ -1,0 +1,15 @@
+:sourcesdir: ../../../../source
+
+[[pivotTable_examples_editable]]
+==== 可编辑的透视表
+
+在下面的示例中，让 `pivotTable` 可编辑并设置默认聚合函数。在可编辑模式下，可以直接在 UI 中更改外观（图表类型）和表格内容（行和列）。
+
+[source,xml]
+----
+include::{sourcesdir}/pivot/pivot_table_3.xml[]
+----
+
+.可编辑的透视表
+image::pivot/PivotTable_3.png[align="center"]
+

@@ -47,6 +47,11 @@ task buildManualRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildManualChs(type: Asciidoc2Html) {
+    docName = 'manual'
+    docLang = 'chs'
+}
+
 task chopManualEn(dependsOn: [buildManualEn], type: CreateMultiPageDoc) {
     docName = 'manual'
     docLang = 'en'
@@ -57,6 +62,12 @@ task chopManualRu(dependsOn: [buildManualRu], type: CreateMultiPageDoc) {
     docName = 'manual'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Руководство по разработке приложений"
+}
+
+task chopManualChs(dependsOn: [buildManualChs], type: CreateMultiPageDoc) {
+    docName = 'manual'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.cn/manual' target='_blank'>CUBA Platform</a>. 开发者手册"
 }
 
 task warManualEn(dependsOn: [chopManualEn], type: CreateWar) {
@@ -71,6 +82,12 @@ task warManualRu(dependsOn: [chopManualRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warManualChs(dependsOn: [chopManualChs], type: CreateWar) {
+    docName = 'manual'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployManualEn(dependsOn: warManualEn, type: Copy) {
     from warManualEn
     into webappsDir
@@ -78,6 +95,11 @@ task deployManualEn(dependsOn: warManualEn, type: Copy) {
 
 task deployManualRu(dependsOn: warManualRu, type: Copy) {
     from warManualRu
+    into webappsDir
+}
+
+task deployManualChs(dependsOn: warManualChs, type: Copy) {
+    from warManualChs
     into webappsDir
 }
 
@@ -93,6 +115,11 @@ task buildReportingRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildReportingChs(type: Asciidoc2Html) {
+    docName = 'reporting'
+    docLang = 'chs'
+}
+
 task chopReportingEn(dependsOn: [buildReportingEn], type: CreateMultiPageDoc) {
     docName = 'reporting'
     docLang = 'en'
@@ -103,6 +130,12 @@ task chopReportingRu(dependsOn: [buildReportingRu], type: CreateMultiPageDoc) {
     docName = 'reporting'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Генератор отчетов"
+}
+
+task chopReportingChs(dependsOn: [buildReportingChs], type: CreateMultiPageDoc) {
+    docName = 'reporting'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.com/manual' target='_blank'>CUBA 平台</a>. 报表生成器"
 }
 
 task warReportingEn(dependsOn: [chopReportingEn], type: CreateWar) {
@@ -117,6 +150,12 @@ task warReportingRu(dependsOn: [chopReportingRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warReportingChs(dependsOn: [chopReportingChs], type: CreateWar) {
+    docName = 'reporting'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployReportingEn(dependsOn: warReportingEn, type: Copy) {
     from warReportingEn
     into webappsDir
@@ -124,6 +163,11 @@ task deployReportingEn(dependsOn: warReportingEn, type: Copy) {
 
 task deployReportingRu(dependsOn: warReportingRu, type: Copy) {
     from warReportingRu
+    into webappsDir
+}
+
+task deployReportingChs(dependsOn: warReportingChs, type: Copy) {
+    from warReportingChs
     into webappsDir
 }
 
@@ -139,6 +183,11 @@ task buildChartsRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildChartsChs(type: Asciidoc2Html) {
+    docName = 'charts'
+    docLang = 'chs'
+}
+
 task chopChartsEn(dependsOn: [buildChartsEn], type: CreateMultiPageDoc) {
     docName = 'charts'
     docLang = 'en'
@@ -149,6 +198,12 @@ task chopChartsRu(dependsOn: [buildChartsRu], type: CreateMultiPageDoc) {
     docName = 'charts'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Отображение диаграмм и карт"
+}
+
+task chopChartsChs(dependsOn: [buildChartsChs], type: CreateMultiPageDoc) {
+    docName = 'charts'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.com/manual' target='_blank'>CUBA 平台</a>. 显示图表和地图"
 }
 
 task warChartsEn(dependsOn: [chopChartsEn], type: CreateWar) {
@@ -163,6 +218,12 @@ task warChartsRu(dependsOn: [chopChartsRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warChartsChs(dependsOn: [chopChartsChs], type: CreateWar) {
+    docName = 'charts'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployChartsEn(dependsOn: warChartsEn, type: Copy) {
     from warChartsEn
     into webappsDir
@@ -170,6 +231,11 @@ task deployChartsEn(dependsOn: warChartsEn, type: Copy) {
 
 task deployChartsRu(dependsOn: warChartsRu, type: Copy) {
     from warChartsRu
+    into webappsDir
+}
+
+task deployChartsChs(dependsOn: warChartsChs, type: Copy) {
+    from warChartsChs
     into webappsDir
 }
 
@@ -185,6 +251,11 @@ task buildFtsRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildFtsChs(type: Asciidoc2Html) {
+    docName = 'fts'
+    docLang = 'chs'
+}
+
 task chopFtsEn(dependsOn: [buildFtsEn], type: CreateMultiPageDoc) {
     docName = 'fts'
     docLang = 'en'
@@ -195,6 +266,12 @@ task chopFtsRu(dependsOn: [buildFtsRu], type: CreateMultiPageDoc) {
     docName = 'fts'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Полнотекстовый поиск"
+}
+
+task chopFtsChs(dependsOn: [buildFtsChs], type: CreateMultiPageDoc) {
+    docName = 'fts'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.com/manual' target='_blank'>CUBA 平台</a>. 全文检索"
 }
 
 task warFtsEn(dependsOn: [chopFtsEn], type: CreateWar) {
@@ -209,6 +286,12 @@ task warFtsRu(dependsOn: [chopFtsRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warFtsChs(dependsOn: [chopFtsChs], type: CreateWar) {
+    docName = 'fts'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployFtsEn(dependsOn: warFtsEn, type: Copy) {
     from warFtsEn
     into webappsDir
@@ -216,6 +299,11 @@ task deployFtsEn(dependsOn: warFtsEn, type: Copy) {
 
 task deployFtsRu(dependsOn: warFtsRu, type: Copy) {
     from warFtsRu
+    into webappsDir
+}
+
+task deployFtsChs(dependsOn: warFtsChs, type: Copy) {
+    from warFtsChs
     into webappsDir
 }
 
@@ -231,6 +319,11 @@ task buildBpmRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildBpmChs(type: Asciidoc2Html) {
+    docName = 'bpm'
+    docLang = 'chs'
+}
+
 task chopBpmEn(dependsOn: [buildBpmEn], type: CreateMultiPageDoc) {
     docName = 'bpm'
     docLang = 'en'
@@ -241,6 +334,12 @@ task chopBpmRu(dependsOn: [buildBpmRu], type: CreateMultiPageDoc) {
     docName = 'bpm'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Управление бизнес процессами"
+}
+
+task chopBpmChs(dependsOn: [buildBpmChs], type: CreateMultiPageDoc) {
+    docName = 'bpm'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.com/manual' target='_blank'>CUBA 平台</a>. 业务流程管理（BPM）"
 }
 
 task warBpmEn(dependsOn: [chopBpmEn], type: CreateWar) {
@@ -255,6 +354,12 @@ task warBpmRu(dependsOn: [chopBpmRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warBpmChs(dependsOn: [chopBpmChs], type: CreateWar) {
+    docName = 'bpm'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployBpmEn(dependsOn: warBpmEn, type: Copy) {
     from warBpmEn
     into webappsDir
@@ -262,6 +367,11 @@ task deployBpmEn(dependsOn: warBpmEn, type: Copy) {
 
 task deployBpmRu(dependsOn: warBpmRu, type: Copy) {
     from warBpmRu
+    into webappsDir
+}
+
+task deployBpmChs(dependsOn: warBpmChs, type: Copy) {
+    from warBpmChs
     into webappsDir
 }
 
@@ -277,6 +387,11 @@ task buildBiRu(type: Asciidoc2Html) {
     docLang = 'ru'
 }
 
+task buildBiChs(type: Asciidoc2Html) {
+    docName = 'bi'
+    docLang = 'chs'
+}
+
 task chopBiEn(dependsOn: [buildBiEn], type: CreateMultiPageDoc) {
     docName = 'bi'
     docLang = 'en'
@@ -287,6 +402,12 @@ task chopBiRu(dependsOn: [buildBiRu], type: CreateMultiPageDoc) {
     docName = 'bi'
     docLang = 'ru'
     docTitle = "<a href='https://www.cuba-platform.ru/manual' target='_blank'>Платформа CUBA</a>. Интеграция с инструментами BI"
+}
+
+task chopBiChs(dependsOn: [buildBiChs], type: CreateMultiPageDoc) {
+    docName = 'bi'
+    docLang = 'chs'
+    docTitle = "<a href='https://www.cuba-platform.com/manual' target='_blank'>CUBA 平台</a>. 集成BI工具"
 }
 
 task warBiEn(dependsOn: [chopBiEn], type: CreateWar) {
@@ -301,6 +422,12 @@ task warBiRu(dependsOn: [chopBiRu], type: CreateWar) {
     docVer = docVersion
 }
 
+task warBiChs(dependsOn: [chopBiChs], type: CreateWar) {
+    docName = 'bi'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployBiEn(dependsOn: warBiEn, type: Copy) {
     from warBiEn
     into webappsDir
@@ -308,6 +435,11 @@ task deployBiEn(dependsOn: warBiEn, type: Copy) {
 
 task deployBiRu(dependsOn: warBiRu, type: Copy) {
     from warBiRu
+    into webappsDir
+}
+
+task deployBiChs(dependsOn: warBiChs, type: Copy) {
+    from warBiChs
     into webappsDir
 }
 
@@ -342,10 +474,21 @@ task buildPolymerEn(type: Asciidoc2Html, dependsOn: [':polymer-module:assemblePo
     docLang = 'en'
 }
 
+task buildPolymerChs(type: Asciidoc2Html, dependsOn: [':polymer-module:assemblePolymer']) {
+    docName = 'polymer'
+    docLang = 'chs'
+}
+
 task chopPolymerEn(dependsOn: [buildPolymerEn], type: CreateMultiPageDoc) {
     docName = 'polymer'
     docLang = 'en'
     docTitle = "Polymer manual"
+}
+
+task chopPolymerChs(dependsOn: [buildPolymerChs], type: CreateMultiPageDoc) {
+    docName = 'polymer'
+    docLang = 'chs'
+    docTitle = "Polymer 手册"
 }
 
 task warPolymerEn(dependsOn: [chopPolymerEn], type: CreateWar) {
@@ -354,16 +497,31 @@ task warPolymerEn(dependsOn: [chopPolymerEn], type: CreateWar) {
     docVer = docVersion
 }
 
+task warPolymerChs(dependsOn: [chopPolymerChs], type: CreateWar) {
+    docName = 'polymer'
+    docLang = 'chs'
+    docVer = docVersion
+}
+
 task deployPolymerEn(dependsOn: warPolymerEn, type: Copy) {
     from warPolymerEn
     into webappsDir
 }
 
+task deployPolymerChs(dependsOn: warPolymerChs, type: Copy) {
+    from warPolymerChs
+    into webappsDir
+}
 /* ============= Studio =================*/
 
 task buildStudioEn(type: Asciidoc2Html) {
     docName = 'studio'
     docLang = 'en'
+}
+
+task buildStudioChs(type: Asciidoc2Html) {
+    docName = 'studio'
+    docLang = 'chs'
 }
 
 task buildStudioRu(type: Asciidoc2Html) {
@@ -374,6 +532,12 @@ task buildStudioRu(type: Asciidoc2Html) {
 task chopStudioEn(dependsOn: [buildStudioEn], type: CreateMultiPageDoc) {
     docName = 'studio'
     docLang = 'en'
+    properties = ['version': 'IntelliJ Plugin Version 8']
+}
+
+task chopStudioChs(dependsOn: [buildStudioChs], type: CreateMultiPageDoc) {
+    docName = 'studio'
+    docLang = 'chs'
     properties = ['version': 'IntelliJ Plugin Version 8']
 }
 
@@ -388,6 +552,11 @@ task warStudioEn(dependsOn: [chopStudioEn], type: CreateWar) {
     docLang = 'en'
 }
 
+task warStudioChs(dependsOn: [chopStudioChs], type: CreateWar) {
+    docName = 'studio'
+    docLang = 'chs'
+}
+
 task warStudioRu(dependsOn: [chopStudioRu], type: CreateWar) {
     docName = 'studio'
     docLang = 'ru'
@@ -395,6 +564,11 @@ task warStudioRu(dependsOn: [chopStudioRu], type: CreateWar) {
 
 task deployStudioEn(dependsOn: warStudioEn, type: Copy) {
     from warStudioEn
+    into webappsDir
+}
+
+task deployStudioChs(dependsOn: warStudioChs, type: Copy) {
+    from warStudioChs
     into webappsDir
 }
 
@@ -410,37 +584,43 @@ task buildRnEn(type: Asciidoc2Html) {
     docLang = 'en'
 }
 
+task buildRnChs(type: Asciidoc2Html) {
+    docName = 'release_notes'
+    docLang = 'chs'
+}
+
+
 /* ============= Build all =================*/
 
-task buildManualAll(dependsOn: [buildManualEn, buildManualRu])
-task chopManualAll(dependsOn: [chopManualEn, chopManualRu])
-task warManualAll(dependsOn: [warManualEn, warManualRu])
-task deployManualAll(dependsOn: [deployManualEn, deployManualRu])
+task buildManualAll(dependsOn: [buildManualEn, buildManualRu, buildManualChs])
+task chopManualAll(dependsOn: [chopManualEn, chopManualRu, chopManualChs])
+task warManualAll(dependsOn: [warManualEn, warManualRu, warManualChs])
+task deployManualAll(dependsOn: [deployManualEn, deployManualRu, deployManualChs])
 
-task buildReportingAll(dependsOn: [buildReportingEn, buildReportingRu])
-task chopReportingAll(dependsOn: [chopReportingEn, chopReportingRu])
-task warReportingAll(dependsOn: [warReportingEn, warReportingRu])
-task deployReportingAll(dependsOn: [deployReportingEn, deployReportingRu])
+task buildReportingAll(dependsOn: [buildReportingEn, buildReportingRu, buildReportingChs])
+task chopReportingAll(dependsOn: [chopReportingEn, chopReportingRu, chopReportingChs])
+task warReportingAll(dependsOn: [warReportingEn, warReportingRu, warReportingChs])
+task deployReportingAll(dependsOn: [deployReportingEn, deployReportingRu, deployReportingChs])
 
-task buildChartsAll(dependsOn: [buildChartsEn, buildChartsRu])
-task chopChartsAll(dependsOn: [chopChartsEn, chopChartsRu])
-task warChartsAll(dependsOn: [warChartsEn, warChartsRu])
-task deployChartsAll(dependsOn: [deployChartsEn, deployChartsRu])
+task buildChartsAll(dependsOn: [buildChartsEn, buildChartsRu, buildChartsChs])
+task chopChartsAll(dependsOn: [chopChartsEn, chopChartsRu, chopChartsChs])
+task warChartsAll(dependsOn: [warChartsEn, warChartsRu, warChartsChs])
+task deployChartsAll(dependsOn: [deployChartsEn, deployChartsRu, deployChartsChs])
 
-task buildFtsAll(dependsOn: [buildFtsEn, buildFtsRu])
-task chopFtsAll(dependsOn: [chopFtsEn, chopFtsRu])
-task warFtsAll(dependsOn: [warFtsEn, warFtsRu])
-task deployFtsAll(dependsOn: [deployFtsEn, deployFtsRu])
+task buildFtsAll(dependsOn: [buildFtsEn, buildFtsRu, buildFtsChs])
+task chopFtsAll(dependsOn: [chopFtsEn, chopFtsRu, chopFtsChs])
+task warFtsAll(dependsOn: [warFtsEn, warFtsRu, warFtsChs])
+task deployFtsAll(dependsOn: [deployFtsEn, deployFtsRu, deployFtsChs])
 
-task buildBpmAll(dependsOn: [buildBpmEn, buildBpmRu])
-task chopBpmAll(dependsOn: [chopBpmEn, chopBpmRu])
-task warBpmAll(dependsOn: [warBpmEn, warBpmRu])
-task deployBpmAll(dependsOn: [deployBpmEn, deployBpmRu])
+task buildBpmAll(dependsOn: [buildBpmEn, buildBpmRu, buildBpmChs])
+task chopBpmAll(dependsOn: [chopBpmEn, chopBpmRu, chopBpmChs])
+task warBpmAll(dependsOn: [warBpmEn, warBpmRu, warBpmChs])
+task deployBpmAll(dependsOn: [deployBpmEn, deployBpmRu, deployBpmChs])
 
-task buildBiAll(dependsOn: [buildBiEn, buildBiRu])
-task chopBiAll(dependsOn: [chopBiEn, chopBiRu])
-task warBiAll(dependsOn: [warBiEn, warBiRu])
-task deployBiAll(dependsOn: [deployBiEn, deployBiRu])
+task buildBiAll(dependsOn: [buildBiEn, buildBiRu, buildBiChs])
+task chopBiAll(dependsOn: [chopBiEn, chopBiRu, chopBiChs])
+task warBiAll(dependsOn: [warBiEn, warBiRu, warBiChs])
+task deployBiAll(dependsOn: [deployBiEn, deployBiRu, deployBiChs])
 
 task buildStudioAll(dependsOn: [buildStudioEn, buildStudioRu])
 task chopStudioAll(dependsOn: [chopStudioEn, chopStudioRu])

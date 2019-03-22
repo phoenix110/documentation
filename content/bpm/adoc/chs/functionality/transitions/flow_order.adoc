@@ -1,0 +1,7 @@
+:sourcesdir: ../../../../source
+
+[[flow_order]]
+==== 流顺序
+
+需要注意的是，流顺序必须定义。否则，Activiti 会在具有显式条件的流之前处理默认流。要定义流顺序，请使用 *Exclusive gateway* 节点的 *Flow order* 属性。
+

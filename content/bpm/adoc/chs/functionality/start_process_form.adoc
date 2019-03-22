@@ -1,0 +1,20 @@
+:sourcesdir: ../../../source
+
+[[start_process_form]]
+=== 启动流程表单
+
+要定义将在流程开始时显示的表单，请使用 *Start event* 节点的 *Start form* 属性。在<<process_forms>>章节查阅更多有关表单的内容。
+
+启用流程表单定义：
+
+[source, xml]
+----
+<startEvent id="startEvent">
+  <extensionElements>
+    <cuba:form name="standardProcForm">
+      <cuba:param name="procActorsVisible" value="true"></cuba:param>
+    </cuba:form>
+  </extensionElements>
+</startEvent>
+----
+

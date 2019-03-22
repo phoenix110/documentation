@@ -1,0 +1,21 @@
+:sourcesdir: ../../../source
+
+[[polymer_manual__basic]]
+=== Polymer 基本核心原理
+
+Polymer 组件都保存在 HTML 文件内。每个文件包含一个组件，每个组件由模板（HTML），样式（CSS）和业务逻辑（JavaScript）。
+
+Polymer 组件可以引入和使用其它的 Polymer 组件。
+
+include::polymer_manual__basic/polymer_manual__basic__simple_component.adoc[]
+
+include::polymer_manual__basic/polymer_manual__basic__properties.adoc[]
+
+include::polymer_manual__basic/polymer_manual__changing_properties.adoc[]
+
+include::polymer_manual__basic/polymer_manual__basic__templating.adoc[]
+
+include::polymer_manual__basic/polymer_manual__basic__events.adoc[]
+
+include::polymer_manual__basic/polymer_manual__basic__library.adoc[]
+

@@ -1,0 +1,58 @@
+:sourcesdir: ../../../source
+
+[[cuba_rest_js]]
+=== cuba-rest-js 库
+
+事实上，<<cuba_app,cuba-app>> 使用了 https://github.com/cuba-platform/cuba-rest-js[cuba-rest-js] 库。
+这个库提供了方便访问 CUBA REST API 的方法，比如：
+
+* `login(login: string, password: string, options: object): Promise`.
+
+* `loadEntities(entityName: string, optoins: object): Promise`.
+
+* `getUserInfo(): Promise`.
+
+* 等等。
+
+可以看到，很多方法返回 promise。可以在 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise[MDN 文档] 了解更多关于 promise 的内容。
+
+有时可能需要直接使用这些方法，而不是使用 CUBA Polymer 组件。可以通过实现 `CubaAppAwareBehavior` behavior。这个 behavior 提供了 `app` 属性能访问上面提到的公共 API。
+
+下面这个例子演示了一个简单的应用程序展示当前认证用户的信息：
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/cuba/init/user-info-component.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <user-info-component></user-info-component>
+</body>
+</html>
+----
+
+.src/cuba/init/user-info-component.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/init/user-info-component.html[]
+----
+
+*Result*
+
+[subs="none"]
+++++
+    <iframe
+        height="150"
+        class="polymer-iframe-container"
+        src="html/src/cuba/init/stub/user-info-component-stub.html"></iframe>
+++++
+
+`userInfo` 对象的内容在 REST API Swagger http://files.cuba-platform.com/swagger/{revnumber}[文档] 中描述。
+
+我们扩展 `CubaAppAwareBehavior` 的方式看上去不那么直观。那是因为 CUBA 元素目前都是混合（hybrid）模式，也就是说同时支持 Polymer 1.0 和 2.0 语法。在 Polymer 1.0 中使用的是 behavior 而不是 mixin。可以参考 https://www.polymer-project.org/2.0/docs/devguide/hybrid-elements 了解更多关于混合元素的新信息
+

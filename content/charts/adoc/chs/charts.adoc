@@ -1,0 +1,31 @@
+= CUBA 框架. 展示图表和地图
+:toc: left
+:toc-title: 目录
+:toclevels: 6
+:sectnumlevels: 6
+:stylesheet: cuba.css
+:linkcss:
+:source-highlighter: coderay
+:imagesdir: ./img
+:stylesdir: ./styles
+:sourcesdir: ../../source
+:doctype: book
+:sectlinks:
+:sectanchors:
+:lang: en
+:revnumber: 7.0
+:version-label: Version
+:revremark: Copyright (c) 2019 Haulmont (www.haulmont.com)
+:main_man_url: https://doc.cuba-platform.com/manual-{revnumber}-chs
+:studio_man_url: https://doc.cuba-platform.com/studio-chs
+
+:!sectnums:
+
+include::preface.adoc[]
+
+include::chart.adoc[]
+
+include::map.adoc[]
+
+include::pivotTable.adoc[]
+

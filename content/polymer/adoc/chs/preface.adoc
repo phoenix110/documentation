@@ -1,0 +1,25 @@
+:sourcesdir: ../../source
+
+[[preface]]
+== 序言
+
+这个向导将会介绍如何使用 CUBA Polymer UI 来开发跟 CUBA middleware 工作的前端应用程序。这个向导主要是为不熟悉 Web 组件技术和 Google Polymer 库但是了解 HTML、JavaScript 和 CSS 的开发人员准备的。
+
+本向导分成三个章节：
+
+* <<polymer_manual>>：Polymer 的介绍，基本包含了使用这个技术开发前端的所有必须知道的内容。
+
+* <<cuba_components>>：CUBA Polymer 组件，可以通过这些组件在 CUBA 框架创建应用。
+
+* <<recipes>>：记录了我们的一些诀窍，帮助开发者解决在创建 web app 的过程中遇到的常见问题。比如，怎么构建导航栏，怎么做依赖注入等等。
+
+手册包含很多示例。基本上对于每个话题都提供了：
+
+* 源代码带了很多注释，对各个主题做说明；
+
+* `index.html` 作为应用程序的入口；
+
+* 执行这些代码的结果。
+
+所有的示例都可以通过复制拷贝到自己创建的 CUBA 项目中，以便详细研究。最简单的方法是用 CUBA Studio 创建一个新项目然后通过 *Project Properties → Manage modules → Create polymer client module* 命令创建 Polymer UI 模块。之后，部署和启动服务。前端应用会放在 `deploy/tomcat/webapps/app-front` 目录，可以把我们的示例拷贝到这里，然后在浏览器重新加载页面就可以实际看到改动了。
+

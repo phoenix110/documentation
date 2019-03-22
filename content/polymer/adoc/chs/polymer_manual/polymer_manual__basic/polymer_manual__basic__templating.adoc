@@ -1,0 +1,58 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__basic__templating]]
+==== 模板控制
+
+Polymer 提供了方便的模板控制方法：条件模板（`dom-if`）和重复模板（`dom-repeat`）。
+
+下面的例子演示了这些功能。例子中是一个叫做 `name-list` 的组件，用户可创建名称列表。提供了一个输入框，用户可以输入一些名称然后通过点击按钮确认。确认了的名称会被添加到列表里并在下方显示。
+
+为了不让用户输入太多的名称，有个 `maxNameLength` 属性来控制。当列表的大小达到限定值（默认 3）的时候，输入框会消失。
+
+*结果*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-basic/templating/name-list.html">
+
+<div class="polymer-demo-container">
+    <name-list></name-list>
+</div>
+
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-basic/templating/name-list.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <name-list></name-list>
+</body>
+</html>
+----
+
+.src/polymer-basic/templating/name-list.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/templating/name-list.html[]
+----
+
+这个示例演示如何使用 `dom-if` 和 `dom-repeat` 模板。
+
+
+目前我们学到的::
++
+--
+* `dom-if` 可以用在某些内容需要在某些条件的控制下显示或者隐藏。
+
+* `dom-repeat` 可以用在展示一组元素。
+
+* 对象属性的默认值需要用函数来设置，避免在不同的组件之间共用。
+--
+

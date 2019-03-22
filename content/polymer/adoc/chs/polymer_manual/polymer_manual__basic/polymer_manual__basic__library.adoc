@@ -1,0 +1,66 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__basic__library]]
+==== Polymer 组件库
+
+Polymer 提供了很多标准组件，按照集合来分类：https://www.webcomponents.org/collection/PolymerElements/iron-elements[iron-elements]， https://www.webcomponents.org/collection/PolymerElements/paper-elements[paper-elements]， https://www.webcomponents.org/collection/PolymerElements/app-elements[app-elements]， https://www.webcomponents.org/collection/PolymerElements/gold-elements[gold-elements]，等等。
+
+前面两个集合是最基础的，也是最常用的：
+
+* Iron elements 为几乎所有的项目提供了非常基础的组件：输入框（input），标签（label）等。
+
+* Paper elements 提供了一组实现了 material design 的 UI 组件：输入框（input），复选框（checkbox），滑动条（slider）等。
+
+在前面的例子中已经见过 `iron-input` 了。现在我们看看一个 Paper element：`paper-checkbox`。是简单付款框的扁平化设计实现。下面是个使用这个元素的简单程序。
+
+*音乐偏好分析家*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-basic/library/music-survey.html">
+
+<div class="polymer-demo-container">
+    <music-survey></music-survey>
+</div>
+
+++++
+
+这个是可以分析个人的音乐偏好的组件，并且根据选择的偏好画出任务的精神肖像。
+我们看看组件内部是怎么工作的。
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-basic/library/music-survey.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <music-survey></music-survey>
+</body>
+</html>
+----
+
+.src/polymer-basic/library/music-survey.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/library/music-survey.html[]
+----
+
+访问 https://www.webcomponents.org/collection/Polymer/elements 学习 Polymer 组件标准库的更多知识。
+
+目前我们学到的::
++
+--
+* Polymer 提供一组可以直接使用的组件。
+
+* Iron elements 是标准库中的基本组件。
+
+* Paper elements 集合提供一组实现 Material design 的 UI 组件。
+
+* 我们可以使用 `Polymer.dom(this.root).querySelectorAll("some-selector-there")` 在组件中找到需要的元素。
+--
+

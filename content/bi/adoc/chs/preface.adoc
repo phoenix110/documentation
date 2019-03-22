@@ -1,0 +1,13 @@
+:sourcesdir: ../../source
+
+[[preface]]
+== 序言
+
+此手册描述如何集成 *商务智能* 插件，此插件用来集成 CUBA 应用程序和 *Pentaho Platform*。
+
+此处假设读者对于 CUBA 框架开发者手册都很熟悉，手册地址： https://www.cuba-platform.com/manual 。
+
+如果您有任何关于提高本手册的建议，请在源码仓库提交 issue：https://github.com/cuba-platform/documentation[GitHub]。如果您发现了任何拼写或文字错误、bug 或者任何不一致的地方，请直接 fork 仓库修改。谢谢！
+
+:sectnums:
+

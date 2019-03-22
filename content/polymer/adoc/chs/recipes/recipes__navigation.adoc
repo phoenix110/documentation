@@ -1,0 +1,73 @@
+:sourcesdir: ../../../source
+
+[[recipes__navigation]]
+=== 页面导航
+
+当然，页面导航（以下简称导航，有的系统称之为路由）是我们创建 web 应用程序的时候必须实现的最常见的功能之一了。本章节，我们会考虑一种可能的实现方法。
+
+实现是基于两个组件：`app-route` 和 `iron-lazy-pages`。
+
+* `app-route` 用来分析浏览器中当前打开的 URL。
+
+* `iron-lazy-pages` 用来管理那些页面应该用来打开展示内容。
+
+下面是个简单的示例演示使用这些元素会得到什么结果。将组件放到了 `<iframe/>` 中，因为我们必须改变当前位置以便展示导航怎么工作的。
+
+*导航示例*
+
+[subs="none"]
+++++
+    <iframe
+        height="300"
+        class="polymer-iframe-container"
+        src="html/app-with-navigation.html">
+
+    </iframe>
+++++
+
+*iframe 中的代码*
+
+.app-with-navigation.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/app-with-navigation.html[]
+----
+
+*实现了导航的 Polymer 元素*
+
+.src/recipes/navigation/thermodynamic-laws.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/navigation/thermodynamic-laws.html[]
+----
+
+导航可以包含多重级别。可以通过同一个 `app-route` 和 `iron-lazy-pages` 组件来达到这个目的。在下面的例子中，点击 "Paper Elements" 链接，可以展示导航的第二层。
+
+*第二层导航*
+
+[subs="none"]
+++++
+    <iframe
+        height="300"
+        class="polymer-iframe-container"
+        src="html/app-with-2-level-navigation.html">
+
+    </iframe>
+++++
+
+*源码:*
+
+.src/recipes/navigation/polymer-elements-registry.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/navigation/polymer-elements-registry.html[]
+----
+
+.src/recipes/navigation/paper-elements-registry.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/navigation/paper-elements-registry.html[]
+----
+
+同样的方法可以用来创建任何导航树。
+

@@ -1,0 +1,73 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__basic__events]]
+==== 事件的触发和处理
+
+经常自组件必须要通知父组件有些事情发生了，比如按钮按下了，表单填完了，等等。在 Polymer 中，这些消息可以用标准的观察者模式实现。子组件发送一些事件消息，父组件监听这些消息。
+
+考虑这个例子：有个简单的表单由一个输入框和一个按钮组成。用户输入他们的姓名然后表单通知父组件填写完毕，并且将输入的姓名传递给父组件。
+
+*表单*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-basic/events/event-manager.html">
+
+<div class="polymer-demo-container">
+    <event-manager></event-manager>
+</div>
+
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-basic/events/event-manager.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <event-manager></event-manager>
+</body>
+</html>
+----
+
+.src/polymer-basic/events/event-manager.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/events/event-manager.html[]
+----
+
+.src/polymer-basic/events/participation-form.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/events/participation-form.html[]
+----
+
+[TIP]
+====
+如果对 JavaScript 的事件有一些经验，很可能看出来我们没有在 `EventManager` 组件的 `formSubmitted(e)` 方法中添加 `e.stopPropagation()` 调用。
+我们不停止传播（stop propagation）是因为根本没有进行事件的传播，CustomEvents 默认不会跨过影子 DOM 的边界。
+
+比如有三个组件 Component1, Component2 和 Component3。
+Component1 包含 Component2。
+Component2 包含 Component3。
+Component3 发送事件。
+此时，只有 Component2 会收到事件，Component1 不会收到。
+
+这个行为在很多情况下都很方便，但是也可以通过 `composed` 属性改变行为。参考 https://www.polymer-project.org/2.0/docs/devguide/events[官方文档] 了解更多信息。
+====
+
+目前我们学到的::
++
+--
+* `dispatchEvent(event)` 方法用来发送事件。如果需要创建事件，可以使用 `CustomEvent` 构造器，此构造器接收事件名称（必须）和事件配置对象（可选）作为参数。我们可以在配置对象的 `detail` 属性中加入自定义的参数。
+
+* `on-{eventName}` 属性用来监听事件。
+
+* 事件参数可以通过 `detail` 属性获取。
+--
+

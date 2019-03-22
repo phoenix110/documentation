@@ -1,0 +1,10 @@
+:sourcesdir: ../../../source
+
+[[additional_info]]
+=== 其它材料
+
+本指南以及 CUBA 框架的任何其它文档可从 https://www.cuba-platform.com/documentation 获取。
+
+CUBA 图表展示子系统是基于 *AmCharts* 库实现的，所以熟悉这个库对图表开发很有帮助。参阅 http://www.amcharts.com 。
+
+

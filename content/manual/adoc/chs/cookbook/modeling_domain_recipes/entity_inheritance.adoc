@@ -1,0 +1,42 @@
+:sourcesdir: ../../../../source
+
+[[entity_inheritance]]
+==== 实体继承
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo2.cuba-platform.com/model/open?screen=sample$Order.browse" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+本节演示如何在 CUBA 应用程序中使用实体继承。
+
+让我们假设我们有两种类型的客户 - 公司和个体，它们有一些共同的属性。我们希望将公共属性存储在一个表中并使用单独的关联表来存储这些特定的属性。
+
+因此，数据模型包含 `Client` 实体，它是存储在 `SAMPLE_CLIENT` 基础表中的基类。`Company` 和 `Person` 实体分别存储在具有引用基础表外键的单独表中。
+
+`Order` 实体引用了 `Client`。由于客户可以是不同类型，当用户创建订单时，应该能够选择客户的类型。
+
+image::cookbook/inheritance.png[align="center"]
+
+{proj_model}/blob/master/modules/global/src/com/company/sample/entity/clients/Client.java[Client.java] 实体：
+
+* 继承策略设置为 `JOINED`
+
+* 辨别(Discriminator)列名称 `DTYPE` 和类型 String 保留为默认值
+
+* 辨别值设置为 `C`
+
+{proj_model}/blob/master/modules/global/src/com/company/sample/entity/clients/Company.java[Company.java] 实体：
+
+* 父类设置为 `Client`
+
+* 辨别值设置为 `M`
+
+{proj_model}/blob/master/modules/global/src/com/company/sample/entity/clients/Person.java[Person.java] 实体：
+
+* 父类设置为 `Client`
+
+* 辨别值设置为 `P`
+
+{proj_model}/blob/master/modules/web/src/com/company/sample/web/order/OrderEdit.java[OrderEdit.java] 界面控制器包含客户选择组件和逻辑。

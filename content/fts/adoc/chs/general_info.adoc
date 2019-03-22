@@ -1,0 +1,19 @@
+:sourcesdir: ../../source
+
+[[general_info]]
+== FTS 插件概述
+
+CUBA 框架的全文搜索（FTS）功能在实体属性和上传文件的内容的内提供非结构化搜索。
+
+CUBA 框架全文搜索的一个独特之处在于它专注于具有复杂数据模型的业务应用程序。特别是搜索结果不仅包括直接包含搜索关键字的实体，还包括在显示时使用了该实体类型属性的相关实体。例如，如果 `Order` 实体包含指向 'Customer` 的链接，并且搜索关键字是客户的名称，则搜索结果会包括 `Customer` 和相关的 `Order`。对于通常在订单编辑界面中看到客户名称的用户来说，这种处理是合理的。
+
+搜索结果也受框架安全子系统的约束，即如果当前用户的访问组不允许访问某些实体实例，则此类实例不会出现在搜索结果中。
+
+全文搜索插件包含两个相互关联的机制：索引和搜索。
+
+include::general_info/indexing.adoc[]
+
+include::general_info/search.adoc[]
+
+include::general_info/index_search_example.adoc[]
+

@@ -1,0 +1,11 @@
+:sourcesdir: ../../../source
+
+[[permissions]]
+=== 报表访问权限
+
+可以在报表编辑界面的 *Roles and Screens* 标签页中定义哪些用户可以访问报表，以及哪些界面可以使用报表。
+
+如果报表角色列表中含有角色，则该报表仅对具有此角色的用户可用。如果未指定任何角色，则所有人都可以使用该报表。
+
+界面列表允许指定在调用 `RunReportAction`，`TablePrintFormAction` 或 `EditorPrintFormAction` <<run_actions, actions>>时报表可用的界面。如果未指定任何界面，则报表在任何界面都不可用。
+

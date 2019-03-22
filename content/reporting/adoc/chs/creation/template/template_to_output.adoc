@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[template_to_output]]
+==== 输出格式对应表
+
+[options="header"]
+|===============
+|Template / Output|XLSX|XLS|CSV|DOCX|DOC|PDF  |HTML |Chart
+|XLSX             |+   |   |+  |    |   |+ ^1^|+ ^1^|
+|XLS              |    |+  |   |    |   |+ ^1^|     |
+|CSV              |    |   |+  |    |   |     |     |
+|DOCX             |    |   |   |+   |   |+ ^2^|+ ^2^|
+|DOC              |    |   |   |    |  +|+ ^1^|     |
+|HTML             |    |   |   |    |   |+    |+    |
+|Chart            |    |   |   |    |   |     |     |+
+|JRXML            |+   |+  |+  |+   |+  |+    |+    |
+|===============
+
+^1^ - 必须<<open_office,安装>>  OpenOffice/LibreOffice 才能输出。
+
+^2^ - 根据<<reporting.openoffice.docx.useOfficeForDocumentConversion,reporting.openoffice.docx.useOfficeForDocumentConversion>>应用程序属性，可以选择使用或不使用 OpenOffice/LibreOffice 执行输出。在后一种情况下，需要提供所需的字体，如<<html_to_pdf>>中所述。
+

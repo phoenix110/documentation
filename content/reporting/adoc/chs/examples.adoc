@@ -1,0 +1,13 @@
+:sourcesdir: ../../source
+
+[[examples]]
+== 示例报表
+
+include::examples/example_xls.adoc[]
+
+include::examples/crosstab_xls.adoc[]
+
+include::examples/example_jasper.adoc[]
+
+include::examples/example_html.adoc[]
+

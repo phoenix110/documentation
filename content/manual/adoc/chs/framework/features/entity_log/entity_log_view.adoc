@@ -1,0 +1,27 @@
+:sourcesdir: ../../../../../source
+
+[[entity_log_view]]
+===== 查看实体日志
+
+实体日志内容可以在 *Administration > Entity Log* 上的专用界面上查看。
+
+除此之外，也能在其它应用程序界面访问实体更改日志，只要加载 `EntityLogItem` 集合及其关联的 `EntityLogAttr` 实例到数据源，再创建连接到这些数据源的可视化组件。例如：
+
+[source, xml]
+----
+include::{sourcesdir}/features/entity_log.xml[]
+----
+
+要显示本地化的值，启用日志记录的属性应包含<<localizedValue_annotation,@LocalizedValue>>注解。有此注解时，日志记录机制将填写 `EntityLogAttr.messagesPack` 字段，从而上面示例中的表格可以使用 `locValue` 列代替 `value` 列来显示本地化值：
+
+[source, xml]
+----
+<table id="logAttrTable" width="100%" height="100%">
+  <columns>
+      <column id="name"/>
+      <column id="locValue"/>
+  </columns>
+  <rows datasource="logAttrDs"/>
+</table>
+----
+

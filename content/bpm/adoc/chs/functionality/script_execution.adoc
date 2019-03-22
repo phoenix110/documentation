@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[script_execution]]
+=== 执行脚本
+
+*Script task* 节点被用于执行脚本。系统会分析 *Script* 属性值的内容，如果该值是有效的文件路径且该文件存在，则该文件中的脚本被执行，否则 *Script* 字段值作为脚本执行。
+
+请注意，可以在脚本中使用 `persistence` 和 `metadata` 对象。
+

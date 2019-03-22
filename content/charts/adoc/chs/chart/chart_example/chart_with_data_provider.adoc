@@ -1,0 +1,13 @@
+:sourcesdir: ../../../../source
+
+[[chart_with_data_provider]]
+==== 使用 DataProvider 提供的数据创建图表
+
+这个图表通过控制器编码创建的 `DataProvider` 获取数据，所以并没有定义 `dataContainer` 属性。
+
+include::chart_with_data_provider/cdp_xml_descriptor.adoc[]
+
+include::chart_with_data_provider/cdp_screen_controller.adoc[]
+
+include::chart_with_data_provider/cdp_result.adoc[]
+

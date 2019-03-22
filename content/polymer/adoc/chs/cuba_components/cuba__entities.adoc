@@ -1,0 +1,117 @@
+:sourcesdir: ../../../source
+
+[[cuba__entities]]
+=== 处理实体
+
+CUBA 提供了一组组件用来对实体进行 CRUD 操作。
+
+在我们继续之前，值得先提醒下关于实体的一些基本概念：
+
+--
+* _Entity name - 实体名称_ 实体类的唯一标识符。包含由 "$" 分隔的两部分：`{namespace$concept}`。比如，`taxi$Driver`, `statistics$FieldDescription` 等。在 middleware，实体名称在实体 Java 类的 `@Entity` 注解中定义。
+
+* _Entity view - 实体视图_ 描述了从数据库加载实体以及关联实体的什么属性。因为性能的原因，视图需要包含用到的最少数量的属性。更多细节参考 {manual-address}/views.html[开发者手册]。
+--
+
+实体浏览::
++
+--
+* https://cuba-elements.github.io/cuba-elements/components/cuba-data/#cuba-entities[cuba-entities] 组件用来加载一组实体列表。
+
+* https://cuba-elements.github.io/cuba-elements/components/cuba-data/#cuba-entity[cuba-entity] 组件用来根据实体 id 加载一个实体。
+
+下面这个例子展示了可以怎样使用这些组件 - 书本浏览应用程序。用户能看见书本列表并且可以选择一本书查看细节。
+
+书本的列表通过 `cuba-entities` 加载，`cuba-entity` 用来重新加载指定的书本。当我们显示书的列表的时候，我们加载了尽量少的信息以提高性能。但是当用户选择了一本书之后，我们就可以加载更多的信息了：author biography（作者传记）, editions（版本信息）, 甚至封皮的照片。
+
+*书籍浏览*
+
+[subs="none"]
+++++
+    <iframe
+        height="300"
+        class="polymer-iframe-container"
+        src="html/src/cuba/entity/stub/cuba-books-browser-stub.html"></iframe>
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/cuba/entity/books-browser.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <books-browser></books-browser>
+</body>
+</html>
+----
+
+.src/cuba/entity/books-browser.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/entity/books-browser.html[]
+----
+
+在这个例子中我们省掉了登录部分的代码。在真正的项目中，只有在登录后或者开启了 {manual-address}/rest_api_v2_anonymous.html[匿名访问] 才能使用 REST API。
+--
+
+创建实体::
++
+--
+`cuba-entity-form` 组件提供了创建新实体的能力。需要提供实体名称以及需要持久化的实体实例。之后，可以通过调用 `submit` 来保存实体。
+
+*创建书本*
+
+[subs="none"]
+++++
+    <iframe
+        height="300"
+        class="polymer-iframe-container"
+        src="html/src/cuba/entity/stub/cuba-book-creator-stub.html"></iframe>
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/cuba/entity/book-creator.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <book-creator></book-creator>
+</body>
+</html>
+----
+
+.src/cuba/entity/book-creator.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/entity/book-creator.html[]
+----
+--
+
+删除实体::
++
+--
+`cuba-entities` 组件有 `remove()` 方法，可以用来删除实体实例。
+--
+
+更新实体::
++
+--
+实体可以通过 `cuba-entity-form` 组件更新。
+--
+
+结论::
++
+--
+上面是可以用来操作实体的一组 CUBA 组件介绍。但是组件都提供了很多上面没有提到的更多的功能。比如，`cuba-entity` 可以设置 `debounce` 参数来防止过高频率的服务器请求；`cuba-entities` 可以根据实体属性对列表排序，等等。想了解更多，参考 https://cuba-elements.github.io/cuba-elements ，有公共 API 和组件源码。
+--
+

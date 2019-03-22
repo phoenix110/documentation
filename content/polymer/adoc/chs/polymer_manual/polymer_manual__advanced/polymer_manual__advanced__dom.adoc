@@ -1,0 +1,86 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__advanced__dom]]
+==== 访问 DOM 元素
+
+从 JS 访问 HTML 元素最简单最直接的方法就是使用 id。看下面这个例子。
+
+点击按钮看看它做了什么：
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/dom/colored-square-controller.html">
+
+<div class="polymer-demo-container">
+    <colored-square-controller></colored-square-controller>
+</div>
+
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-advanced/dom/colored-square-controller.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <colored-square-controller></colored-square-controller>
+</body>
+</html>
+----
+
+.src/polymer-advanced/dom/colored-square-controller.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/dom/colored-square-controller.html[]
+----
+
+.src/polymer-advanced/dom/colored-square.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/dom/colored-square.html[]
+----
+
+可以看到，Polymer 有特殊的方式 - `this.$`，可以用来根据元素的 id 取到元素。找到了元素之后，可以更改元素的属性或者调用元素的方法。
+
+[TIP]
+====
+需要注意的是，我们用了 `black$` 而不是 `black`。哪里不同呢？
+
+如果只是使用 `black`，在组件初始化的过程中，Polymer 会根据 `black` 属性是 true 还是 false 来决定是否将 `black` 属性加到 `div` DOM 里。之后，不管 `black` 属性改成什么值，也不会再次往 `div` 里添加/删除这个属性。因此，就不能在 CSS 中使用此属性了（`.square[black]`）。但是如果使用的是 `black$`，Polymer 会自动根据 `black` 属性的变化修改 HTML 的 `black` 属性。
+
+也就是说在我们的例子中，如果使用的是 `black` 而不是 `black$`，那么这个方块会一直是白色，不管怎么点击按钮也没法更改。
+====
+
+但是，`this.$` 语法不总是有效。下面我们把 `colored-square` 组件放到一个 if 模板中。此时，即使条件为真，`this.$.square` 也没作用。参考 https://www.polymer-project.org/2.0/docs/devguide/dom-template#node-finding[官方文档] 了解细节。
+
+.src/polymer-advanced/dom/colored-square-controller-with-if.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/dom/colored-square-controller-with-if.html[]
+----
+
+这种情况下，可以通过原生的 DOM API 来查找需要的元素：`this.shadowRoot.querySelector("selector")`。这个方法会动态的查找元素。
+
+.src/polymer-advanced/dom/colored-square-controller-with-if-fixed.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/dom/colored-square-controller-with-if-fixed.html[]
+----
+
+目前我们学到的::
++
+--
+* `this.$.{id}` 可以用来按照 id 获取页面元素。但是如果元素是从 DOM 中动态创建或者删除的话，此方法无效。
+
+* 原生的 DOM API `this.shadowRoot.querySelector("{selector}")` 可以用来按照 CSS 选择器来查找页面元素。
+
+* 可以修改找到的元素的属性或者调用它的方法。
+
+* 如果需要修改标签参数，可以用特殊的语法 ("black$=")。大多数情况，这个语法用在我们需要在 CSS 里面使用这些参数时。
+--
+

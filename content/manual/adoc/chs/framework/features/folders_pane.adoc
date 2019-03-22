@@ -1,0 +1,57 @@
+:sourcesdir: ../../../../source
+
+[[folders_pane]]
+==== 文件夹面板
+
+文件夹面板提供对常用信息的快速访问。它是主应用程序窗口左侧的一个包含多级文件夹的面板。点击文件夹会使用特定参数打开相应的系统界面。
+
+在撰写本文时，该面板仅适用于 *Web Client*。
+
+平台支持三种类型的文件夹：_应用程序文件夹_ 、 _搜索文件夹_ 和 _记录集_。应用程序文件夹作为单独的文件夹树显示在面板顶部；搜索文件夹和记录集显示在面板底部的组合树中。如果设置<<cuba.web.foldersPaneEnabled,cuba.web.foldersPaneEnabled>>属性为 `true`，文件夹将支持键盘<<shortcuts,快捷键>>。
+
+* 应用程序文件夹:
+
+** 打开应用程序界面，界面上可以没有<<gui_Filter,过滤器>>。
+
+** 文件夹集合取决于当前用户会话信息。文件夹的可见性通过 Groovy 脚本定义。
+
+** 只有具有特定<<permissions,权限>>的用户才能创建和更改应用程序文件夹。
+
+** 文件夹标题上可以显示通过 Groovy 脚本获取的记录数。
+
+** 文件夹标题通过计时器事件更新，这意味着可以动态更新每个文件夹的记录数和显示样式。
+
+* 搜索文件夹:
+
+** 打开带有<<gui_Filter,过滤器>>的界面。
+
+** 搜索文件夹可以是私有的，也可以是全局的，私有文件夹只能由创建它的用户访问，全局文件夹所有用户都可以访问。
+
+** 任何用户都可以创建私有文件夹，而只有具有特定权限的用户才能创建全局文件夹。
+
+* 记录集:
+
+** 打开带有过滤器的界面，这个过滤器包含了根据标识符选择特定记录的条件。
+
+** 可以使用专门的表格<<gui_Action,操作>>编辑记录集内容：将记录添加到记录集中或从记录集中删除记录。
+
+** 记录集仅能供创建它们的用户使用。
+
+通过下列应用程序属性可以定制文件夹面板的功能：
+
+* <<cuba.web.foldersPaneEnabled,cuba.web.foldersPaneEnabled>>
+
+* <<cuba.web.foldersPaneVisibleByDefault,cuba.web.foldersPaneVisibleByDefault>>
+
+* <<cuba.web.foldersPaneDefaultWidth,cuba.web.foldersPaneDefaultWidth>>
+
+* <<cuba.web.appFoldersRefreshPeriodSec,cuba.web.appFoldersRefreshPeriodSec>>
+
+* <<cuba.web.showFolderIcons,cuba.web.showFolderIcons>>
+
+include::folders_pane/application_folder.adoc[]
+
+include::folders_pane/search_folder.adoc[]
+
+include::folders_pane/record_set.adoc[]
+

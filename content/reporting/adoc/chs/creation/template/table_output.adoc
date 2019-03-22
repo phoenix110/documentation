@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[table_output]]
+==== 表格格式化器（Formatter）
+
+表格输出不需要报表模板，因为数据将显示在专用的应用程序界面。
+
+要使用表格格式化器，请在报表模板编辑界面中选择 *Table* 作为输出类型。
+
+.表格格式化器
+image::report_table_output.png[align="center"]
+
+报表生成器会获取报表带区数据，并从报表带区树的第一级为每个带区绘制一个可排序表格。
+
+表格在列上显示 SQL、JPQL 数据集的所有属性。如果使用实体/实体列表数据集，则表格仅为选择的属性显示列。
+
+结果表格可通过 Web 应用程序的 *Reports > Show Report Table* 界面查看。使用 *Excel* 按钮可以将显示的表格导出为 Excel 文件。
+
+.查看报表表格
+image::show_report_table.png[align="center"]
+
+数据透视表显示所有类型的

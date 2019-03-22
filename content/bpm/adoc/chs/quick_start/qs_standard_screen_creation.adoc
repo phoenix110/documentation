@@ -1,0 +1,11 @@
+:sourcesdir: ../../../source
+
+[[qs_standard_screen_creation]]
+=== 创建标准界面
+
+
+在 *Data model* 部分中选择 `Contract` 实体，然后单击 *New > Generic UI screen*。在界面模板的列表中，选择 *Entity browser and editor screens* 然后单击 *Create*。关闭模板列表。
+
+.合同界面
+image::CreateContractScreens.png[align="center"]
+

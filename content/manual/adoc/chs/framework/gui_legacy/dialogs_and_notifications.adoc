@@ -1,0 +1,13 @@
+:sourcesdir: ../../../../source
+
+[[dialogs_and_notifications]]
+==== 对话框消息和通知消息（遗留版本）
+
+对话框消息和通知消息可以用来为用户呈现消息。
+
+对话框消息有标题、关闭按钮并且总是在应用程序主窗口的中间展示。通知消息可以显示在窗口中间或者角落，并且能自动消失。
+
+include::dialogs_and_notifications/dialogs.adoc[]
+
+include::dialogs_and_notifications/notifications.adoc[]
+

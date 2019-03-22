@@ -1,0 +1,37 @@
+:sourcesdir: ../../../../source
+
+[[template_chart]]
+==== 图表模板
+
+如果应用程序项目包含 https://doc.cuba-platform.com/charts-latest/[*charts* 组件]，则可以使用图表输出类型。生成的图表显示在 Web 应用程序的 *Reports* -> *Show Charts* 界面中。
+
+支持两种类型的图表：饼图和序列图，每种类型都有自己的一组参数。
+
+饼图:
+
+.饼图模板
+image::chart_template_pie.png[align="center"]
+
+* *Band name* - 为图表提供数据的报表带区。
+* *Title field* - 将从中获取分段名称的字段。
+* *Value field* - 将从中获取分段值的字段。
+* *Color field* - 将从中获取分段颜色的字段。颜色值应在 https://en.wikipedia.org/wiki/Web_colors[web] 格式中指定。如果未定义，将自动选择颜色。
+* *Units* -此文本将被追加到图例值后面。
+
+序列图：
+
+.序列图模板
+image::chart_template_serial.png[align="center"]
+
+* *Band name* - 为图表提供数据的报表带区。
+* *Category field* - 将从中获取类别名称的字段。
+* *Category axis caption* - 横轴的标题。
+* *Value axis caption* - 纵轴的标题。
+* *Value axis units* - 纵轴值的单位。
+
+必须为序列图添加至少一个行定义：
+
+* *Value field* - 将从中获取行值的字段。
+* *Type* - 行显示类型。
+* *Color field* - 将从中获取分段颜色的字段。颜色值应在 https://en.wikipedia.org/wiki/Web_colors[web] 格式中指定。如果未定义，将自动选择颜色。
+

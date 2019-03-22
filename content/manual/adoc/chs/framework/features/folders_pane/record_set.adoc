@@ -1,0 +1,27 @@
+:sourcesdir: ../../../../../source
+
+[[record_set]]
+===== 记录集
+
+如果<<gui_Filter,过滤器>>在 `applyTo` 属性中定义了相应的<<gui_Table,表格>>组件，则可以在界面中使用记录集。例如：
+
+[source, xml]
+----
+<layout>
+  <filter id="customerFilter"
+          datasource="customersDs"
+          applyTo="customersTable"/>
+
+  <groupTable id="customersTable"
+              width="100%">
+      <buttonsPanel>
+          <button action="customersTable.create"/>
+...
+      </buttonsPanel>
+...
+----
+
+*Add to set* 或 *Add to current set* / *Remove from set* 会出现在表格右键菜单中。如果一个表格包含 `buttonsPanel`（如上例所示），则还会添加相应的表格按钮。
+
+记录集是 `SearchFolder` 实体的实例，存储在相关的 *SYS_FOLDER* 和 *SEC_SEARCH_FOLDER* 表。
+

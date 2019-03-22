@@ -1,0 +1,35 @@
+:sourcesdir: ../../../source
+
+[[recipes__fetch]]
+=== 使用 REST API
+
+本章节包含了消费第三方 REST API 的一些建议。
+
+Fetch API::
++
+--
+CUBA Studio 生成的 `index.html` 为 Fetch API 包含了一个 polyfill，因为 CUBA Polymer 组件会使用它。
+
+所以可以很容易的在自定义的代码中使用 `fetch`。
+
+.src/recipes/ajax/fetch-example.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/ajax/fetch-example.html[]
+----
+
+阅读 https://developers.google.com/web/updates/2015/03/introduction-to-fetch[此文章] 了解更多关于 Fetch API 的细节。
+--
+
+iron-ajax::
++
+--
+`iron-ajax` 组件是执行 AJAX 请求的另外一个方便的选择。
+
+.src/recipes/ajax/iron-ajax-example.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/ajax/iron-ajax-example.html[]
+----
+--
+

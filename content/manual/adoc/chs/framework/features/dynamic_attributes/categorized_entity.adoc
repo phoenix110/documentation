@@ -1,0 +1,50 @@
+:sourcesdir: ../../../../../source
+
+[[categorized_entity]]
+===== 实体分类
+
+如果实体实现了 `com.haulmont.cuba.core.entity.Categorized` 接口，则可以使用 `com.haulmont.cuba.gui.components.RuntimePropertiesFrame` 组件来显示该实体的动态属性。此组件允许用户为特定实体实例选择类别，并指定此类别的动态属性的值。
+
+要在编辑界面中使用 `RuntimePropertiesFrame` 组件，请执行以下操作：
+
+* 在 `dsContext` 部分声明两个<<datasources,datasources>>：
++
+--
+
+
+** `runtimePropsDatasource`  - 加载 `CategoryAttributeValue` 实例的特定数据源。`mainDs` 属性必须引用主数据源，其中包含被编辑的实体。
+
+** 一个常规的 `collectionDatasource` 来加载这个实体类型的类别列表。
+
+示例:
+
+[source, xml]
+----
+<dsContext>
+  <datasource id="carDs"
+      class="com.company.sample.entity.Car"
+      view="carEdit"/>
+
+  <runtimePropsDatasource id="runtimePropsDs"
+      mainDs="carDs"/>
+
+  <collectionDatasource id="categories"
+      class="com.haulmont.cuba.core.entity.Category"
+      view="_local">
+    <query>
+         select c from sys$Category c where c.entityType='sample$Car'
+    </query>
+  </collectionDatasource>
+</dsContext>
+----
+--
+
+* 现在，数据源配置好了，可以将 `runtimeProperties` 可视化组件添加在界面的 XML 描述中：
++
+[source, xml]
+----
+<runtimeProperties id="runtimePropsFrame"
+  runtimeDs="runtimePropsDs"
+  categoriesDs="categories"/>
+----
+

@@ -1,0 +1,237 @@
+:sourcesdir: ../../source
+
+[[pivotTable]]
+== 透视表展示
+
+`PivotTable` 是带有拖拽功能的表格组件，通过这个组件可以将数据集合转换成汇总表格，并且可以通过 2D 的拖拽 UI 来操作。在 CUBA Studio 组件库就可以使用该组件的全部功能。
+
+`PivotTable` 基于外部 JavaScript 库 - https://github.com/nicolaskruchten/pivottable 。可以在作者的网站上找到更多关于 `PivotTable` 的例子： http://nicolas.kruchten.com/pivottable/examples/ 。
+
+该组件的 XML 名称： `pivotTable`
+
+实现该组件的 block： *Web Client*
+
+.透视表
+image::pivot/PivotTable_1.png[align="center"]
+
+[[chart_PivotTable_example]]
+
+在界面 XML 描述中定义组件的示例：
+
+[source,xml]
+----
+include::{sourcesdir}/pivot/pivot_table_1.xml[]
+----
+
+pivotTable 的 XML 元素::
+
+[[chart_PivotTable_properties]]
+* `properties` - 在 `pivotTable` 内使用的一组属性的键值对映射。键是 {main_man_url}/gui_data_containers.html[数据容器] 中属性的名称，值是本地化语言的名称。
+
+
+[[chart_PivotTable_derivedProperties]]
+* `derivedProperties` - 可以向原始数据容器添加新属性，这些属性派生自现有属性。此元素是键值映射，其中键是生成的属性的名称，值是生成此属性的 JavaScript 函数。
+
+** 元素内部的 `derivedProperty` 元素需要定义 `caption` 属性，此属性的值会被当作键值使用。
+
+** `function` 元素用作 `derivedProperty` 的值。
+
+[[chart_PivotTable_hiddenProperties]]
+* `hiddenProperties` - 不需要展示在 UI 的一组属性。该属性值可以设置为 `properties` 的键值或者生成属性的名称（比如 <<chart_PivotTable_derivedProperties,derivedProperties>> 的键值）。该属性只对<<chart_PivotTable_editable,可编辑的>> `pivotTable` 有效。
+
+[[chart_PivotTable_hiddenFromAggregations]]
+* `hiddenFromAggregations` - 不在<<chart_PivotTable_aggregation,聚合>>参数下拉框显示的一组属性。
+
+[[chart_PivotTable_hiddenFromDragDrop]]
+* `hiddenFromDragDrop` - 不在 UI 可拖拽部分显示的一组属性。
+
+[[chart_PivotTable_columns]]
+* `columns` - 作为表格列使用的一组属性。该属性值可以设置为 `properties` 的键值或者生成属性的名称。
+
+[[chart_PivotTable_columnOrder]]
+* `columnOrder` - <<chart_PivotTable_renderers,渲染>>时列数据的展示顺序。
+
+[[chart_PivotTable_rows]]
+* `rows` - 作为表格行使用的一组属性。该属性值可以设置为 `properties` 的键值或者生成属性的名称。
+
+[[chart_PivotTable_rowOrder]]
+* `rowOrder` - <<chart_PivotTable_renderers,渲染>>时行数据的展示顺序。
+
+[[chart_PivotTable_exclusions]]
+* `exclusions` - 键值映射，其中键是属性的名称（`properties` 键值或生成的属性的名称），值是要在渲染时不包括的属性值列表。该属性只对<<chart_PivotTable_editable,可编辑的>> `pivotTable` 有效。
+
+[[chart_PivotTable_inclusions]]
+* `inclusions` - 键值映射，其中键是属性的名称（`properties` 键值或生成的属性的名称），值是要渲染的属性值列表。该属性只对<<chart_PivotTable_editable,可编辑的>> `pivotTable` 有效。
+
+[[chart_PivotTable_filterFunction]]
+* `filterFunction` -  JavaScript 函数，用来做过滤。
+
+[[chart_PivotTable_renderers]]
+* `renderers` - 定义渲染函数的集合，这个集合需要在 UI 中的可用渲染器列表中显示。
+
+** `default` 属性用来设置一个默认的渲染器。当组件加载时，选择的渲染器会当作默认的使用。
+
+** 内部的 `renderer` 元素可以使用 `type` 属性来设置一个预制的渲染器：`AREA_CHART` 、 `BAR_CHART` 、 `COL_HEATMAP` 、 `HEATMAP` 、 `HORIZONTAL_BAR_CHART` 、  `HORIZONTAL_STACKED_BAR_CHART` 、 `LINE_CHART` 、 `ROW_HEATMAP` 、 `SCATTER_CHART` 、 `STACKED_BAR_CHART` 、 `TABLE_BAR_CHART` 、 `TABLE` 、  `TREEMAP` 、  `TSV_EXPORT`。
++
+只对<<chart_PivotTable_editable,可编辑的>> `pivotTable` 有效。
+
+[[chart_PivotTable_rendererOptions]]
+* `rendererOptions` - 定义渲染器的参数。事实上只有两种渲染器能做自定义设置：
+
+** 全部的 `heatmap` 渲染器。可以通过 JavaScript 代码设置热力单元的颜色。
+
+** 全部的 `chart` 渲染器。参数可以用来设置图表的大小。
+
+
+[[chart_PivotTable_sortersFunction]]
+* `sortersFunction` - JavaScript 函数，用来做行和列标题的排序。
+--
+pivotTable 的聚合（aggregation）属性::
+--
+[[chart_PivotTable_aggregation]]
+. `aggregation` - 设置聚合函数，用来对每个单元格的结果做聚合。
++
+`aggregation` 属性：
++
+** `mode` 属性可以用来设置一个预制的聚合函数。
++
+** `caption` 展示在 UI 的本地化语言的描述。
++
+** `custom` - 如果是 `true`，那么会忽略 `mode` 的值，而使用 内部的 `function` 元素指定的 JavaScript 函数。
++
+`aggregation` 元素：
+
++
+** `function` - 包含聚合函数的 JavaScript 代码。
++
+** `property` - 用来作为聚合函数输入参数的属性列表。该属性值可以设置为 `properties` 的键值或者生成属性的名称。只对非可编辑 `pivotTable` 有效。
++
+示例：
++
+[source, xml]
+----
+include::{sourcesdir}/pivot/aggregation.xml[]
+----
+
+[[chart_PivotTable_aggregationProperties]]
+[start=2]
+. `aggregationProperties` - 定义在聚合器的下拉列表中显示的属性列表。该属性值可以设置为 `properties` 的键值或者生成属性的名称。只对可编辑 `pivotTable` 有效。
++
+[source, xml]
+----
+include::{sourcesdir}/pivot/aggregationProperties.xml[]
+----
+
+[[chart_PivotTable_aggregations]]
+[start=3]
+. `aggregations` - 定义需要在 UI 中的可用聚合器下拉列表中显示的聚合器集合。
++
+`aggregations` 属性：
++
+* `default` 属性用来设置一个预制的聚合函数。当组件加载时，选择的函数会当作默认的使用。
++
+* 内部的 `aggregation` 元素跟 <<chart_PivotTable_aggregation,aggregation>> 的使用方法相同，除了内部的 `property` 元素。只对可编辑 `pivotTable` 有效。
++
+示例：
++
+[source, xml]
+----
+include::{sourcesdir}/pivot/aggregations.xml[]
+----
+--
+
+pivotTable 属性::
+--
+
+[[chart_PivotTable_dataContainer]]
+* `dataContainer` - 设置在界面 XML 描述的 `data` 部分定义的一个数据容器。必须是 `collectionDataContainer` 类型。
+
+[[chart_PivotTable_editable]]
+* `editable` - 如果是 `true`，UI 会显示用来操作数据的元素，否则只显示数据。
+
+[[chart_PivotTable_menuLimit]]
+* `menuLimit` - 设置双击显示菜单的最大条目数量。如果记录数大于这个值，则会显示相应的信息。只对可编辑 `pivotTable` 有效。
+
+[[chart_PivotTable_renderer]]
+* `renderer` - 启用设置一个预制的数据渲染器。只对非可编辑 `pivotTable` 有效。
+
+[[chart_PivotTable_showColTotals]]
+* `showColTotals` - 定义是否显示列总数。默认值是 `true`。只对表格渲染器有效。
+
+[[chart_PivotTable_showRowTotals]]
+* `showRowTotals` - 定义是否显示行总数。默认值是 `true`。只对表格渲染器有效。
+
+[[chart_PivotTable_showUI]]
+* `showUI` - 控制是否在可编辑的透视表中显示 UI 元素。默认值是 `true`。
+
+[[chart_PivotTable_autoSortUnusedProperties]]
+* `autoSortUnusedProperties` - 定义在 UI 是否要对没使用的属性进行排序。只对可编辑 `pivotTable` 有效。
+
+[[chart_PivotTable_unusedPropertiesVertical]]
+* `unusedPropertiesVertical` - 定义没使用的属性是要以垂直方式展示（`true`）还是以水平方式展示（`false` 或者默认情况）。如果设置为数字，那么当属性名称的字符组合长度超过此数字，则属性将垂直显示。
+
+--
+pivotTable 的监听器::
+--
+
+[[chart_PivotTable_CellClickListener]]
+* `addCellClickListener` - 为 `PivotTable` 添加单元格点击事件监听器。`CellClickEvent` 事件只在表格渲染器会触发（`TABLE`, `HEATMAP`, `TABLE_BAR_CHART`, `COL_HEATMAP`, `ROW_HEATMAP`）。
++
+[source, java]
+----
+include::{sourcesdir}/pivot/CellClickListener.java[]
+----
+
+[[chart_PivotTable_RefreshListener]]
+* `addRefreshListener` - 为 `PivotTable` 添加刷新事件监听器。`RefreshEvent` 事件只在<<chart_PivotTable_editable,可编辑>> `PivotTable` 会触发。
++
+[source, java]
+----
+include::{sourcesdir}/pivot/RefreshListener.java[]
+----
++
+`RefreshEvent` 事件中有下列值可用： <<chart_PivotTable_aggregation,aggregation>>, <<chart_PivotTable_aggregationProperties,aggregationProperties>>, <<chart_PivotTable_columns,columns>>, <<chart_PivotTable_columnOrder,columnOrder>>, <<chart_PivotTable_exclusions,exclusions>>, <<chart_PivotTable_inclusions,inclusions>>, <<chart_PivotTable_renderer,renderer>>, <<chart_PivotTable_rowOrder,rowOrder>>, <<chart_PivotTable_rows,rows>>.
+
+'''
+
+pivotTable 的属性::
+<<chart_PivotTable_autoSortUnusedProperties,autoSortUnusedProperties>> -
+<<chart_PivotTable_dataContainer,dataContainer>> -
+<<chart_PivotTable_editable,editable>> -
+height -
+<<chart_PivotTable_menuLimit,menuLimit>> -
+<<chart_PivotTable_renderer,renderer>> -
+<<chart_PivotTable_unusedPropertiesVertical,unusedPropertiesVertical>> -
+width
+
+pivotTable 的元素::
+<<chart_PivotTable_aggregation,aggregation>> -
+<<chart_PivotTable_aggregationProperties,aggregationProperties>> -
+<<chart_PivotTable_aggregations,aggregations>> -
+<<chart_PivotTable_columnOrder,columnOrder>> -
+<<chart_PivotTable_columns,columns>> -
+<<chart_PivotTable_derivedProperties,derivedProperties>> -
+<<chart_PivotTable_exclusions,exclusions>> -
+<<chart_PivotTable_filterFunction,filterFunction>> -
+<<chart_PivotTable_hiddenFromAggregations,hiddenFromAggregations>> -
+<<chart_PivotTable_hiddenFromDragDrop,hiddenFromDragDrop>> -
+<<chart_PivotTable_hiddenProperties,hiddenProperties>> -
+<<chart_PivotTable_inclusions,inclusions>> -
+<<chart_PivotTable_properties,properties>> -
+<<chart_PivotTable_rendererOptions,rendererOptions>> -
+<<chart_PivotTable_renderers,renderers>> -
+<<chart_PivotTable_rowOrder,rowOrder>> -
+<<chart_PivotTable_rows,rows>> -
+<<chart_PivotTable_sortersFunction,sortersFunction>>
+
+API::
+<<chart_PivotTable_CellClickListener,addCellClickListener>> -
+<<chart_PivotTable_RefreshListener,addRefreshListener>>
+
+'''
+
+include::pivotTable/pivotTable_examples.adoc[]
+
+include::pivotTable/pivotTable_extension.adoc[]
+
+include::pivotTable/pivotTable_ShowPivotAction.adoc[]

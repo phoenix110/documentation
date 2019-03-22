@@ -1,0 +1,21 @@
+:sourcesdir: ../../../source
+
+[[process_roles]]
+=== 流程角色
+
+流程角色定义流程参与者类型，例如 “操作员”或“管理员”。要打开流程角色编辑界面，请在模型属性面板中选择 *Process roles* 属性。有关角色的信息将在模型部署期间写入流程 XML（`process` 元素的 `extensionElements` 部分）。
+
+流程角色定义：
+
+[source, xml]
+----
+<process id="testProcess" name="Test process">
+    <extensionElements>
+         <cuba:procRoles>
+            <cuba:procRole name="Manager" code="manager"/>
+            <cuba:procRole name="Operator" code="operator"/>
+        </cuba:procRoles>
+    </extensionElements>
+</process>
+----
+

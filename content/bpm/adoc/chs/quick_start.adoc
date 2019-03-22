@@ -1,0 +1,36 @@
+:sourcesdir: ../../source
+
+[[quick_start]]
+== 快速开始
+
+
+在本章中，将创建一个小项目来演示如何使用业务流程子系统，会以合同审批业务流程作为示例。
+
+
+通常，审批流程涉及以下步骤：
+
+
+* 用户创建 `Contract` 对象，定义参与者并发起审批流程。
+
+* 具有 `Controller` 角色的参与者接收任务并审验附加的合同。
+
+* 如果审验通过，则合同将传递给分配了 `Manager` 角色的用户，否则该流程将以 `Not valid` 状态终止。
+
+* 在相关管理人员批准或拒绝合同之后，分别以 `Approved` 或 `Not approved` 状态返回。
+
+include::quick_start/qs_project_creation.adoc[]
+
+include::quick_start/qs_data_model_creation.adoc[]
+
+include::quick_start/qs_standard_screen_creation.adoc[]
+
+include::quick_start/qs_approvalHelper.adoc[]
+
+include::quick_start/qs_run_app.adoc[]
+
+include::quick_start/qs_process_creation.adoc[]
+
+include::quick_start/qs_screens_adaptation.adoc[]
+
+include::quick_start/qs_work_with_app.adoc[]
+

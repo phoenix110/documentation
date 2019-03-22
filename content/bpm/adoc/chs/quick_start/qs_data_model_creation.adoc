@@ -1,0 +1,33 @@
+:sourcesdir: ../../../source
+
+[[qs_data_model_creation]]
+=== 创建数据模型
+
+
+转到 *Data model* 标签页并按 *New > Entity*。类名称是 `Contract`。
+
+.创建合同实体
+image::CreateContractEntity.png[align="center"]
+
+
+创建以下实体属性：
+
+
+* `number` (`String` 类型)
+
+
+* `date` (`Date` 类型)
+
+
+* `state` (`String` 类型)
+
+.合同实体属性
+image::ContractEntityAttributes.png[align="center"]
+
+
+转到 *Instance name* 标签页并将 `number` 属性添加到 *Name pattern attributes*。
+
+.实例名称模式
+image::ContractEntityNamePattern.png[align="center"]
+
+按 *OK* 按钮保存实体。

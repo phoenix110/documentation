@@ -1,0 +1,16 @@
+:sourcesdir: ../../source
+
+[[preface]]
+[preface]
+== 序言
+
+本文档介绍了 CUBA 框架的两个功能模块，图表展示和地图展示。这两个子系统在同一个扩展中实现 - *charts*， 因而在一个项目中只能一起引入。
+
+图表和地图的展示功能目前只能在 web 客户端使用。
+
+include::preface/audience.adoc[]
+
+include::preface/additional_info.adoc[]
+
+include::preface/feedback.adoc[]
+

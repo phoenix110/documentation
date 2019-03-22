@@ -100,7 +100,7 @@ class Section {
         def docName = context.vars['docName']
         def docLang = context.locale == '' ? 'en' : context.locale
         vars.setProperty("github-link",
-                "https://github.com/cuba-platform/documentation/blob/$gitBranch/content/$docName/adoc/$docLang/$srcDoc")
+                "https://github.com/cubacn/documentation/blob/$gitBranch/content/$docName/adoc/$docLang/$srcDoc")
 
         for (name in vars.stringPropertyNames()) {
             if (name == 'scripts' && Boolean.valueOf(System.getProperty('noScripts'))) {

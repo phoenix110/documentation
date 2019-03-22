@@ -1,0 +1,14 @@
+:sourcesdir: ../../../source
+
+[[service_invocation]]
+=== 中间件 Bean 方法调用
+
+*Service task* 节点用于调用服务方法。Activiti 引擎与 Spring 框架集成，因此可以按名称访问中间件 bean。要调用托管 bean 的方法，请将下面的表达式用于 *Expression* 字段：
+
+[source,groovy]
+----
+${beanName.methodName(processVarName, 'someStringParam')}
+----
+
+可以使用流程变量作为方法参数，包括在流程启动时自动创建的变量（`entityId` 、  `bpmProcInstanceId` 等，如<<services.adoc#process_runtime_service>>中所述）。
+

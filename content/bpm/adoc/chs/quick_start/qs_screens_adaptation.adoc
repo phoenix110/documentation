@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[qs_screens_adaptation]]
+=== 使界面适应流程
+
+在本章中，我们将在合同编辑界面上添加一个使用合同审批流程的功能。
+
+include::qs_screens_adaptation/qs_contract_edit_descriptor.adoc[]
+
+include::qs_screens_adaptation/qs_contract_edit_controller.adoc[]
+
+include::qs_screens_adaptation/qs_localization.adoc[]
+

@@ -1,0 +1,15 @@
+:sourcesdir: ../../source
+
+[[polymer_manual]]
+== Polymer 核心
+
+https://www.polymer-project.org[Google Polymer] 是一个 JavaScript 类库，能创建可重用的 https://www.webcomponents.org[Web 组件]。CUBA Polymer UI 模块是基于它构建的，所以了解这个框架的基本原理很重要。
+
+Google Polymer 有 https://www.polymer-project.org/2.0/docs/devguide/feature-overview[官方研发向导]。但是，为了加快学习过程，我们创建了自己的快速学习手册，着重强调了 Polymer 中最重要的功能，并且提供了丰富的示例以便更好的了解框架的各种功能。
+
+Polymer 类库目前有两个主要版本：1.0 和 2.0，语法差别很大。我们的例子都是基于 2.0 的。
+
+include::polymer_manual/polymer_manual__basic.adoc[]
+
+include::polymer_manual/polymer_manual__advanced.adoc[]
+

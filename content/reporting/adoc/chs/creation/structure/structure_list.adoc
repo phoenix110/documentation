@@ -1,0 +1,11 @@
+:sourcesdir: ../../../../source
+
+[[structure_list]]
+==== 实体列表数据集
+
+*实体列表* 数据集是使用实体实例列表生成的。
+
+数据源是使用 *实体列表* 类型的外部参数生成，必须在 *Parameters and Formats* 标签页中进行描述。*Entity parameter name* 字段中的值必须与参数别名匹配。
+
+报表模板必须包含具有实体属性名称的字段。模板中使用的属性应列在特定窗口中，使用 *Entity attributes* 按钮打开该窗口。
+

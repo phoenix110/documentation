@@ -1,0 +1,208 @@
+:sourcesdir: ../../../source
+
+[[chart_configuration]]
+=== 配置图表
+
+图表通过 `Chart` 组件进行展示，该组件可以作为全局的画布（canvas）。图表类型通过<<chart_types,子类型接口>>定义，该接口继承了 `Chart` 接口。
+
+图表可以通在 {main_man_url}/screen_descriptors.html[界面 XML 描述] 或者 {main_man_url}/screen_controllers.html[界面控制器] 中创建。此时需要在 XML 描述中加入相应的 chart `命名空间`：
+
+[source, xml]
+----
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        ...>
+----
+
+不同图表类型对应的 XML 元素：
+
+* `chart:xyChart` – <<xy_chart,XYChart – 散点图>>
+* `chart:serialChart` – <<serial_chart,SerialChart – 序列图>>
+* `chart:pieChart` – <<pie_chart,PieChart – 饼图>>
+* `chart:funnelChart` – <<funnel_chart,FunnelChart – 漏斗图>>
+* `chart:gaugeChart` – <<gauge_chart,AngularGaugeChart – 仪表盘图>>
+* `chart:radarChart` – <<radar_chart,RadarChart – 雷达图>>
+* `chart:ganttChart` – <<gantt_chart,GanttChart – 甘特图>>
+* `chart:stockChart` – <<stock_chart,StockChart – 股票图>>
+
+每种图表类型有其本身的属性和方法，这些属性和方法是从 AmCharts 库的相应图表拷贝过来的。图表的属性和方法的文档可以参阅： http://docs.amcharts.com/3/javascriptcharts 。
+
+下列元素可以用来为所有类型的图表做声明式的配置：
+
+[[chart_allLabels]]
+* `chart:allLabels` – 包含 `label` 元素，带有标签文字和其它属性。标签可以放在图表的特定位置，比如：
++
+--
+
+.chart:allLabels
+image::chart/charts_allLabels.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_allLabels.xml[]
+----
+--
+
+[[chart_balloon]]
+* `chart:balloon` – 配置鼠标悬浮在图表上时显示的气球（提示窗）的样式，示例：
++
+--
+.chart:balloon
+image::chart/charts_balloon.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_balloon.xml[]
+----
+
+气球的文字通过每个图表的 `balloonText` 属性来定义。
+
+[[chart_additionalFields]]
+** `additionalFields` 属性
++
+可以在图表的所有字段中插入图表的数据值，比如 `titleField`, `valueField`, `category`, `value`, `description`, `percents`, `open` 等等，另外，HTML 中也能使用。
++
+也可以使用 `additionalFields` 属性从数据提供方获取更多的实体属性。通过这个属性可以将实体属性传递到图表的查询语句中，之后将数据返回给 UI。因此可以在图表的配置中直接使用实体属性的名称。
++
+在下面的例子中，`title` 是图表的标题，`category` 是 category 轴的值，`value` 是 value 轴的值，`optional` 是 `IncomeExpenses` 实体属性，取出来用来插入到 `balloonText` 中：
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_additionalFields.xml[]
+----
++
+.additionalFields
+image::chart/charts_balloon_additiional.png[align="center"]
++
+字段列表可以通过英文逗号分隔的字符串声明式添加：
++
+[source, xml]
+----
+additionalFields="income,expense,vat"
+----
++
+或者通过编程的方式，在界面控制器中添加：
++
+[source, java]
+----
+include::{sourcesdir}/chart/chart_additionalFields.java[]
+----
+--
+
+[[chart_chartScrollbar]]
+* `chart:chartScrollbar` (对于 <<serial_chart>> 和 <<xy_chart>> 有效) – 图表的滚动条。
++
+--
+* 可以设置具体图表通过滚动条进行缩放，示例：
++
+.chart:chartScrollbar
+image::chart/charts_zoom.png[align="center"]
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_chartScrollbar.xml[]
+----
+
+* 通过 `chart:chartScrollbarSettings` 元素可以对滚动条的属性进行定制化设置。
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_chartScrollbar2.xml[]
+----
+
+* 另外，<<gantt_chart>> 可以有一个 `chart:valueScrollbar` 元素用来做 value 轴的滚动，`chart:chartScrollbar` 用来做 category 轴的缩放。
++
+.chart:valueScrollbar
+image::chart/charts_valueScrollBar.png[align="center"]
++
+[source, xml]
+----
+include::{sourcesdir}/chart/charts_valueScrollBar.xml[]
+----
+--
+
+[[chart_cursor]]
+* `chart:cursor` – 可选元素，能在图标上添加光标；光标跟着鼠标指针走，展示图表上对应点的数值小弹窗。
++
+--
+.chart:cursor
+image::chart/charts_cursor.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_cursor.xml[]
+----
+--
+
+* `chart:data` – 可选元素，用来做<<chart_data,数据绑定>>。一般在做原型的时候使用。
+
+* `chart:export` – 可选元素，可以启用<<chart_export,图表导出>>。默认的导出实现会在图表上添加一个浮动的 *download* 按钮：
++
+.chart:export
+image::chart/charts_export.png[align="center"]
+
+[[chart_guides]]
+* `chart:guides` – 水平/垂直参考线。
++
+--
+.chart:guides
+image::chart/charts_guides.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_guides.xml[]
+----
+--
+
+[[chart_legend]]
+* `chart:legend` – 定义图表图例的元素，示例：
++
+--
+.chart:legend
+image::chart/charts_legend.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_legend.xml[]
+----
+--
+
+* `chart:nativeJson` – 图表的 <<custom_json,JSON 配置>>。
+
+[[chart_titles]]
+* `chart:titles` – 图表标题，示例：
++
+--
+.chart:titles
+image::chart/charts_titles.png[align="center"]
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_titles.xml[]
+----
+--
+
+[[chart_responsive]]
+* `chart:responsive` – 图表的响应式插件。
++
+--
+此插件可以自动调整图表的大小以适应不同的屏幕分辨率。关于 `responsive` 插件的更多信息可以参阅 https://www.amcharts.com/kbase/making-charts-responsive/[AmCharts website]。
+
+`responsive` 元素需要包含嵌套的 `rules` 元素，这里可以定义适配的规则。可以设置图表是否显示图例、轴标题、参考线、图表标题、缩放控制器，或者将标签移入图表区域等：
+
+[source,xml]
+----
+include::{sourcesdir}/chart/responsive.xml[]
+----
+--
+
+任何配置属性都可以设置为 `null`；此时，系统会使用默认值（除了 AmCharts 文档中提到的特殊情况）。
+
+在界面控制器配置图表也是按照相同的逻辑。可以配置单一属性，也可以配置组合对象：
+
+[source,java]
+----
+include::{sourcesdir}/chart/chart_configure.java[]
+----
+
+展示图表使用的信息可以使用 web 模块的主语言消息包进行覆盖或者本地化。在 CUBA https://github.com/cuba-platform/translations[GitHub] 已经有一些本地化语言包。

@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[bi_widget]]
+=== 在 CUBA 示例项目打开 BI Widget
+
+. 打开 `++http://localhost:8080/app++`
+
+. 打开 *Shop → BI Saiku* 主菜单项：
+
+.BI Saiku 页面
+image::saiku.gif[]
+
+

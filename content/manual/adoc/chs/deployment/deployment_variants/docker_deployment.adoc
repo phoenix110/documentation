@@ -1,0 +1,24 @@
+:sourcesdir: ../../../../source
+
+[[docker_deployment]]
+==== 使用 Docker 部署
+
+本章节介绍了怎样使用 https://www.docker.com/[Docker®] 来部署 CUBA 应用程序。
+
+[TIP]
+=====
+本向导是按照使用 PostgreSQL 数据库的项目部署来介绍的。
+=====
+
+在生产环境运行 CUBA 应用程序的最简单方法就是使用 UberJAR 方案。可以通过 <<build.gradle_buildUberJar>> Gradle 任务构建包含所有依赖的 JAR 包，然后可以在命令行通过 `java` 来运行，所以其实不需要使用特殊的 web 服务器或者 servlet 容器。可以简单的用可执行文件的方式启动应用。所有应用程序使用的参数都是在构建时确定的，但是可以在运行时进行覆盖。
+
+后面会介绍怎么通过 Docker 容器来部署单体（monolithic）应用系统或者分布式应用系统。
+
+include::docker_deployment/single_jar_deployment.adoc[]
+
+include::docker_deployment/distributed_jar_deployment.adoc[]
+
+include::docker_deployment/docker_plugin.adoc[]
+
+include::docker_deployment/heroku_container.adoc[]
+

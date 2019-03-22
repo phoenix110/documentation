@@ -1,0 +1,56 @@
+:sourcesdir: ../../../../source
+
+[[gauge_chart]]
+==== 仪表盘图
+
+使用 `AngularGaugeChart` 组件可以创建仪表盘图。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=gauge-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.仪表盘图
+image::chart/gauge-chart.svg[align="center", width="800"]
+
+该组件的 XML 名称：`chart:gaugeChart`
+
+`chart:gaugeChart` 的元素::
++
+--
+* `arrows` – 包含嵌套的 `arrow` 元素，作为图表的箭头。
++
+[source, xml]
+----
+<chart:arrows>
+    <chart:arrow value="60"/>
+</chart:arrows>
+----
+
+* `axes` – 包含嵌套的 `axis` 元素，作为仪表盘的坐标轴。
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_axes.xml[]
+----
++
+使用 `band` 元素可以将坐标轴分成不同的部分，如上面的图所示：
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_axes_band.xml[]
+----
++
+`endValue` 和 `startValue` 属性用来设置图表的值域范围，`valueInterval` 属性用来显示仪表盘标尺刻度。
+--
+
+`AngularGaugeChart` 事件监听器: ::
++
+--
+* `ChartClickListener` – 点击画布。
+* `ChartRightClickListener` – 右键点击画布。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmAngularGauge[AmCharts 文档]。
+

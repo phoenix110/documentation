@@ -1,0 +1,157 @@
+:sourcesdir: ../../source
+
+[[rest_reports]]
+== 报表 REST API
+
+通用 REST API 为报表扩展提供以下功能：
+
+* 获取报表列表。
+
+* 获取特定报表的详细信息。
+
+* 运行报表并获取结果。
+
+* 获取 Swagger 文档。
+
+REST API 使用 OAuth2 协议进行身份验证，并支持匿名访问。
+
+要通过 REST API 提供报表，请在 *Roles and Screens* 标签页上选中 *Visible for REST API* 复选框：
+
+.Visible for REST API 复选框
+image::visible_for_rest.png[align="center"]
+
+
+下面提供了一些报表特定功能的一般描述。有关如何获取 OAuth 令牌和其它 REST API 功能的更多信息，请参阅 {main_man_url}/rest_api_v2.html[开发人员手册] 。
+
+[[rest_reports_get_all]]
+获取现有报表列表::
++
+--
+可以使用以下 *GET* 请求获取现有报表列表：
+
+[source, plain]
+----
+/rest/reports/v1/report
+----
+
+例如：
+
+[source, plain]
+----
+GET http://localhost:8080/app/rest/reports/v1/report HTTP/1.1
+
+Authorization: Bearer f5a2b4b1-a121-4563-9519-dd3c0b116689
+Content-Type: application/json
+----
+
+响应体将包含标记为 *Visible for REST API* 的报表的简要信息：
+
+[source, json]
+----
+{
+    "id": "2dd27fbf-8830-416a-899f-339543f8f27a",
+    "name": "Books by author"
+},
+{
+    "id": "2f07c9fe-5d6d-48cf-876f-8c02ac1f6c3c",
+    "name": "Book availability in department"
+}
+----
+--
+
+[[rest_reports_get_one]]
+获取报表信息::
++
+--
+使用以下 *GET* 请求获取指定报表的详细信息：
+
+[source, plain]
+----
+/rest/reports/v1/report/{id}
+----
+
+这里查询的最后一部分是报表标识符，例如：
+
+[source, plain]
+----
+GET http://localhost:8080/app/rest/reports/v1/report/2dd27fbf-8830-416a-899f-339543f8f27a HTTP/1.1
+----
+
+返回的 JSON 对象将包含报表的以下信息：
+
+* ID
+* 名称
+* <<structure,系统代码>> (如果存在)
+* <<template,报表模板>>
+* <<parameters,参数>>及其类型
+
+[source, json]
+----
+{
+    "id": "2dd27fbf-8830-416a-899f-339543f8f27a",
+    "name": "Books by author",
+    "templates": [
+        {
+            "code": "DEFAULT",
+            "outputType": "XLS"
+        }
+    ],
+    "inputParameters": [
+        {
+            "name": "Author",
+            "alias": "author",
+            "type": "ENTITY",
+            "required": true,
+            "hidden": false,
+            "entityMetaClass": "library$Author"
+        }
+    ]
+}
+----
+--
+
+[[rest_reports_run]]
+运行报表::
++
+--
+要运行报表，请发送以下 *POST* 请求：
+
+[source, plain]
+----
+/rest/reports/v1/run/{id}
+----
+
+这里查询的最后一部分是报表标识符，例如：
+
+[source, plain]
+----
+POST http://localhost:8080/app/rest/reports/v1/run/2dd27fbf-8830-416a-899f-339543f8f27a HTTP/1.1
+----
+
+报表参数在请求体中被传递：
+
+[source, plain]
+----
+{parameters: [{name: 'author',value: '4b3a21b0-d6b7-4161-b0b6-55f118fbaac5'}]}
+----
+
+要使用非默认模板打印报表，请在请求体中传递模板代码：
+
+[source, plain]
+----
+{template: 'Template_1', parameters: [{name: 'author',value: '4b3a21b0-d6b7-4161-b0b6-55f118fbaac5'}]}
+----
+--
+
+[[rest_reports_swagger]]
+获取 Swagger 文档::
++
+--
+可以通过 *GET* 请求此地址获取报表扩展的完整 Swagger 文档：
+
+[source, plain]
+----
+http://localhost:8080/app/rest/reports/v1/docs/swagger.json
+----
+--
+

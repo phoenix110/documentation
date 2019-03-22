@@ -1,0 +1,38 @@
+:sourcesdir: ../../../../../source
+
+[[query]]
+===== 执行 JPQL 查询
+
+`Query` 接口用于执行 <<jpql,JPQL>> 查询。可以通过调用 `createQuery()` 方法从当前的 `EntityManager` 实例获得其引用。如果该查询用于加载实体，建议使用结果类型作为参数调用 `createQuery()`。这将创建一个 `TypedQuery` 实例。
+
+`Query` 的方法主要对应于标准 JPA link:http://docs.oracle.com/javaee/7/api/javax/persistence/Query.html[javax.persistence.Query] 接口的方法。但有以下差异：
+
+* `setParameter()` – 为查询参数设置值。如果该值是实体实例，则隐式将实例转换为它的标识符。例如：
++
+[source, java]
+----
+include::{sourcesdir}/middleware/jpqlquery_1.java[]
+----
++
+请注意，虽然参数中传递了一个实体实例，但是查询中的比较使用的是实例的标识符。
++
+使用了 `implicitConversions = false` 的重载方法不执行此类转换。
+
+* `setView()` 、`addView()` – 定义用于加载数据的<<views,视图>>。
+
+* `getDelegate()` – 返回由 ORM 实现提供的 `javax.persistence.Query` 实例。
+
+如果为查询指定了<<views,视图>> ，则默认情况下查询使用 `FlushModeType.AUTO` 模式，这会影响当前持久化上下文包含已更改实体实例的情况：这些实例将在执行查询之前保存到数据库中。换句话说，ORM 首先同步持久化上下文和数据库中的实体状态，之后才执行查询。这样可以保证查询结果包含所有相关实例，即使它们尚未明确地保存到数据库中。这样做的缺点是会有一个隐式刷新(flush)，也就是为所有当前已更改的实体实例执行 SQL 更新语句，这可能会影响性能。
+
+如果在没有视图的情况下执行查询，则默认情况下查询使用 `FlushModeType.COMMIT` 模式，这意味着查询不会导致刷新(flush)，并且查询结果将不会体现出当前持久化上下文数据。
+
+在大多数情况下，忽略当前的持久化上下文是可以接受的，并且是首选行为，因为它不会导致额外的 SQL 更新。但是在使用视图时存在以下问题：如果持久化上下文中存在已更改的实体实例，并且使用视图以 `FlushModeType.COMMIT` 模式执行查询去加载相同的实例，则更改将丢失。这就是在运行带有视图的查询时默认使用 `FlushModeType.AUTO` 的原因。
+
+还可以使用 `Query` 接口的 `setFlushMode()` 方法显式设置刷新（flush）模式，这样将覆盖上述默认设置。
+
+include::query/jpql_functions.adoc[]
+
+include::query/query_case_insensitive.adoc[]
+
+include::query/jpql_macro.adoc[]
+

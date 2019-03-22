@@ -1,0 +1,20 @@
+:sourcesdir: ../../../source
+
+[[chart_listeners]]
+=== 事件
+
+可以为每种图表的不同类型的事件配置处理函数。以下监听器类型对于所有图表子类型都适用：
+
+* `LegendItemHideListener` – 隐藏一个图例。
+* `LegendItemShowListener` – 显示一个图例。
+* `LegendLabelClickListener` – 点击图例标签。
+* `LegendMarkerClickListener` – 点击图例标记。
+
+其它针对具体图表类型的事件监听器可以在手册的<<chart_types,这部分>>找到。
+
+对事件处理的例子可以参阅 <<section_use_of_events>>。
+
+除了监听器之外，`SeriesBasedChart` 接口包含 `zoomOut` 、`zoomToIndexes` 和 `zoomToDates` 方法用来操纵图表的轴。
+
+类似的 ，`CoordinateChart` 接口也提供这些方法用来操纵值坐标轴： `zoomOutValueAxes` 、 `zoomOutValueAxis` 、 `zoomOutValueAxis` 、 `zoomValueAxisToValues` 和 `zoomValueAxisToValues`。
+

@@ -1,0 +1,53 @@
+:sourcesdir: ../../../source
+
+[[recipes__di]]
+=== 服务和依赖注入
+
+在本章节，服务（service）指的是一个程序组件为其它组件提供某些特定的功能。最常见的服务例子就是跟 REST API 通信的组件、多语言支持、工具类服务、缓存，等等。
+
+有很多创建服务并且将他们注入到 web 组件的方案。推荐按照下面描述的方式。
+
+想象一个应用程序为用户展示通知消息。这些消息通过给用户展示一段文字来告诉用户一些事件发生了。应用中不同的地方需要展示通知消息。
+
+这里有个可能的实现：
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/recipes/di/forbidden-button.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <forbidden-button></forbidden-button>
+</body>
+</html>
+----
+
+.src/recipes/di/forbidden-button.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/di/forbidden-button.html[]
+----
+
+.src/recipes/di/notification-service.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/di/notification-service.html[]
+----
+
+*结果*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/recipes/di/forbidden-button.html">
+
+<div class="polymer-demo-container">
+    <forbidden-button></forbidden-button>
+</div>
+
+++++
+
+所以，基本上我们只是实例化了一些对象，将他们放在了全局变量的位置，然后将他们赋值给了组件的属性。
+

@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[localization]]
+=== 报表名称本地化
+
+可以本地化报表名称 - 在报表列表中以用户登录的语言显示报表名称。要做到这点，需要转到 *Localization* 标签页并输入键值对 `++locale_name = report_name++` ，例如：
+
+[source, properties]
+----
+en = Books by author
+ru = Книги по автору
+----
+

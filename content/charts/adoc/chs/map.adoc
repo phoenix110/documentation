@@ -1,0 +1,13 @@
+:sourcesdir: ../../source
+
+[[map]]
+== 地图展示
+
+CUBA 框架的地图展示子系统是基于集成第三方地图服务提供商。目前，只支持 *Google 地图*。
+
+include::map/map_features.adoc[]
+
+include::map/map_project_setup.adoc[]
+
+include::map/mapViewer.adoc[]
+

@@ -1,0 +1,79 @@
+:sourcesdir: ../../../../source
+
+[[structure_sql]]
+==== SQL 数据集
+
+*SQL* 数据集是通过执行 SQL 查询而生成的。建议使用 `as` 运算符为查询结果字段使用别名。也建议将别名用双引号括起来，以防止 DBMS 进行可能的大小写转换：
+
+[source, sql]
+----
+select u.name as "userName", u.login as "userLogin" 
+from sec_user u
+----
+
+可以在查询中使用报表输入参数和父带区字段。参数应该用 `${}` 中的名称来处理，例如 `${dateFrom}`。父带区字段也可以类似地处理，通过在字段名称前面添加带区名称：`${band1.field1}`。
+
+下面是一个使用从 `group` 父带区获取的 `groupId` 参数和外部 `active` 参数的 SQL 查询示例：
+
+[source, sql]
+----
+select u.name as "userName", u.login as "userLogin" 
+from sec_user u
+where u.group_id = ${group.groupId} 
+    and u.active = ${active}
+    and u.delete_ts is null
+----
+
+[WARNING]
+====
+SQL 查询中应手动包含条件以过滤掉软删除的记录。
+====
+
+默认情况下，SQL 查询在主数据库上执行。如果要查询 {main_man_url}/data_store.html[额外数据存储]，请在 *Data store* 字段中设置其名称。
+
+[[query_preprocessing]]
+报表带区中的查询预处理::
++
+--
+如果需要根据报表输入参数或父带区中的参数值动态修改 SQL/JPQL 查询，则可以使用 SQL 预处理。模板引擎允许使用 Groovy 修改 SQL/JPQ 查询。要激活它，请在报表带区编辑界面下方选中 *Preprocess query as Groovy template* 复选框。生成的查询将由 `GStringTemplateEngine` 处理，它可以访问：
+
+* 报表参数: `${<parameter_name>}`,
+
+* 父带区中的值: `${<band_name>.<parameter_name>}`.
+
+考虑以下示例：根据是否传递 `createTs2` 报表参数选择一个查询条件：`e.create_ts < ${createTs2}` 或 `e.create_ts < current_timestamp`。
+
+在这种情况下，查询应如下所示：
+
+[source, sql]
+----
+select e.create_ts, e.id, e.vin from ref_car e
+where
+e.create_ts >= \${createTs1}
+and
+<% out << (createTs2 != null  ? 'e.create_ts < ${createTs2}' : 'e.create_ts < current_timestamp')%>
+----
+
+因此，如果未传递 `createTs2` 参数，则初始查询将转换为以下查询：
+
+[source, sql]
+----
+select e.create_ts, e.id, e.vin from ref_car e
+where
+e.create_ts >= \${createTs1}
+and
+e.create_ts < current_timestamp
+----
+
+如果传递 `createTs2`，则报表带区将使用以下查询：
+
+[source, sql]
+----
+select e.create_ts, e.id, e.vin from ref_car e
+where
+e.create_ts >= \${createTs1}
+and
+e.create_ts < ${createTs2}
+----
+--
+

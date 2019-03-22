@@ -1,0 +1,100 @@
+:sourcesdir: ../../../../../source
+
+[[single_jar_deployment]]
+===== 单一 UberJAR 部署
+
+在 CUBA Studio 打开项目，点击 *CUBA > Deployment > UberJAR Settings* 主菜单项或者双击项目树中 *Project > Deployment* 的条目，按照如下介绍配置选项：
+
+. 勾选 *Build Uber JAR*。
+. 勾选 *Single Uber JAR*，如果默认没勾选。
+. 点击 *Logback configuration file* 旁边的 *Generate* 按钮。
+. 点击 *Custom Jetty environment file* 旁边的 *Generate* 按钮，在弹出框输入数据库库连接信息。如果需要在应用程序中使用标准的 PostgreSQL 容器，需要修改数据库 URL 字段，从 `localhost` 改为 `postgres`。
+
+Studio 会在 `build.gradle` 文件添加 <<build.gradle_buildUberJar,buildUberJar>> 任务，执行这个任务创建 JAR 文件：
+
+[source, plain]
+----
+gradle buildUberJar
+----
+创建 CUBA app 的 Docker 镜像（image）需要基于 OpenJDK。推荐使用 `Dockerfile` 来记录 Docker 需要知道的关于程序运行的信息 - 基础 Docker 镜像、项目代码地址、任何需要的依赖以及启动服务需要的命令。
+
+. 在项目中创建 `docker-image` 目录。
+. 拷贝 Uber JAR 文件到这个目录。
+. 创建 `Dockerfile` 文件，按照下面简单内容：
+
+[source, plain]
+----
+### Dockerfile
+
+FROM openjdk:8
+
+COPY . /usr/src/cuba-sales
+
+CMD java -Dapp.home=/usr/src/cuba-sales/home -jar /usr/src/cuba-sales/app.jar
+----
+
+* `FROM` 指令用来初始化一个新的镜像构建，并且设置 *Base Image* 用来做之后的步骤。
+* `COPY` 指令从 `<src>` 拷贝新文件或者目录到 Docker 容器的文件系统的 `<dest>` 路径。可以指定多个 `<src>` 源，但是这些目录需要是构建源目录（the context of the build）的相对路径。
+* `CMD` 指令的主要作用是给执行（executing）容器提供默认参数。这些默认参数可以包含一个可执行文件，或者不包含可执行文件，但是这种情况下还需要指定一个 `ENTRYPOINT` 指令。
+
+了解更多 Dockerfile 指令的介绍，可以查看 https://docs.docker.com/engine/reference/builder/[Dockerfile 参考]。
+
+构建 Docker 镜像：
+
+. 从 `docker-image` 目录打开终端窗口。
+. 运行 docker `build` 命令。命令非常简单 - 带一个可选的 tag 名称，使用 `-t` 指定；还有一个参数是包含 Dockerfile 的目录，`.` 表示当前目录。
+
+[source, plain]
+----
+docker build -t cuba-sample-sales .
+----
+如果没有 `openjdk:8` 镜像文件，docker 客户端会先拉取（pull）基准镜像然后再创建新镜像。
+
+如需定义和运行多容器 Docker 应用程序，可以使用 https://docs.docker.com/compose/overview/[Docker Compose tool]。通过 Compose，使用一个 YAML 文件来配置多个应用服务，因此这些服务可以通过 Compose 一起启动。
+
+`docker-compose.yml` 文件内容类似如下：
+
+[source, plain]
+----
+version: '2'
+
+services:
+  postgres:
+    image: postgres:9.6.6
+    environment:
+      - POSTGRES_PASSWORD=cuba
+      - POSTGRES_USER=cuba
+      - POSTGRES_DB=sales
+    ports:
+     - "5433:5432"
+    networks:
+     - sales-network
+  web:
+    image: cuba-sample-sales
+    ports:
+     - "8080:8080"
+    networks:
+     - sales-network
+
+networks:
+  sales-network:
+----
+
+这个 compose 文件定义了两个服务，`web` 和 `postgres`。
+
+web 服务：
+
+* 使用了从当前目录的 Dockerfile 构建的镜像。
+* 将容器曝露的 8080 端口转发到宿主机的 8080 端口。
+
+`postgres` 服务使用了从 Docker Hub 拉取的公共 Postgres 镜像。
+
+启动应用程序，进入包含 `docker-compose.yml` 文件的目录并且运行：
+
+[source, plain]
+----
+docker-compose up
+----
+
+当任务启动任务完成后，可以通过 `++http://localhost:8080/app++` 访问应用程序。
+

@@ -1,0 +1,7 @@
+:sourcesdir: ../../../source
+
+[[bpm_activiti_listener]]
+=== BpmActivitiListener
+
+创建模型时，`BpmActivitiListener` 事件监听器会自动被添加到流程中。`BpmActivitiListener` 实现了 `ActivitiEventListener` 接口（参阅 http://www.activiti.org/userguide/#eventDispatcher） 。当某些流程事件发生时（例如，用户任务开始、流程取消、任务完成等），监听器负责创建和修改 BPM 实体。这个监听器创建 `ProcTasks` 对象，并且为 `ProcInstance` 设置 `endDate` 值。
+

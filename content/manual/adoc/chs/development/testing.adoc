@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[testing]]
+=== 测试
+
+本章节介绍 CUBA 应用程序在不同层（layers）的测试方法。
+
+include::testing/unit_tests.adoc[]
+
+include::testing/integration_tests_mw.adoc[]
+
+include::testing/integration_tests_client.adoc[]
+

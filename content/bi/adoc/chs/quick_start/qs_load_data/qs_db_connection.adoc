@@ -1,0 +1,34 @@
+:sourcesdir: ../../../../source
+
+[[qs_db_connection]]
+==== 创建数据库连接
+
+如果需要自己创建 Star Schema，按照下面的步骤做即可。详细介绍可以咨询 http://wiki.pentaho.com/display/EAI/.03+Database+Connections[Pentaho wiki]。
+
+. 在 `$PENTAHO_HOME$/design-tools/data-integration` 目录，用 `spoon.bat` 启动 _Pentaho Data Integration_。
+
+. 创建新变换（transformation）。
+
+. 为变换创建新数据库连接：
++
+--
+* 输入 Connection Name（连接名称）
+
+* Connection Type（连接类型）: Hypersonic
+
+* Access（访问方式）: Native (JDBC)
+
+* Host Name（主机名称）: localhost
+
+* Database Name（数据库名称）: bidemo
+
+* Port Number（端口号）: 19001
+
+* User Name（用户名）: sa
+
+* Password（密码）字段留空
+
+.数据库连接
+image::star-schema.png[]
+--
+

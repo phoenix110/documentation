@@ -1,0 +1,58 @@
+:sourcesdir: ../../../../source
+
+[[pivotTable_output]]
+==== 数据透视表格式化器
+
+如果应用程序项目包含 *charts* 组件，则可以使用数据透视表输出类型。有关数据透视表的更多信息，请参阅 https://doc.cuba-platform.com/charts-latest/pivotTable.html[*Charts* 手册]。
+
+透视表输出只能为报表输出锦上添花，这也就是为什么在报表<<wizard,向导>>中没有透视表。要使用透视表格式化器，在报表编辑页面切换到 *Templates* 标签页，点击 *Create* 然后选择透视表作为新模板的输出类型。之后，按照下面的描述配置模板。
+
+生成的表格会显示在 Web 应用程序的 *Reports* -> *Show Pivot Tables* 界面中。
+
+.透视表格式化器
+image::pivot_template_result.png[align="center"]
+
+报表生成器将获取报表带区数据并绘制具有拖放功能、聚合数据和汇总数据的表格。在数据透视报表中只能使用一个报表带区，不支持嵌套带区。
+
+渲染器选项::
+
+此标签页上列出了可用的渲染器，选择一个默认渲染器。
+
+.Renderer Options 标签页
+image::pivot_template_renderer.png[align="center"]
+
+聚合选项::
+
+*Aggregation options* 标签页允许定义表格聚合器列表。聚合属性：
+
+* *Mode* 可以设置一个预定义的聚合函数，
+* *Caption* 要在 UI 中显示的本地化名称，
+* *Custom function* - 如果不为空，则忽略 *Mode* 值而使用自定义的 JavaScript 代码。
+
+.Aggregation options 标签页
+image::pivot_template_aggregation.png[align="center"]
+
+属性选项::
+
+数据透视表显示所有类型的<<structure,数据集的>>的所有属性。 需要注意的是,SQL、JPQL 和 Groovy 数据集中的引用属性的别名不能包含句点，例如， `select u.name as "userName" `。所选属性应在模板编辑界面的 *Properties options* 标签页上被设置为数据透视表的属性：
+
+* *Row* 、 *Column* - 都是键值对字典，其中包含要在数据透视表列和行中使用的属性，其中键是数据集中属性的名称，值是其本地化标题。
+* *Aggregation* - 要对其值进行聚合的属性，
+* *Derived property* - 可用于向原始数据集添加新属性，这些属性派生自现有数据集。此元素是键值对，其中键是生成的属性的名称，值是生成此属性的 JavaScript 函数。
+
+.Properties Options 标签页
+image::pivot_template_properties.png[align="center"]
+
+自定义选项::
+
+* *Filter function* - 用于过滤的 JavaScript 函数。
+* *Sorters function* - 用于行和列标题排序的 JavaScript 函数。
+* 渲染器配置（可配置内容取决于在渲染器选项中选择的渲染器）- 允许设置用于自定义渲染器渲染效果的 JavaScript 函数。实际上，只有两种类型的渲染器可以定制：
++
+** 各种 `heatmap`：可以通过 Javascript 代码设置单元格颜色，
++
+** 各种图表：选项可用于设置图表的尺寸。
+
+.Custom Options
+image::pivot_template_custom_properties.png[align="center"]
+

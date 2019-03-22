@@ -1,0 +1,10 @@
+:sourcesdir: ../../source
+
+[[app_properties]]
+[appendix]
+== 应用程序属性
+
+
+bpm.activiti.asyncExecutorEnabled ::
+可选值：`true` 或 `false`。定义是否启用定时器的 Job 执行器和异步任务。默认值为 `false`。
+

@@ -1,0 +1,39 @@
+:sourcesdir: ../../../../source
+
+[[qs_dimensions]]
+==== 创建维度表
+
+维度表将使用 Products 和 Customers。每个 Product 会关联一些 product line（产品线），产品线就是产品的种类，比如 _Ford T_ 属于 _Vintage Cars_ 产品线。
+
+Customers 属于特定的城市，这些城市属于某些国家，国家又按照洲分布。
+
+. 首先，创建 Product 变换。拖拽 *Table input* 节点到工作簿（worksheet）并且定义报表需要的字段：product `id`, `name` 和 `product_line_id`。
++
+.Product 表输入
+image::star-schema_2.png[]
+
+. 然后创建 products 的插入/更新节点：
++
+.插入/更新 Product
+image::star-schema_3.png[]
+
+. 创建 product lines 变换：
++
+.Product 变换
+image::star-schema_4.png[]
+
+. 通过 *Update* 节点完成第一个变换：
++
+.更新 Product
+image::star-schema_5.png[]
+
+. 按照相同的方式创建 Customer 变换，包含城市和洲级别。然后添加到第一个 Product 中：
++
+.Customer 变换
+image::star-schema_6.png[]
+
+. 当变换准备好之后，再套上外围相应的任务，*START - 启动* 和 *Success - 成功*，以及 *Abort job* 节点用来做出错时退出：
++
+.维度任务
+image::star-schema_12.png[]
+

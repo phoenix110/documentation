@@ -1,0 +1,86 @@
+:sourcesdir: ../../../../../source
+
+[[constraints]]
+===== 约束
+
+Constraints - 约束 限制用户访问实体实例。与应用到 _类_ 级别的许可不同，约束是应用到 _特定实体实例_ 的，当实体实例不满足约束条件时，则不允许访问。约束可以设置到增删改查级别。同时，还可以配置自定义约束。
+
+[TIP]
+====
+配置到用户访问组的约束，及其树形层级以上的访问组的约束都会对该用户生效。所以，当用户所在访问组树形层级越低，给用户配置的约束会越多。
+====
+
+所有客户端层通过标准 <<dataManager,DataManager>> 发起的操作都会触发约束检查. 如果实体不满足约束，添加、更改或删除的时候会抛出 `RowLevelSecurityException` 异常。
+
+约束检查有三种类型：数据库约束检查，内存约束检查，数据库加内存约束检查。
+
+. 数据库约束检查条件通过 <<jpql,JPQL>> 子句设置。设置以后会被追加到查询语句之后，这样不满足条件的结果在数据库级别会被过滤掉。数据库检查的约束只能用到查询操作中。
+
+. 内存约束检查通过 Groovy 表达式设置。这类表达式执行在对象图中的实例上，当不满足条件时，数据会被从对象图中过滤掉。
+
+. 数据库加内存约束检查兼有上述二者。
+
+需要创建约束时，打开 *Access Groups - 访问组* 界面，选择一个 group，在 *Constraints - 约束* 标签页中点击 *Create - 创建*:
+
+image::constraint_edit.png[align="center"]
+
+从 *Entity Name - 实体名称* 下拉列表中选择一个实体, 从 *Operation Type - 操作类型* 下拉列表中选择操作类型，基于选择的约束检查类型，用 *Join Clause* 和 *Where Clause* 设置 JPQL 条件或者用 *Groovy 脚本* 字段设置 Groovy 条件。也可以使用 *Constraint Wizard - 约束向导*，可以直观的创建 JPQL 和 Groovy 条件。当选择自定义操作类型时，会出现 *Code* 字段，设置特定的 code 来定义约束。
+
+[TIP]
+====
+JPQL 编辑器中的 *Join Clause* 和 *Where Clause* 字段支持自动填写实体名和对应的属性。按下 *Ctrl+Space* 可以触发自动填写。在“.”之后触发会列出匹配上下文的属性名，其它情况下，会列出实体列表。
+====
+
+JPQL 约束需要遵从以下规则：
+
+* `{E}` 需要被做为查询实体的别名，当执行查询语句时，它会被查询语句中真正使用的别名替代。
+
+* 以下预定义常量可以用作 JPQL 参数：
+
+** `session$userLogin` – 当前用户的 login 登录名，（如果是<<user_substitution,替代用户>> – 则为被替代用户的 login）。
+
+** `session$userId` – 当前用户的 ID，（如果是替代用户 – 则为被替代用户的 ID）。
+
+** `session$userGroupId` – 当前用户的 group ID，（如果是替代用户 − 则为被替代用户的 group ID）。
+
+** `session$XYZ` – 当前<<userSession,用户会话>>的其它任意属性，将 XYZ 替换为属性名使用。
+
+* *Where Clause* 字段中的内容会被添加到 `where` 子句并用 `and` 连接。不需要显式添加 `where` 单词，系统会自动添加。
+
+* *Join Clause* 字段中的内容会被添加到 `from` 子句，该字段需要用逗号“,”开头，使用 `join` 或 `left join`。
+
+一个简单的约束示例如上图所示：用户只能看到 `ref$Car` 中 VIN 以 ‘00’ 开头实体数据。
+
+另外一个常见的例子：假如有一个实体与 `User` 实体为多对多关系，想让用户只能看到跟自己相关的数据，可以在 *Where Clause* 中使用 JPQL 的 `member of` 操作符：
+
+[source, java]
+----
+(select u from sec$User u where u.id = :session$userId) member of {E}.users
+----
+
+内存约束检查时，`UserSession` 类型的 `userSession` 会被传入 Groovy 脚本，可以用它获取当前会话的属性，例如：
+
+[source, java]
+----
+include::{sourcesdir}/security/constraints_2.groovy[]
+----
+
+开发者可以使用以下 `Security` 接口检查某一实体的约束条件：
+
+* `isPermitted(Entity, ConstraintOperationType)` - 根据操作类型检查是否约束。
+
+* `isPermitted(Entity, String)` - 根据输入字符串检查是否约束。
+
+也可以基于 `ItemTrackingAction` 连接 action 和特定约束。在 `action` 的 XML 节点中设置 `constraintOperationType` 属性或者使用 `setConstraintOperationType()` 方法设置。
+
+示例：
+[source, xml]
+----
+include::{sourcesdir}/security/constraints_1.xml[]
+----
+
+[TIP]
+====
+违反约束时，会弹出<<notifications,通知>>给用户。每个约束的提示标题与内容可以在运行时重写，在 *Access Groups - 访问组* 界面的 *Constraints - 约束* 标签页，点击 *Localization - 本地化*，然后就可以设置通知的标题和内容文本了。
+====
+

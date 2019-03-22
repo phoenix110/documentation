@@ -1,0 +1,97 @@
+:sourcesdir: ../../../source
+
+[[example_html]]
+=== 带分页、页眉和页脚的 HTML/PDF 报表示例
+
+假设要创建一个这样的报表：横向展示、每页上都显示页码和固定的页眉页脚，使用特殊的 CSS 规则和属性进行配置。输出格式是 HTML 并可以导出为 PDF。
+
+此报表示例及其演示项目也可在 https://github.com/cuba-labs/reports-pdf-page-settings[CUBA GitHub] 上找到。
+
+. 数据模型
+
++
+--
+报表将显示有关 `Client` 实体的信息。它包含两个 String 属性：`title` 和 `summary`，在报表结构中会使用它们。
+
+[source, java]
+----
+include::{sourcesdir}/examples_html.java[]
+----
+--
+
+. <<structure,创建报表>>
+
++
+--
+
+创建一个没有参数的简单报表。使用 JPQL 查询所有 Client 实体的本地属性：`title` 和 `summary`。
+
+.报表数据结构
+
+image::example_html_1.png[align="center"]
+--
+
+. <<template_html,报表模板>>.
+
++
+--
+现在创建报表模板文件。在这里定义页眉和页脚块，页眉和页脚会在每页 PDF 都打印 。这需要使用特殊的 `page-break-before`: `always`  CSS 属性。它会在每个 Client 信息块之前生成分页符。
+
+如下所示，使用 *FreeMarker* 语法将数据插入到模板中。请在此处查看完整的 FreeMarker 参考： https://freemarker.apache.org/docs/ 。
+
+[source, html]
+----
+include::{sourcesdir}/examples_html.html[]
+----
+--
+
+. CSS 规则
+
++
+--
+将使用以下 CSS 代码来调整 PDF 页面显示：
+
+[source, css]
+----
+include::{sourcesdir}/examples_html_1.css[]
+----
+
+此 CSS 代码将设置页眉/页脚位置：
+
+[source, css]
+----
+include::{sourcesdir}/examples_html_2.css[]
+----
+
+之后，需要填充主要内容的边距以防止内容和页眉/页脚重叠：
+
+[source, css]
+----
+include::{sourcesdir}/examples_html_3.css[]
+----
+
+
+最终，完整的 `paging-template.html` 文件如下所示：
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_5.html[]
+----
+--
+
+. 上传模板文件并运行报表。
+
++
+--
+.模板编辑界面
+
+image::example_html_3.png[align="center"]
+
+
+正如所见，报表包含标题页、每个 Client 信息前都分页、每页都显示页眉和页脚。
+
+.报表运行效果
+
+image::example_html_2.png[align="center"]
+--
+

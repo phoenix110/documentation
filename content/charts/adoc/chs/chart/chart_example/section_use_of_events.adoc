@@ -1,0 +1,28 @@
+:sourcesdir: ../../../../source
+
+[[section_use_of_events]]
+==== 使用事件
+
+这里看看事件的使用。我们将在<<cdb_screen_controller>>中创建的界面中添加对图形项目点击事件的处理。在 IDE 中打开界面控制器并且注入图表。为了显示通知，在界面控制器中注入了 `Notifications` bean。
+
+[source, java]
+----
+@Inject
+private Notifications notifications;
+
+@Inject
+private SerialChart serialChart;
+----
+
+然后在 `onInit` 方法的最后添加一个监听器。当图表从 `DataProvider` 接收数据时，可以使用 `getDataItemNN()` 方法来取到点击的条目。在此示例中，`SerialChart` 组件绑定了数据容器，因此应使用另一种方法获取点击的条目：`getEntityNN()`：
+
+[source,java]
+----
+include::{sourcesdir}/chart/GraphItemClickListener.java[]
+----
+
+查看结果，使用 *Run* -> *Restart application server* 重新构建项目然后登录系统。打开界面点击其中一列。
+
+.处理图形条目点击事件的图表
+image::chart/chart-with-event.png[align="center", width="800", height="367"]
+

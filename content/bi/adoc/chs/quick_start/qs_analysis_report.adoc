@@ -1,0 +1,32 @@
+:sourcesdir: ../../../source
+
+[[qs_analysis_report]]
+=== 配置 Pentaho 分析报表
+
+. 打开 Pentaho 终端： `++http://localhost:18081/pentaho++` 用 `Admin/password` 登录。
+
+. 点击 *File → Manage Data Sources（管理数据源）*.
+
+. 点击配置按钮然后选择 *New Connection - 新建连接*:
++
+.数据库连接
+image::bi_pentaho.png[]
+
+. 创建 HSQLDB 连接：
++
+--
+* Host Name: `localhost`
+* Database Name: `bidemo`
+* Port Number: `19001`
+* User Name: `sa`
+
+.数据库连接
+image::bi_pentaho_2.png[]
+--
+
+现在可以使用<<qs_demo_report,项目携带的>>分析报表或者按照<<qs_create_report,以下>>步骤自己创建。
+
+include::qs_analysis_report/qs_demo_report.adoc[]
+
+include::qs_analysis_report/qs_create_report.adoc[]
+

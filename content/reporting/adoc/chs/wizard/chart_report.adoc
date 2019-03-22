@@ -1,0 +1,33 @@
+:sourcesdir: ../../../source
+
+[[chart_report]]
+=== 带图表输出的报表
+
+使用报表向导，可以使用跟创建其他类型的报表一样的方式创建带<<template_chart,图表输出>>的报表。唯一的不同是在向导中完成了报表之后需要配置图表模板。
+
+. 如前一章所述开始创建报表。
++
+.向导中的图表模板 - 第一步
+image::chart_wizard.png[align="center"]
+
+. 对于图表报表，要选择可进行数值计算的实体属性，将来用这些属性作为图表的数值轴。
++
+.向导中的图表模板 - 选择属性
+image::chart_wizard_2.png[align="center"]
+
+. 完成创建报表的下一步。
++
+.向导中的图表模板 - 第二步
+image::chart_wizard_3.png[align="center"]
+
+. 最后一步中，选择图表类型，饼图或序列图，然后保存报表。
++
+.向导中的图表模板 - 第三步
+image::chart_wizard_4.png[align="center"]
+
+. 最后，在报表编辑界面的 *Templates* 标签页配置图表的轴。
++
+.图标模板配置
+image::chart_wizard_5.png[align="center"]
++
+要了解图表配置的更多细节，请参阅 https://doc.cuba-platform.com/charts-latest/index.html[图表文档] 。

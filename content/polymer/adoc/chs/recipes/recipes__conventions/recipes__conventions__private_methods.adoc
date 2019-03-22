@@ -1,0 +1,65 @@
+:sourcesdir: ../../../../source
+
+[[recipes__conventions__private_methods]]
+==== 私有方法和属性
+
+任何 Polymer 组件可以暴露由一些方法和属性组成的 API。这些组件的成员可以公共访问。但是也有属性和方法限制在组件内部使用。我们可以称之为私有成员。
+
+用下划线开头为私有方法和属性使用命名是很好的实践。
+
+参阅下面的示例：
+
+*迪斯科灯光程序*
+
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/recipes/convention/access-control/disc-jockey.html">
+
+<div class="polymer-demo-container">
+    <disc-jockey></disc-jockey>
+</div>
+
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/recipes/convention/access-control/disc-jockey.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <disc-jockey></disc-jockey>
+</body>
+</html>
+----
+
+.src/recipes/convention/access-control/disc-jockey.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/convention/access-control/disc-jockey.html[]
+----
+
+.src/recipes/convention/access-control/disco-lights.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/convention/access-control/disco-lights.html[]
+----
+
+[TIP]
+====
+`_currentColor` 属性是私有的，但是对于跨项目可重用的组件设计来说，这个属性可以是公共的。另一个选择是可以创建关于现在选择的颜色的事件。
+====
+
+采用私有属性和方法的这个惯例，我们可以至少达到下面这些目标：
+
+* 我们显式的声明那些元素成员可以用。
+
+* 我们能让 API 更加清晰和明显。
+
+* 在重构的过程中，我们很清楚的看见哪些属性和方法的名称不应该被更改。
+

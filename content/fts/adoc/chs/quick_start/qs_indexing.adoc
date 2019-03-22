@@ -1,0 +1,32 @@
+:sourcesdir: ../../../source
+
+[[qs_indexing]]
+=== 配置索引过程的调用
+
+可以使用框架的 {main_man_url}/scheduled_tasks_cuba.html[定时任务机制] 按计划调用建索引过程。
+
+首先，需要激活任务启动功能。将以下属性添加到项目 *core* 模块的 `app.properties` 文件中。
+
+[source, properties]
+----
+cuba.schedulingActive = true
+----
+
+重启应用服务，以 *`admin`* 的身份登录系统，打开 JMX Console 界面，找到并打开 `app-core.cuba:type=Scheduling` JMX bean 确保 *Active* 属性被设置为 `true`。
+
+然后打开 *Administration* -> *Scheduled Tasks* 界面，单击 *Create* 并为新任务填写以下属性值：
+
+* *Defined by*: Bean
+* *Bean name*: cuba_FtsManager
+* *Method name*: processQueue()
+* *Singleton*: true
+* *Period, sec*: 30
+
+保存任务，在表格中选择它，然后单击 *Activate*。从现在开始，系统将开始每隔 30 秒为已更改的实体建索引。
+
+
+[WARNING]
+====
+自动索引不包括在启动之前创建的实体。要将此类实体加入索引队列，请使用 `app-core.fts:type=FtsManager` JMX bean 的 `reindexAll()` 或 `asyncReindexAll()` 方法。参阅<<reindex>>。
+====
+

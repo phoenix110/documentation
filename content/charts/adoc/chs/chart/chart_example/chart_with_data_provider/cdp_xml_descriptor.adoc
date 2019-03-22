@@ -1,0 +1,62 @@
+:sourcesdir: ../../../../../../source
+
+[[cdp_xml_descriptor]]
+====== 界面 XML 描述
+
+现在我们创建一个新界面来显示图表。
+
+. 在项目树中选择 *Generic UI*，在右键菜单中点击 *New -> Screen*。这时会出现模板浏览页面。
+. 在可用模板列表中选择 *Blank screen*，再点击 *Next*。
+. 在 *Descriptor name* 字段输入 `stackedarea-chart` 后点击 *Next*。
+. 打开 *Text* 标签页，使用下面的内容替换里面的值：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/stackedarea-chart.xml[]
+----
+
+界面描述的根元素包含了一个新的 `xmlns:chart` 属性：
+
+[source, xml]
+----
+<window xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+    ...
+>
+----
+
+`chart:serialChart` 属性：
+
+* `categoryField` - `DataProvider` 实例中列举的 `DataItem` 包含的键值对的键值；用来为分类轴定义标签。
+
+`chart:serialChart` 的元素：
+
+* `chart:chartCursor` - 可选元素，在图表中添加一个光标。光标跟随鼠标指针并且以提示窗的方式显示图表中相应点的数据。
+** `cursorAlpha` 属性定义光标线的透明度。
+
+* `chart:legend` - 定义图表图例的元素。
+** `position` 属性定义图例相对于图表的位置。
+** `equalWidths` 属性指定是否每个图例条目要跟最宽的那个等宽。
+** `periodValueText` 属性定义在图例中作为值部分显示的文字，当用户的鼠标指针没有悬浮在任何数据点时显示。这个文字标签需要由两部分构成 - 字段名称（值/开盘/收盘/最高/最低）以及该时间段需要显示的值 - 开盘/收盘/最高/最低/总和/平均/计数。
+** `valueAlign` 属性定义值文字的对其方式。可能值：`left` 和 `right`。
+** `valueWidth` 属性定义值文字的宽度。
+
+* `chart:valueAxes` - 定义垂直轴数值的元素。在这里，只使用了一个垂直轴，通过 `chart:axis` 元素描述。
+** `position` 属性定义数值轴跟图表的相对位置。
+** `title` 属性定义数值轴标题。
+** 设置 `stackType` 为 `REGULAR` 可以让图表展示滚动值，将该属性设置为 `none` 则显示非滚动值。
+** `gridAlpha` 定义网格线的透明度。
+
+* `chart:graphs` - 包含 `chart:graph` 元素集合；图形是通过 `chart:graph` 元素进行描述。
+** `type` 属性定义图形类型：线图、列图、步进线图，平滑线图，烛台图以及蜡烛图。
+** `valueField` 属性定义 `DataProvider` 实例中列举的 `DataItem` 包含的键值对的键值；用来为定义数值。
+** `fillAlphas` 属性定义填充色的透明度。
+** `lineAlpha` 属性定义线（或者列边框）的透明度。值域： 0 - 1。
+** `hidden` 属性指定图形是否隐藏
+
+* `chart:categoryAxis` - 描述分类轴的元素。
+** 设置 `startOnAxis` 为 `true` 会导致直接挨着数值轴开始绘制图表。该属性的默认值是 `false`，此时，在数值轴和图表之间会有个小间隔。
+** `gridAlpha` 定义网格线的透明度。
+** `axisColor` 属性定义轴的颜色。
+
+* `chart:export` – 可选元素，用来启用图表导出。
+

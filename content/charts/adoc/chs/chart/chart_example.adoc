@@ -1,0 +1,21 @@
+:sourcesdir: ../../../source
+
+[[chart_example]]
+=== 图表使用示例
+
+本章节展示如何使用图表展示扩展。
+
+include::chart_example/chart_project_setup.adoc[]
+
+include::chart_example/chart_data_simplified.adoc[]
+
+include::chart_example/chart_data_from_entity.adoc[]
+
+include::chart_example/chart_with_data_provider.adoc[]
+
+include::chart_example/section_incremental_data_update.adoc[]
+
+include::chart_example/section_use_of_events.adoc[]
+
+include::chart_example/custom_json.adoc[]
+

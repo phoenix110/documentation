@@ -1,0 +1,31 @@
+:sourcesdir: ../../source
+
+[[functionality]]
+== 功能
+
+BPM 子系统使用 Activiti 引擎来执行业务流程。Activiti Explorer 中的模型编辑器被用于使用 BPMN 2.0 对流程建模。除了 Activiti 框架功能之外，BPM 子系统还提供了本节所描述的其它功能。对 Activiti 框架的说明超出了本手册的范围，可以通过 https://www.activiti.org/userguide/ 查看详细说明。
+
+include::functionality/bpm_activiti_listener.adoc[]
+
+include::functionality/process_roles.adoc[]
+
+include::functionality/start_process_form.adoc[]
+
+include::functionality/user_task.adoc[]
+
+include::functionality/task_outcomes.adoc[]
+
+include::functionality/transitions.adoc[]
+
+include::functionality/script_execution.adoc[]
+
+include::functionality/service_invocation.adoc[]
+
+include::functionality/timer.adoc[]
+
+include::functionality/localization.adoc[]
+
+include::functionality/submodels.adoc[]
+
+include::functionality/custom_stencils.adoc[]
+

@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[qs_setup_sample]]
+=== 配置 CUBA 示范应用
+
+. 克隆（clone）或者下载项目： https://github.com/cuba-platform/cuba-bi-demo.git
+
+. 在 IDE 或者 CUBA Studio 中打开这个项目，运行 `createDb` 命令并且启动应用服务。
+

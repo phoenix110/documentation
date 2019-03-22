@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[pivotTable_examples]]
+=== 透视表示例
+
+include::pivotTable_examples/pivotTable_examples_custom.adoc[]
+
+include::pivotTable_examples/pivotTable_examples_editable.adoc[]
+

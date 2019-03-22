@@ -1,0 +1,46 @@
+:sourcesdir: ../../../../source
+
+[[pie_chart]]
+==== 饼图
+
+使用 `PieChart` 组件可以创建饼图/多纳圈图。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=pie3d-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.饼图
+image::chart/pie-chart.svg[align="center", width="800"]
+
+该组件的 XML 名称：`chart:pieChart`
+
+数据绑定: ::
++
+--
+. 使用数据容器。
++
+可以为图表指定一个 `CollectionContainer` 。然后为 `pieChart` 元素定义 `titleField` 和 `valueField` 属性：
++
+[source, xml]
+----
+include::{sourcesdir}/chart/pie_chart.xml[]
+----
+
+. 使用 <<chart_data,chart:data>> 元素。
+--
+
+`PieChart` 事件监听器: ::
++
+--
+* `ChartClickListener` – 点击画布。
+* `ChartRightClickListener` – 右键点击画布。
+* `SliceClickListener` – 点击饼图的一个分片。
+* `SlicePullInListener` – 饼图的一个分片移入图表。
+* `SlicePullOutListener` – 饼图的一个分片移出图表。
+* `SliceRightClickListener` – 右键点击饼图的一个分片。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmPieChart[AmCharts 文档]。
+

@@ -1,0 +1,70 @@
+:sourcesdir: ../../../../../source
+
+[[association_mtm_recipe_1]]
+===== 直接多对多关联
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo2.cuba-platform.com/model/open?screen=sample$Airline.browse" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+这里使用 `Airport` 和 `Airline` 实体来实现多对多关联。机场可以服务于多个航空公司，而航空公司也可以为许多机场提供服务：
+
+image::cookbook/association_recipe_1.png[align="center"]
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/entity/airports/Airport.java[Airport.java] -  `Airport` 实体包含了航空公司列表属性 `airlines`，并被声明为多对多关系。
+
++
+在 Studio 实体设计器中，设置 `airlines` 属性： *Attribute type* - `ASSOCIATION`, *Cardinality* - `MANY_TO_MANY`。
++
+标记 `Airport` 为关系的拥有方，Studio 会要求在 `Airline` 实体中创建相应的 `airports` 属性作为关系的反向对应。
++
+[source, java]
+----
+@JoinTable(name = "SAMPLE_AIRLINE_AIRPORT_LINK",
+    joinColumns = @JoinColumn(name = "AIRPORT_ID"),
+    inverseJoinColumns = @JoinColumn(name = "AIRLINE_ID"))
+@ManyToMany
+protected List<Airline> airlines;
+----
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/entity/airports/Airline.java[Airline.java] - `Airline` 实体现在包含多对多的机场列表： *Attribute type* - `ASSOCIATION`, *Cardinality* - `MANY_TO_MANY`。
+
++
+[source, java]
+----
+@JoinTable(name = "SAMPLE_AIRLINE_AIRPORT_LINK",
+    joinColumns = @JoinColumn(name = "AIRLINE_ID"),
+    inverseJoinColumns = @JoinColumn(name = "AIRPORT_ID"))
+@ManyToMany
+protected List<Airport> airports;
+----
+
++
+默认情况下也会将 `Airline` 标记为关系的拥有方，这样关系的两边都可以修改集合。
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/views.xml[views.xml] - 机场编辑界面的 `airport-airlines` 视图包含 airlines 关联属性，这个关联属性使用了 `_minimal` 视图。`airline-airports` 视图也包含 airports 机场关联属性。
+
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airports/airport/airport-edit.xml[airport-edit.xml] - 机场编辑器界面的 XML 描述定义了 `Airport` 实例的数据源，同时为其航空公司定义了嵌套数据源。它还包含一个显示航空公司的表格以及 https://doc.cuba-platform.com/manual-latest/list_actions.html#addAction[add] 和 https://doc.cuba-platform.com/manual-latest/list_actions.html#removeAction[remove] 操作。
+
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airline/airline-edit.xml[airline-edit.xml] - 航空公司编辑界面的 XML 描述定义了 `Airline` 实例的数据源，同时为机场定义了嵌套数据源。它还包含一个显示机场的表格以及 *add* 和 *remove* 操作。
+
++
+最终，`Airport` 和 `Airport` 编辑界面是绝对对称的。
+
+这样，编辑航空公司实例的工作方式如下：
+
+航空公司编辑界面显示机场列表。
+
+
+用户可以点击 *Add*，https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airports/airport/airport-browse.xml[`Airport` 查找界面] 将被打开，用户可以选择要添加的机场或打开其编辑界面。在 https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airports/airport/airport-edit.xml[airport 编辑页面] 中点击确定后，更新的机场实例，既保存到数据库又保存到航空公司编辑界面的 https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airline/airline-edit.xml#L12[`airportsDs` 数据源] 中，因为 `Airport` 实体是完全独立的。
+
+用户可以创建新机场并删除现有的机场，所有更改将在单独的事务中保存到数据库，并保存到 `airportsDs` 数据源。
+
+当用户在航空公司编辑界面中点击确定时，更新后的 `Airline` 实例与新创建的 `Airport` 实例链接将一起提交给中间层的 <<dataManager,DataManager>>.commit() 方法并保存到数据库。
+
+在 `Aiport` 编辑界面中也会以完全相同的方式工作。
+

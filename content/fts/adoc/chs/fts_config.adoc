@@ -1,0 +1,87 @@
+:sourcesdir: ../../source
+
+[[fts_config]]
+[appendix]
+== FTS 配置文件
+
+全文搜索配置文件是一个 XML 文件，通常位于 *core* 模块的 `src` 目录中，包含索引实体及其属性的描述。
+
+该文件在<<cuba.ftsConfig,cuba.ftsConfig>>应用程序属性中指定。
+
+该文件的结构如下：
+
+`fts-config` - 根元素。
+
+`fts-config` 元素:
+
+* `entities` - 要建索引和搜索的实体列表。
++
+`entities` 元素:
++
+** entity - 索引实体描述。
++
+--
+`entity` 属性：
+
+* `class` - 实体 Java 类。
+
+* `show` - 定义此实体是否应出现在搜索结果中，`false` 值是用来设置不显示用户不感兴趣的关联实体，但这些实体是必须的，例如，链接上传的文件和其关联的域模型的实体。默认值为 `true`。
+
+`entity` 元素:
+
+* `include` - 确定一个或多个需要作为索引的实体属性。
++
+`include` 属性:
++
+** `re` - 按名称选择属性的正则表达式。
++
+** `name` - 属性名。它可以是引用属性路径（以点分隔）。不检查类型。但是，如果名称使用路径定义，则可以有两个选项：
++
+. 最终属性必须是非嵌入式实体。包含非实体类型属性在这里没有意义，因为它必须在其拥有的实体内建索引。
++
+. 最终属性必须是嵌入实体的非实体字段。例如，如果索引实体具有 Address 类型（可嵌入实体）的"address"字段，则属性名称应为"address.city"或"address.street"，而不是"address"。
+--
+
+* `exclude` - 排除之前 `include` 元素中包含的属性，配置规则与 `include` 元素相同 。
+
+* `searchables` - 一个 Groovy 脚本，用于将与更改实体关联的任意实体添加到索引队列。
++
+--
+例如，当添加或删除 `CardAttachment` 实例时，关联的 `Card` 实例应该被重建索引。原因是 `Card` 实例本身不会被添加到队列中，因为它没有被更改（它存储了一个 `CardAttachment` 实例的集合）。这样，如果在其链接实体(新添加的 `CardAttachment`)中找到匹配数据，`Card` 实例也不会在搜索结果中显示。
+
+调用时将以下对象传递给脚本：
+
+* `searchables` - 应附加的实体列表。
+
+* `entity` - 当前实体实例，自动添加到队列中。
+
+脚本示例:
+
+[source,xml]
+----
+include::{sourcesdir}/fts_config_1.xml[]
+----
+--
+
+* `searchableIf` - 一个 Groovy 脚本，用于从队列中排除索引实体的某些实例。
++
+--
+例如，可能不想将旧版本的文档编入索引。
+
+运行脚本时，`entity` 变量 - 当前实体实例 - 会被传递给它。该脚本应该返回一个布尔值：如果当前实例应该被建索引，则返回 `true`，否则返回 `false`。
+
+脚本示例:
+
+[source, xml]
+----
+include::{sourcesdir}/fts_config_2.xml[]
+----
+--
+
+FTS 配置文件示例:
+
+[source, xml]
+----
+include::{sourcesdir}/fts_config_3.xml[]
+----
+

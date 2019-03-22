@@ -1,0 +1,73 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__advanced__observers]]
+==== 观察者
+
+有时候，需要监听某些属性的改动然后相应作出反应。比如，我们可能在用户输入某些信息的时候往服务器发送一些消息通知。
+
+下面的例子演示了这点。基本上，用户可以选择他们的公司，然后我们将公司保存在数据库的某处。
+
+*公司类型选择器*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/observers/company-type-select.html">
+
+<div class="polymer-demo-container">
+    <company-type-select></company-type-select>
+</div>
+
+++++
+
+*Source code*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-advanced/observers/company-type-select.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <company-type-select></company-type-select>
+</body>
+</html>
+----
+
+.src/polymer-advanced/observers/company-type-select.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/observers/company-type-select.html[]
+----
+
+观察者可以更加复杂。比如，可能需要监控几个不同的属性。
+
+我们将刚才的例子强化一下，加上一个联系人输入。
+
+.src/polymer-advanced/observers/company-type-select-enhanced.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/observers/company-type-select-enhanced.html[]
+----
+
+*Enhanced company type selector*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/observers/company-type-select-enhanced.html">
+
+<div class="polymer-demo-container">
+    <company-type-select-enhanced></company-type-select-enhanced>
+</div>
+
+++++
+
+目前我们学到的::
++
+--
+* 可以通过 `observer` 参数监控单一属性的改动。观察者函数接收两个参数：旧值和新值。
+
+* 可以用观察者数组的方式同时监控多个属性的改动，但是这样会丢失属性的旧值信息。
+--
+

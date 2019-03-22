@@ -1,0 +1,47 @@
+:sourcesdir: ../../../../source
+
+[[funnel_chart]]
+==== 漏斗图
+
+使用 `FunnelChart` 组件可以创建漏斗/金字塔图。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=funnel3d-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.漏斗图
+image::chart/funnel-chart.svg[align="center", width="800"]
+
+该组件的 XML 名称：`chart:funnelChart`
+
+数据绑定: ::
++
+--
+. 可以为图表指定集合数据容器，然后为 `funnelChart` 元素定义 `titleField` 和 `valueField` 属性：
++
+[source, xml]
+----
+include::{sourcesdir}/chart/funnelChart.xml[]
+----
+
+. 使用 <<chart_data,chart:data>> 元素。
++
+[source, xml]
+----
+include::{sourcesdir}/chart/funnel_chart.xml[]
+----
+--
+
+`FunnelChart` 事件监听器: ::
++
+--
+* `SliceClickListener` – 点击漏斗图的一层。
+* `SlicePullInListener` – 漏斗图的一层移回图表。
+* `SlicePullOutListener` – 漏斗图的一层移出图表。
+* `SliceRightClickListener` – 右键点击漏斗图的一层。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmFunnelChart[AmCharts 文档]。
+

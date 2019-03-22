@@ -1,0 +1,33 @@
+= CUBA Platform. 全文搜索
+:toc: left
+:toc-title: 目录
+:toclevels: 6
+:sectnumlevels: 6
+:stylesheet: cuba.css
+:linkcss:
+:source-highlighter: coderay
+:imagesdir: ./img
+:stylesdir: ./styles
+:sourcesdir: ../../source
+:doctype: book
+:sectlinks:
+:sectanchors:
+:lang: en
+:revnumber: 7.0
+:version-label: Version
+:revremark: Copyright (c) 2019 Haulmont (www.haulmont.com)
+:main_man_url: https://doc.cuba-platform.com/manual-{revnumber}-chs
+:studio_man_url: https://doc.cuba-platform.com/studio-chs
+
+:!sectnums:
+
+include::preface.adoc[]
+
+include::general_info.adoc[]
+
+include::quick_start.adoc[]
+
+include::fts_config.adoc[]
+
+include::fts_properties.adoc[]
+

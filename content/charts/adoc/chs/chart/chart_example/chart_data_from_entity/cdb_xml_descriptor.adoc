@@ -1,0 +1,59 @@
+:sourcesdir: ../../../../../source
+
+[[cdb_xml_descriptor]]
+====== 界面 XML 描述
+
+现在我们创建一个新界面来显示图表。
+
+. 在项目树中选择 *Generic UI*，在右键菜单中点击 *New -> Screen*。这时会出现模板浏览页面。
+. 在可用模板列表中选择 *Blank screen*，再点击 *Next*。
+. 在 *Descriptor name* 字段输入 `column3d-chart` 后点击 *Next*。
+. 打开 *Text* 标签页，使用下面的内容替换里面的值：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/column3d-chart.xml[]
+----
+
+界面描述的根元素包含了一个新的 `xmlns:chart` 属性：
+
+[source, xml]
+----
+<window xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+    ...
+>
+----
+
+图表从 `dataContainer` 属性定义的 `countryGrowthDc` 数据容器获取数据。名称和数值使用 `CountryGrowth` 实体的 `country`, `year2014` 和 `year2015` 属性来展示；这个实体的实例列表保存在数据容器中。
+
+`chart:serialChart` 组件包含以下属性：
+
+* `angle` - 定义图表的角度。值可以从 `0` 到 `90`。
+
+* `balloonText` - 定义鼠标浮动到一列时，提示框内的文字。这里可以使用以下标签：`\[[value]]`, `\[[title]]`, `\[[persents]]`, `\[[description]]`，以及 `DataProvider` 实例中列举的 `DataItem` 的键值，还能使用数据容器中实体属性的名称。如果要使用 `html` 标签，则需要转义。
+
+* `depth3D` - 图表的厚度。跟 `angle` 属性一起使用，可以帮助创建 3D 效果。
+
+* `plotAreaFillAlphas` - 绘图区域的透明度。
+
+* `startDuration` - 动画的持续时间，单位是秒。
+
+* `categoryField` - `DataProvider` 实例中列举的 `DataItem` 包含的键值对的键值；用来为分类轴定义标签。
+
+`chart:serialChart` 组件包含下列元素：
+
+* `chart:categoryAxis` - 描述分类轴的元素。
+** `gridPosition` 属性指定网格线的摆放位置，在分类轴单元的中间还是起始处。
+
+* `chart:valueAxes` - 定义垂直轴数值的元素。在这里，只使用了一个垂直轴，通过 `chart:axis` 元素描述。
+** `position` 属性定义数值轴跟图表的相对位置。
+** 设置 `stackType` 为 `BOX_3D` 可以让图表展示列柱一个在另一个后面。
+
+* `chart:graphs` - 包含 `chart:graph` 元素集合；图形是通过 `chart:graph` 元素进行描述。
+** `type` 属性定义图形类型：线图、列图、步进线图，平滑线图，烛台图以及蜡烛图。
+** `valueField` 属性定义 `DataProvider` 实例中列举的 `DataItem` 包含的键值对的键值；用来为定义数值。
+** `fillAlphas` 属性定义填充色的透明度。
+** `lineAlpha` 属性定义线（或者列边框）的透明度。值域： 0 - 1。
+
+* `chart:export` – 可选元素，用来启用图表导出。
+

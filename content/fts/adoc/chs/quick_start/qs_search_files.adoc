@@ -1,0 +1,32 @@
+:sourcesdir: ../../../source
+
+[[qs_search_files]]
+=== 上传文件内容搜索
+
+现在需要为每本图书出版物提供文件上传的功能，并将上传的文件添加到 `BookPublication` 浏览界面。
+
+自定义 `BookPublication` 实体。首先，添加一个新的 `file` 属性，它与 `FileDescriptor` 实体多对一关联。`FileDescriptor` 是上传的文件的描述（不要与 `java.io.FileDescriptor` 混淆），它允许从数据模型对象中引用文件。保存更改，然后在 Studio 中将新属性附加到现有的 `bookPublication.full` 界面以及 `BookPublication` 的浏览和编辑界面。
+
+.BookPublication 实体的新属性
+image::book_publication_new_attribute.png[align="center"]
+
+生成新的 DB 脚本，更新数据库并重新启动应用程序服务。如果重新创建了 DB，则默认情况下将禁用全文搜索。在 *JMX Console* 复选框中再次选中 *Value* ，对所有文件重建索引，处理索引队列，注销并重新登录。
+
+就所添加的新属性而言，`BookPublication` 浏览界面上的出版物的表格会增加一列：*File*。要填写这列，请打开任意行进行编辑，使用新上传控件上传文本文件，然后单击 OK。默认情况下，CUBA 支持对 `RTF`、`TXT`、`DOC`、`DOCX`、`XLS`、`XSLX`、`ODT`、`ODS` 和 `PDF` 格式的文件建立索引。
+
+.BookPublication 编辑界面
+image::book_publication_file_is_not.png[align="center"]
+
+新文件会出现在表格中。可以调整新列的外观。
+
+.BookPublication 浏览
+image::book_publication_files_uploaded.png[align="center"]
+
+打开 *JMX Console* 界面，打开 `app-core.fts:type=FtsManager` JMX bean 并依次调用 `reindexAll()` 和 `processQueue()` 方法根据新的搜索配置来对数据库和文件中的现有实例重建索引。对所有新增和改变的数据自动建索引会有延迟，这取决于定时任务的间隔时间，即不超过 30 秒。
+
+现在，*Full text search* 将输出所有记录，包括外部文件内容。
+
+.搜索结果
+image::book_publication_fts_result.png[align="center"]
+
+可以在 {main_man_url}/index.html[开发人员手册] 的相应章节中找到有关 `FileStorageAPI` 和 `FileDescriptor` 的 {main_man_url}/file_storage.html[更多信息] 。

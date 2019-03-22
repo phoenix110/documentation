@@ -1,0 +1,37 @@
+:sourcesdir: ../../../source
+
+[[chart_types]]
+=== 图表类型
+CUBA 框架支持以下这些不同类型的图表。
+
+.图表类型层级结构
+image::chart/charts_hierarchy_diagram.png[align="center"]
+
+以下图表组件实现了图表接口：
+
+* <<gauge_chart,AngularGaugeChart - 仪表盘图>>；
+* <<funnel_chart,FunnelChart - 漏斗图>>；
+* <<gantt_chart,GanttChart - 甘特图>>；
+* <<pie_chart,PieChart - 饼图>>；
+* <<radar_chart,RadarChart - 雷达图>>；
+* <<serial_chart,SerialChart - 序列图>>；
+* <<xy_chart,XYChart - 散点图>>。
+
+所有组件都有 `NAME` 常量，所以可以使用 `UiComponents` 来创建。
+
+include::chart_types/gauge_chart.adoc[]
+
+include::chart_types/funnel_chart.adoc[]
+
+include::chart_types/gantt_chart.adoc[]
+
+include::chart_types/pie_chart.adoc[]
+
+include::chart_types/radar_chart.adoc[]
+
+include::chart_types/serial_chart.adoc[]
+
+include::chart_types/stock_chart.adoc[]
+
+include::chart_types/xy_chart.adoc[]
+

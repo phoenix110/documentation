@@ -1,0 +1,14 @@
+:sourcesdir: ../../../source
+
+[[reindex]]
+=== 运行和配置实体索引重建
+
+
+可能启用全文搜索功能前已将某些数据添加到了数据库，这些数据应该被建立一次索引。可以使用 `app-core.fts:type=FtsManager` JMX-bean 的方法将实体添加到索引队列。调用 JMX-bean 方法的一种简便方法是通过 *Administration* 菜单的 s *JMX Console* 界面。
+
+JMX-bean `app-core.fts:type=FtsManager` 提供了两种将实体添加到索引队列的方法：
+
+ * `reindexAll()` - 将 FTS 配置中描述的实体同步添加到索引队列。如果数据量很大，这个过程可能会花费大量时间，因此建议使用 `asyncReindexAll()`。
+
+ * `asyncReindexAll()` - 使用 `FtsManager.reindexNextBatch()` 方法批量异步地将实体添加到索引队列中。批量大小由<<chapter2.adoc#fts.reindexBatchSize,fts.reindexBatchSize>>配置参数定义。`FtsManager.reindexNextBatch()` 方法应由定时任务机制或 Spring 定时任务调用。在完成索引队列构建之前，索引不会被执行。
+

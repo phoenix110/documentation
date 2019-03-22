@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[qs_star_schema]]
+==== 创建 Star Schema
+
+现在我们将维度表任务和事实表任务组装近 star schema：
+
+. 添加 *START* 节点来启动任务。
+
+. 带有 *Check Db connections - 检查数据库连接* 条件的启动任务。
+
+. 如果 DB 没有连上，添加 *Abort job* 节点来退出任务。
+
+. 然后按顺序添加我们之前设计好的 *Update Dimensions* 和 *Update Facts* 任务。
+
+. 最后添加 *Success* 完成任务配置：
++
+.Star Schema 任务
+image::star-schema_14.png[]
+
+. 将所有任务和变换都保存到项目文件夹以便将来使用。
+

@@ -1,0 +1,74 @@
+:sourcesdir: ../../../../source
+
+[[local_admins_example]]
+==== 创建本地管理员
+
+在<<groups,访问组>>的树形层级结构加上<<constraints,约束>>能够支持创建 _本地管理员_，可以用来在组织部门内代理做一些创建、配置用户和权限管理的工作。
+
+本地管理员可以访问安全子系统的界面，但是他们只能看到自己访问组或以下的用户和访问组。本地管理员还可以创建子访问组、用户以及能<<roles,分配>>系统上的角色。其创建的新用户也至少有跟创建他们的本地管理员一样的权限限制。
+
+访问组根节点下面的全局管理员需要创建能被本地管理员看到的角色，然后本地管理员才能分配给用户。本地管理员不能创建或修改角色。
+
+下面是一个访问组结构的例子：
+
+image::local_admins_groups.png[align="center"]
+
+问题有：
+
+* `*Departments*` 下面的用户应该只能看到该组下面的用户，或低于该组层级的组里的用户。
+
+* `*Dept 1*`, `*Dept 2*`, 这些子组都应该有自己的管理员可以创建用户，分配角色。
+
+方案是：
+
+* 在 `*Departments*` 里添加以下约束：
++
+image::local_admins_constraints.png[align="center"]
+
+** 对于 `sec$Group` 实体：
++
+[source, plain]
+----
+{E}.id in (
+  select h.group.id from sec$GroupHierarchy h
+  where h.group.id = :session$userGroupId or h.parent.id = :session$userGroupId
+)
+----
++
+这样，用户就不会看到比自己所在组层级高的组。
+
+** 对于 `sec$User` 实体：
++
+[source, plain]
+----
+{E}.group.id in (
+  select h.group.id from sec$GroupHierarchy h
+  where h.group.id = :session$userGroupId or h.parent.id = :session$userGroupId
+)
+----
++
+这样，用户不会看到比自己所在组层级高的组里的用户。
+
+** 对于 `sec$Role` 实体：
++
+[source, plain]
+----
+({E}.description is null or {E}.description not like '[hide]')
+----
++
+这样，用户不会看到 `description` 属性里包含 `*[hide]*` 的角色。
+
+* 创建一个拒绝编辑角色和权限许可的角色：
++
+--
+image::local_admins_role.png[align="center"]
+
+** 勾选 *Default* 默认角色复选框。
+
+** 把 `*[hide]*` 字符加到 *Description* 属性。
+
+** 在 *Entities* 实体标签页，为 `sec$Role` 配置拒绝 *create*, *update* 和 *delete* 操作。（给 `sec$Permission` 对象添加权限许可的时候，需要勾选 *System level - 系统级* 复选框 ）。
+
+所有创建的用户，包括本地管理员，会分配 `*local_user*` 角色。这个角色对 `*Departments*` 组的用户不可见，所以本地管理员也不能把这个角色从用户移除。本地管理员只能操作全局管理员给他们创建的角色。显然，department 用户可见的其它角色也不能移除 `*local_user*` 角色指定的限制。
+--
+

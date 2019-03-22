@@ -1,0 +1,85 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__basic__simple_component]]
+==== 简单组件
+
+首先看一个非常简单的例子。项目包含两个文件：`index.html` 和 `alert-button.html`。
+
+* `alert-button.html` 定义一个 Polymer 组件。
+
+* `index.html` 使用这个组件。
+
+源码和结果参考下面：
+
+[TIP]
+====
+可以在通过 Studio 创建和部署的应用程序中试试这个列子，拷贝下面的文件到 `deploy/tomcat/webapps/app-front` 目录，保留里面的相对路径不变，也就是说需要用 `index.html` 替换掉 web app 根目录的同名文件，`alert-button.html` 文件必须创建在 `src/polymer-basic/simple-component` 子目录下。
+====
+
+.index.html
+[source, html]
+----
+<html>
+<!-- index.html is an entry point of our application. -->
+<!-- Usually it loads one root Polymer element which contains all other components. -->
+<head>
+    <!-- Import of a web component we want to use. -->
+	<link rel="import" href="src/polymer-basic/simple-component/alert-button.html">
+	<!-- Polyfills. -->
+    <!-- Natively web-components work only in Google Chrome. -->
+    <!-- For all other browsers polyfills are required. -->
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+  <alert-button>
+    <!-- This text goes to the <slot/> element of the Polymer component. -->
+    Our first simple component - alert button!
+  </alert-button>
+</body>
+</html>
+----
+
+.src/polymer-basic/simple-component/alert-button.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/simple-component/alert-button.html[]
+----
+
+*结果*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-basic/simple-component/alert-button.html">
+
+<div class="polymer-demo-container">
+    <alert-button>Our first simple component - alert button!</alert-button>
+</div>
+
+++++
+
+所以，`alert-button` 组件包含一个按钮和可选的消息文本。点击时，按钮会提示 "Hello, User!" 消息。代码用这个组件提供 `<alert-button/>` 标签的内容，内容会显示在组件的 `slot` 元素里面。但是，`slot` 元素不是必须的，也可以省掉。
+
+这些就是使用简单 Polymer 组件的基本原理。
+
+[TIP]
+====
+例子中的 `index.html` 包含了一个 polyfill 脚本。
+这个脚本会检查浏览器不支持的功能（HTML 引入，影子 DOM，自定义元素）然后加载那些真正需要的 polyfills。细节参考 https://github.com/webcomponents/webcomponentsjs[这里]。
+====
+
+目前我们学到的::
++
+--
+* Polymer 组件在 HTML 文件的 `dom-module` 标签内声明。
+
+* 每个 Polymer 组件文件可以包含 CSS（可选），HTML（可选）以及 JavaScript（必须）。
+
+* 一个 Polymer 组件通过创建扩展 `Polymer.Element` 的类来声明，并且用 `customElements` 对象注册。我们的 web 组件必须包含 `is` 静态属性，这个属性需要跟 `dom-module` 元素的 id 匹配。这个 id 之后会用来作为组件的标识符。
+
+* Polymer 组件类可以包含任意数量的函数，可以从 HTML 的行为中调用。
+
+* 声明在 Polymer 组件中的 CSS 不会影响应用的其它部分。
+
+* Polymer 组件可以引入并且使用其它 Polymer 组件。
+--
+

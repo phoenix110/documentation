@@ -1,0 +1,56 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__changing_properties]]
+==== 改变属性值
+
+另一个比较有趣的细节是怎么正确的修改属性的值。
+
+如果属性是简单的值，则可以直接赋值，比如：
+
+`this.someStringProperty = 'value'; // works`
+
+如果在处理对象或者数组类型的属性，要修改这些值（比如修改对象的属性或者在数组中田间新元素）应当使用 https://www.polymer-project.org/2.0/docs/devguide/data-system#make-observable-changes[特殊 API] 将更改通知给 Polymer 数据系统。
+
+修改对象的示例：
+
+[source, javascript]
+----
+this.user.name = 'John'; // does not work
+
+this.set('user.name', 'value'); // works
+----
+
+修改数组的示例：
+
+[source, javascript]
+----
+this.users.push({name: 'John'}); // does not work
+
+this.push('users', {name: 'John'}); // works
+----
+
+还有，如果这些改动并不在可控范围内，或者需要在做了一批改动之后一起触发属性改动的效果，可以使用 https://www.polymer-project.org/2.0/docs/api/elements/Polymer.Element#method-notifyPath[notifyPath] 和 https://www.polymer-project.org/2.0/docs/api/elements/Polymer.Element#method-notifySplices[notifySplices] 方法：
+
+[source, javascript]
+----
+this.user.name = 'John';
+this.user.surname = 'Smith';
+this.notifyPath('user.*');
+----
+
+如果在某些情况下使用了 “=”，由于使用了不同的赋值方法，那么在之后的代码重构中可能会很容易打乱正确的行为。所以有两种模式能避免出问题：
+
+* 避免修改复杂的属性（比如可以使用不可改变的数据结构） - 每次需要改变复杂对象的时候，应该替换整个对象；
+
+* 使用 `set()` 方法而不是使用简单的等号赋值。
+
+这样能保证不会忘记这些规则而且即使将来重构也不会打乱什么逻辑。
+
+目前我们学到的::
++
+--
+* 在属性内部修改子属性是不会被自动发现的。
+
+* 组件属性需要通过一组 Polymer 方法来修改。
+--
+

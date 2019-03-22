@@ -1,0 +1,31 @@
+= CUBA 框架. Polymer 用户界面指导
+:toc: left
+:toc-title: 目录
+:toclevels: 6
+:sectnumlevels: 6
+:stylesheet: cuba.css
+:linkcss:
+:source-highlighter: highlightjs
+:highlightjsdir: js/highlight-js
+:imagesdir: ./img
+:stylesdir: ./styles
+:sourcesdir: ../../source
+:doctype: book
+:sectlinks:
+:sectanchors:
+:lang: en
+:revnumber: 7.0
+:version-label: Version
+:revremark: Copyright (c) 2019 Haulmont (www.haulmont.com)
+:!sectnums:
+
+:manual-address: https://doc.cuba-platform.com/manual-7.0-chs
+
+include::preface.adoc[]
+
+include::polymer_manual.adoc[]
+
+include::cuba_components.adoc[]
+
+include::recipes.adoc[]
+

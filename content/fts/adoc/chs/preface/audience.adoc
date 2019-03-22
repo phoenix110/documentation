@@ -1,0 +1,6 @@
+:sourcesdir: ../../../source
+
+[[audience]]
+=== 目标读者
+
+本手册适用于构建支持全文搜索的 CUBA 应用的开发人员。本手册假设读者已熟悉 {main_man_url}/index.html[开发人员手册] 。

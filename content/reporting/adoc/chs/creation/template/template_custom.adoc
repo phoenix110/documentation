@@ -1,0 +1,42 @@
+:sourcesdir: ../../../../source
+
+[[template_custom]]
+==== 类定义模板
+
+当很难或不可能使用 SQL、JPQL 或 Groovy 选择数据时，可以使用类定义模板。例如，当报表是组合其它几个报表的结果时，就可以使用它们。
+
+将定义模板的类放在 *core* 模块中，并实现 `com.haulmont.yarg.formatters.CustomReport` 接口。在类中，需要定义 `createReport()` 方法，该方法返回一个字节数组并接收以下输入参数：
+
+* `report` - `com.haulmont.yarg.structure.Report` 类型的报表描述。
+* `rootBand` - `com.haulmont.yarg.structure.BandData` 类型的根带区数据。
+* `params` - 外部报表参数的 map。
+
+下面是一个简单的类定义模板的示例。它会创建一个 HTML 文档，显示从参数中获取的书籍的名称：
+
+[source, java]
+----
+package com.sample.library.report;
+
+import com.haulmont.yarg.formatters.CustomReport;
+import com.haulmont.yarg.structure.BandData;
+import com.haulmont.yarg.structure.Report;
+import com.sample.library.entity.Book;
+import java.util.Map;
+
+public class BookReport implements CustomReport {
+    @Override
+    public byte[] createReport(Report report, BandData rootBand, Map<String, Object> params) {
+        Book book = (Book) params.get("book");
+        String html = "<html><body>";
+        html += "<p>Name: " + book.getName() + "</p>";
+        html += "</body></html>";
+        return html.getBytes();
+    }
+}
+----
+
+在模板编辑界面中，选中 *Is custom* 复选框，在 *Defined by* 字段中选择 *Class*，并设置 *custom definition* 为 Java 类的完全限定名：
+
+.类定义模板
+image::class_defined_template.png[align="center"]
+

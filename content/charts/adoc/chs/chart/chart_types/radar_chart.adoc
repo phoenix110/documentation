@@ -1,0 +1,42 @@
+:sourcesdir: ../../../../source
+
+[[radar_chart]]
+==== 雷达图
+
+使用 `RadarChart` 组件可以创建雷达/极坐标图。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=polar-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.雷达图
+image::chart/radar-chart.svg[align="center", width="800"]
+
+该组件的 XML 名称：`chart:radarChart`
+
+数据绑定: ::
++
+--
+可以为图表指定一个 `CollectionContainer`。然后为 `radarChart` 元素定义 `categoryField` 属性，为嵌套的 `graph` 元素定义 `valueField` 属性：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/radar_chart.xml[]
+----
+--
+
+`RadarChart` 事件监听器::
++
+--
+* `AxisZoomListener` – 图表坐标轴缩放。
+* `ChartClickListener` – 点击画布。
+* `ChartRightClickListener` – 右键点击画布。
+* `GraphClickListener` – 点击图形。
+* `GraphItemClickListener` – 点击图形的条目。
+* `GraphItemRightClickListener` – 右键点击图形的条目。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmRadarChart[AmCharts 文档]。
+

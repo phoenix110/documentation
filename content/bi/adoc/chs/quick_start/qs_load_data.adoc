@@ -1,0 +1,17 @@
+:sourcesdir: ../../../source
+
+[[qs_load_data]]
+=== 加载数据到 Star Schema
+
+在我们的 Pentaho 报表中，将会使用从多个数据库表做的聚合数据。这些数据会存在额外的表里面，然后加载到 Star Schema。Star Schema 会包含一个事实表（fact table） - Orders，以及两个维度表（dimension tables） - Customer 和 Product，由此提供可以下钻（drill）的报表结构。
+
+include::qs_load_data/qs_load_data_for_impatient.adoc[]
+
+include::qs_load_data/qs_db_connection.adoc[]
+
+include::qs_load_data/qs_dimensions.adoc[]
+
+include::qs_load_data/qs_facts.adoc[]
+
+include::qs_load_data/qs_star_schema.adoc[]
+

@@ -1,0 +1,129 @@
+:sourcesdir: ../../../source
+
+[[cuba__login]]
+=== 登录表单
+
+所有的 CUBA REST API 方法都需要一个 OAuth 令牌（token）。客户端需要使用用户的登录名和密码认证之后才能获得令牌。这个机制在 {manual-address}/rest_api_v2_ex_get_token.html[开发者手册] 有描述。
+
+https://cuba-elements.github.io/cuba-elements/components/cuba-login/[cuba-login] web 组件可以用来创建登录表单。是一个简单的 UI 组件，包含了两个字段（"User Name", "Password"）以及一个 "Login" 按钮。在尝试登录时可能发送两种事件：`cuba-login-success` 和 `cuba-login-error`。
+
+下面是一个可用的示例，使用 `test` / `test` 登录。
+
+[subs="none"]
+++++
+    <iframe
+        height="200"
+        class="polymer-iframe-container"
+        src="html/src/cuba/login/stub/cuba-app-with-login-stub.html"></iframe>
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/cuba/login/app-with-login.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <app-with-login></app-with-login>
+</body>
+</html>
+----
+
+.src/cuba/login/app-with-login.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/login/app-with-login.html[]
+----
+
+样式::
++
+--
+如果查看 `cuba-login` 源码，会发现此组件通过使用 https://www.polymer-project.org/2.0/docs/devguide/shadow-dom#custom-property-mixins[custom property mixins] 开放了扩展接口。
+
+.bower_components/cuba-login/cuba-login.html
+[source, html]
+----
+  #form {
+    @apply --cuba-login-form;
+  }
+  #username {
+    @apply --cuba-login-username-input;
+  }
+  #password {
+    @apply --cuba-login-password-input;
+  }
+  #submit {
+    @apply --cuba-login-submit-button;
+  }
+  .actions {
+    display: flex;
+    flex-direction: row-reverse;
+    @apply --cuba-login-actions;
+  }
+  ...
+  <form id="form">
+    <div class="fields">
+      <paper-input type="text" id="username" label="[[msg('User Name')]]" value="{{username}}"></paper-input>
+      <paper-input type="password" id="password" label="[[msg('Password')]]" value="{{password}}"></paper-input>
+    </div>
+    <div class="actions">
+      <paper-button id="submit" on-tap="submit">[[msg('Login')]]</paper-button>
+    </div>
+  </form>
+----
+
+下面可以看到这些 mixin 是怎么实现的。示例跟上面的一样，只不过包含了 `<style/>` 部分。
+
+.src/cuba/login/app-with-login-styled.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/login/app-with-login-styled.html[]
+----
+
+*Result of styling*
+
+[subs="none"]
+++++
+    <iframe
+        height="200"
+        class="polymer-iframe-container"
+        src="html/src/cuba/login/stub/cuba-app-with-login-styled-stub.html"></iframe>
+++++
+--
+
+编写自定义的登录表单::
++
+--
+`cuba-login`，跟其它 CUBA 组件一样，背后也使用了 `cuba-rest` 组件 API。也就是说即便需要特别特殊的自定义登录页面，也可以直接使用这些 API，参考下面的例子。
+
+.src/cuba/login/app-with-login-custom.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/login/app-with-login-custom.html[]
+----
+
+*Custom login form*
+
+[subs="none"]
+++++
+    <iframe
+        height="150"
+        class="polymer-iframe-container"
+        src="html/src/cuba/login/stub/cuba-app-with-login-custom-stub.html"></iframe>
+++++
+--
+
+令牌过期::
++
+--
+Polymer 应用程序在认证的时候获得令牌，然后在每个请求中使用令牌。
+
+默认情况下，令牌有效期是 12 个小时。12 小时后，令牌就失效了，请求也会失败，用户需要重新登录。建议配置 {manual-address}/app_properties_reference.html#cuba.rest.client.tokenExpirationTimeSec[令牌失效时间] 为更大的值，并且使用 {manual-address}/rest_api_v2_persistent_token_store.html[令牌存储持久化] 来将令牌保存到数据库，以便系统重启之后还能继续使用。
+
+`cuba-app` 发送 `cuba-token-expired` 事件，可以用来处理令牌过期。
+--
+

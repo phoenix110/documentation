@@ -1,0 +1,33 @@
+:sourcesdir: ../../source
+
+[[cuba_components]]
+== CUBA Web 组件
+
+CUBA 框架也提供了一组特殊的 web 组件，用来解决跟 CUBA 应用程序集成遇到的通用问题：
+
+* <<cuba_app, cuba-app>> - 初始化一个 CUBA 应用程序。使用其它 CUBA web 组件的时候必须使用。
+
+* <<cuba__login, cuba-login>> - 使用 Material design 的登录表单，允许用户使用标准 CUBA UI 的登录名和密码来登录。
+
+* <<cuba__entities, cuba-entity, cuba-entities, cuba-entity-form>> - 用来加载和保存实体的组件。
+
+* <<cuba__rest, cuba-query, cuba-service, cuba-service-form>> - 用来使用自定义元素和 CUBA REST API 的组件。
+
+* <<cuba__file, cuba-file-field>> - 上传文件到服务器的组件。
+
+如果需要创建自定义设计的项目，我们的 UI 组件（`cuba-login`, `cuba-file-field`）可以作为创建自定义组件的模板。
+
+如果应用程序有相对比较简单的数据模型的话，使用处理实体的组件（`cuba-entity`, `cuba-entities`, `cuba-entity-form`）是最方便的。对于更为复杂的情况，可以使用自定义的服务方法和查询（`cuba-query`, `cuba-service`, `cuba-service-form`）。
+
+include::cuba_components/cuba_app.adoc[]
+
+include::cuba_components/cuba_rest_js.adoc[]
+
+include::cuba_components/cuba__login.adoc[]
+
+include::cuba_components/cuba__entities.adoc[]
+
+include::cuba_components/cuba__rest.adoc[]
+
+include::cuba_components/cuba__file.adoc[]
+

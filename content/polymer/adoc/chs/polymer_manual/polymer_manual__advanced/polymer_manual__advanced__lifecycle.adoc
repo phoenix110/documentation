@@ -1,0 +1,66 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__advanced__lifecycle]]
+==== 生命周期回调函数
+
+Polymer 组件可以定义在特定生命周期事件发生时调用的函数代码。
+
+使用这个功能，需要使用下面的名称实现这些方法：
+
+- `constructor` - 在组件创建时但是设置属性值之前调用。
+
+- `connectedCallback` - 在组件创建完且属性值都设置了之后调用。
+
+- `disconnectedCallback` - 当元素从页面 DOM 删除之后调用。
+
+比如，当用户打开一些信息页面时，我们希望在页面展示给用户之前先从服务器加载所有需要的数据。
+
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/lifecycle/profile-page.html">
+
+<div class="polymer-demo-container">
+    <profile-page></profile-page>
+</div>
+
+++++
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-advanced/lifecycle/profile-page.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <profile-page></profile-page>
+</body>
+</html>
+----
+
+.src/polymer-advanced/lifecycle/profile-page.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/lifecycle/profile-page.html[]
+----
+
+.src/polymer-advanced/lifecycle/personal-details-page.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/lifecycle/personal-details-page.html[]
+----
+
+.src/polymer-advanced/lifecycle/preferences-page.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/lifecycle/preferences-page.html[]
+----
+
+目前我们学到的::
++
+--
+* 在他们的声明周期内，Polymer 元素调用一组回调函数。我们可以用这些函数来做我们初始化的业务逻辑。
+--
+

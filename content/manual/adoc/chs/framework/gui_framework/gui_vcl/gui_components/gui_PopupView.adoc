@@ -1,0 +1,95 @@
+:sourcesdir: ../../../../../../source
+
+[[gui_PopupView]]
+====== 弹窗查看控件
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=opening-popupview" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+++++
+<div class="manual-live-demo-container">
+    <a href="http://files.cuba-platform.com/javadoc/cuba/7.0/com/haulmont/cuba/gui/components/PopupView.html" class="api-docs-btn" target="_blank">API 文档</a>
+</div>
+++++
+
+`PopupView` 是一个允许用容器打开弹出窗口的控件。可以通过单击简要值或以编程方式打开弹窗。可以通过鼠标移出或点击外部区域来关闭弹窗。
+
+典型的 `PopupView` 如下所示：
+
+.弹窗隐藏状态
+image::gui_popup_view_mini.png[Popup hidden, align="center"]
+
+.弹窗打开状态
+image::gui_popup_view_mini_open.png[Popup visible, align="center"]
+
+从本地化消息包中获取简要值的 PopupView 的示例：
+
+[source, xml]
+----
+include::{sourcesdir}/gui_vcl/popup_view_1.xml[]
+----
+
+`PopupView` 的内部内容应该是一个容器，例如 <<gui_BoxLayout,BoxLayout>>。
+
+`PopupView` 方法:
+--
+* `setPopupVisible()` 允许以编程方式打开弹窗。
++
+[source, java]
+----
+include::{sourcesdir}/gui_vcl/popup_view_2.java[]
+----
+
+* `setMinimizedValue()` 允许以编程方式设置简要值。
++
+[source, java]
+----
+include::{sourcesdir}/gui_vcl/popup_view_3.java[]
+----
+
+[[gui_PopupView_PopupVisibilityListener]]
+* `addPopupVisibilityListener(PopupVisibilityListener listener)` 方法可用来添加一个跟踪弹窗可见性变化的监听器。
++
+[source, java]
+----
+include::{sourcesdir}/gui_vcl/popup_view_4.java[]
+----
+--
+
+`PopupView` 的属性:
+--
+[[gui_PopupView_minimizedValue]]
+* `minimizedValue` 属性定义弹窗按钮的简要值文本。此文本可包含 HTML 标记。
+
+[[gui_PopupView_hideOnMouseOut]]
+* 如果 `hideOnMouseOut` 属性设置为 `false`，在弹窗外部单击时会关闭弹窗。
+
+--
+
+'''
+popupView 的属性::
+<<gui_attr_caption,caption>> -
+<<gui_attr_captionAsHtml,captionAsHtml>> -
+<<gui_attr_contextHelpText,contextHelpText>> -
+<<gui_attr_contextHelpTextHtmlEnabled,contextHelpTextHtmlEnabled>> -
+<<gui_attr_css,css>> -
+<<gui_attr_description,description>> -
+<<gui_attr_descriptionAsHtml,descriptionAsHtml>> -
+<<gui_attr_expandRatio,box.expandRatio>> -
+<<gui_attr_height,height>> -
+<<gui_PopupView_hideOnMouseOut,hideOnMouseOut>> -
+<<gui_attr_icon,icon>> -
+<<gui_attr_id,id>> -
+<<gui_PopupView_minimizedValue,minimizedValue>> -
+<<gui_attr_stylename,stylename>> -
+<<gui_attr_visible,visible>> -
+<<gui_attr_width,width>>
+
+API::
+<<gui_PopupView_PopupVisibilityListener,addPopupVisibilityListener>>
+
+'''
+

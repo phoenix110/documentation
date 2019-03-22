@@ -1,0 +1,91 @@
+:sourcesdir: ../../../source
+
+[[parameters]]
+=== 外部报表参数
+
+外部参数在运行报表时从外部传递，可用作数据集中的条件。所有外部参数都会成为每个报表带区的字段，因此在模板中可像数据集字段一样直接使用外部参数。在数据集的字段名与参数名相同时，数据集字段值优先，报表将使用数据集字段值。
+
+可以在报表编辑界面的 *Parameters and Formats* 标签页中定义外部参数。添加参数的表单如下：
+
+.外部报表参数
+image::report_parameter.png[align="center"]
+
+*Properties* 标签页：
+
+* *Caption* - 参数名称，在运行报表时这个名称显示在参数输入表单中。
+* *Parameter alias* - 用于在数据集中访问的参数别名。
+* *Parameter type* - 参数类型。
+* *Hidden* - 用于定义是否对用户隐藏此参数，隐藏后将不提示用户输入此参数。
+* *Required parameter?* - 是否是必须的参数。
+* *Entity* - 如果参数类型是 *Entity* 或 *List of entities* ，则需要在此字段中选择一个实体类型。
+* *Entity selection screen* - 可选的界面标识符，用于选择实体实例。如果未指定界面，将使用通用的实体选择界面。
+* *Enumeration* - 如果指定了 *Enumeration* 参数类型，则需要在此字段中选择枚举类型。
+* *Default value* - 定义用户未选择值的情况下将使用的默认参数值。
+* *Default date(time) is current* - 如果指定了时间参数类型（`Date` 、 `Time` 或 `Date and time`），此字段定义是否将当前时间戳用作默认参数值。
+
+在 *Localization* 标签页中，可以为不同的区域设置定义参数名称。为此，应该使用 `++locale_name = parameter_name++` 键值对，例如：
+
+[source, properties]
+----
+ru = Книга
+----
+
+[[report_parameter_transformation]]
+输入参数转换::
++
+--
+在 *Transformation* 标签页中可以定义对参数进行处理的 Groovy 脚本，在报表中使用的将是经过处理的参数。
+
+Groovy 脚本应该返回新的参数值。脚本中的当前参数值可以通过 `paramValue` 别名获取，参数 map 可以通过别名 `params` 获取。例如：
+
+[source, plain]
+----
+return "%" + paramValue + "%"
+----
+
+还可以使用预定义转换为文本（String）参数添加通配符：
+
+* `Starts with`,
+
+* `Ends with`,
+
+* `Contains`.
+
+.输入参数转换
+image::report_parameter_transformation.png[align="center"]
+--
+
+在 *Validation* 标签页中，可以使用 Groovy 脚本定义一些参数验证条件，请参阅下面的详细说明。
+
+[[report_parameter_validation]]
+输入参数验证::
++
+--
+
+可以验证输入参数和（或）定义交叉参数验证。
+
+. 可以通过选中 *Validate* 复选框，在参数编辑界面的 *Validation* 标签页中启用参数验证。验证逻辑由 Groovy 脚本指定。脚本应检查参数值,如果值无效调用就 `invalid()` 方法。此方法会向用户显示一条警告信息，提示用户参数验证失败。
++
+以下变量会传递到脚本中：
++
+* `value` - 用户输入的参数值。
++
+* `dataManager` - 提供 CRUD 功能的 `DataManager` 类型的对象。
++
+* `metadata` - 提供对应用程序元数据的访问的 `Metadata` 类型的对象。
++
+* `security` - `Security` 类型的对象，用于检查用户对系统中不同对象的访问权限。
++
+* `userSession` - 与当前经过身份验证的用户关联的 `UserSession` 类型的对象。
++
+. 输入参数验证
+image::report_parameter_validation.png[align="center"]
+
+. 通过选中 *Parameters and Formats* 标签页的 *Cross parameters validation*  部分的 *Validate* 复选框，可以启用交叉参数验证。验证逻辑由 Groovy 脚本指定。这个脚本应检查参数值之间是否合乎逻辑, 检查不通过时调用 `invalid()` 方法。此方法将向用户显示一条警告信息，其中包含在脚本中指定的提示内容。
++
+除了上面列出的变量之外，`params` 变量也会传递到脚本中以访问外部报表参数字典。
++
+.Cross-parameter validation
+image::cross_parameter_validation.png[align="center"]
+--
+

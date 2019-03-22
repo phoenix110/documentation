@@ -1,0 +1,31 @@
+:sourcesdir: ../../../../source
+
+[[entityChangedEvent]]
+==== EntityChangedEvent
+
+`EntityChangedEvent` 是一个 Spring 的 `ApplicationEvent` 事件，会在实体保存到数据库时从中间层发送该事件。可以在事务中或者事务完成后处理该事件（使用 https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-event[@TransactionalEventListener] ）。只有实体使用了 `@PublishEntityChangedEvents` 注解，才会发送该事件。
+
+`EntityChangedEvent` 不包含更改的实体本身，而只包含了其 id。还有，`getOldValue(attributeName)` 方法也只会返回引用的 id 而不是对象。所以如果需要的话，开发者可以使用合适的视图或者其它参数重新加载实体。
+
+下面的例子展示了在当前事务中和事务后处理 `Customer` 实体的 `EntityChangedEvent` 事件。
+
+[source,java]
+----
+include::{sourcesdir}/middleware/entityChangedEvent_usage_1.java[]
+----
+<1> - 该监听器会在当前事务中调用。使用 `@EventListener` 注解跟 `@TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)` 是一样的。
+<2> - 更改实体的 id。
+<3> - 更改类型： `CREATED`、`UPDATED` 或 `DELETED`。
+<4> - 可以检查是否某个特定属性有变化。
+<5> - 可以获取变化属性的旧值。
+<6> - 该监听器在事务提交之后会被调用。
+<7> - 在事务提交之后，事件包含跟提交之前相同的信息。
+
+如果监听器在事务内部调用，可以通过抛出异常的方法回滚事务，这样不会有数据保存至数据库。如果不想用户看到任何错误提示，可以用 `SilentException`。
+
+如果在当前事务中处理 `EntityChangedEvent`，可以使用 <<transactionalDataManager,TransactionalDataManager>> 从数据库获取更改实体的当前状态。如果在事务提交之后的监听器中，可以使用 `DataManager` 来创建新事务并加载数据。
+
+[TIP]
+=====
+别忘了为需要监听 `EntityChangedEvent` 事件的实体添加 `@PublishEntityChangedEvents` 注解。
+=====

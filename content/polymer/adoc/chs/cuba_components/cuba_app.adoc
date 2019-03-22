@@ -1,0 +1,31 @@
+:sourcesdir: ../../../source
+
+[[cuba_app]]
+=== 应用配置
+
+https://cuba-elements.github.io/cuba-elements/components/cuba-app[cuba-app] 是 CUBA Polymer 应用程序的必须元素。应当在应用中越早定义越好。`cuba-app` 包含了其它 CUBA Polymer 组件需要的初始化逻辑。也就是说如果代码中没有 `cuba-app`，其它 CUBA Polymer 组件都不能正常工作。
+
+下面是使用 `cuba-app` 元素的例子。
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/cuba/init/empty-app.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <empty-app></empty-app>
+</body>
+</html>
+----
+
+.src/cuba/init/empty-app.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/cuba/init/empty-app.html[]
+----
+
+在引用了 `cuba-app` 之后，可以使用其它所有的 CUBA Polymer 组件。
+

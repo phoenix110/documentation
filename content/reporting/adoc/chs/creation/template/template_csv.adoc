@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[template_csv]]
+==== CSV 模板
+
+可以使用 *Microsoft Office* 或 *LibreOffice* 创建 CSV 模板。
+
+CSV 模板中的报表区应该是水平方向的，因此相应的命名区域将向下扩展。此外，报表区应属于第一级数据，即根区的第一级子区。在所有其它方面，应使用与<<template_xls,XLS/XLSX 模板>>相同的规则。
+
+.CSV 模板示例
+image::csv_template.png[align="center"]
+
+.CSV 输出
+image::csv_report.png[align="center"]
+
+*Inline editor*
+
+CSV 模板支持内联编辑。可以直接在 *Template editor* 窗口中编辑模板，无需重新上传模板文件即可查看更改。
+
+.CSV 内联编辑器
+image::csv_report_editor.png[align="center"]
+

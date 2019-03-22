@@ -1,0 +1,53 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__advanced__computed]]
+==== 计算属性
+
+有时候需要一个依赖其它属性的属性。比如，已经有 `lastName - 姓` 和 `firstName - 名`，然后可能还需要一个 `fullName - 姓名`，将姓和名串联起来。或者一个布尔型的变量来定义按钮是否能点击，但是这个变量是通过其它几个变量决定的。
+
+显然，对于这些合成型变量的值，不应该手动的去修改，而应该自动计算。运气不错，Polymer 提供所谓的计算属性，下面是个使用计算属性的例子。
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-advanced/computed-properties/service-agreement.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <service-agreement></service-agreement>
+</body>
+</html>
+----
+
+.src/polymer-advanced/computed-properties/service-agreement.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/computed-properties/service-agreement.html[]
+----
+
+*结果*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/computed-properties/service-agreement.html">
+
+<div class="polymer-demo-container">
+    <service-agreement></service-agreement>
+</div>
+
+++++
+
+这个例子中，用户只有输入姓名并且接受协议才能提交表单。
+
+最本质的要求是要在计算属性中指定依赖的属性。不能只是使用 `computed: "isContinueEnabled()"` 这种形式，然后在 `isContinueEnabled` 方法内使用 `this.name` 和 `this.agreementConfirmed` 属性。因为之后 Polymer 不会知道依赖的是什么属性，从而不会在需要时自动重算计算属性的值。
+
+目前我们学到的::
++
+--
+* 在我们需要使用一些信息是由几个属性自动算出来的时候，可以使用计算属性。
+--
+

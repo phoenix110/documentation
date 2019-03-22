@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[chart_data_simplified]]
+==== 使用简化的数据绑定 API 创建图表
+
+作为第一个示例，我们将创建一个简单的图表，使用简化的数据绑定 API。
+
+在界面添加图表组件然后使用 `addData()` 方法来填充数据，将带有一组键值对的 `MapDataItem` 实例作为参数传递给此方法：
+
+[source,xml]
+----
+include::{sourcesdir}/chart/chart_data_simplified.xml[]
+----
+
+[source,java]
+----
+include::{sourcesdir}/chart/chart_data_simplified.java[]
+----
+
+.简单饼图
+image::chart/chart_simple.png[align="center"]
+

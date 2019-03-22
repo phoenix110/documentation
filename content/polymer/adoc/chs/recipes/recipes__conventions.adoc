@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[recipes__conventions]]
+=== 组织您的代码
+
+本章节包含一些小诀窍，帮助您编写更易读更易维护的代码。
+
+include::recipes__conventions/recipes__conventions__css.adoc[]
+
+include::recipes__conventions/recipes__conventions__private_methods.adoc[]
+
+include::recipes__conventions/recipes__conventions__import.adoc[]
+

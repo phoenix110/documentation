@@ -1,0 +1,111 @@
+:sourcesdir: ../../../source
+
+[[example_xls]]
+=== XLS 报表示例
+
+在本章中，了解 *Library* 示例应用程序中的一个报表的结构，源代码可从 https://github.com/cuba-platform/sample-library-cuba7[GitHub] 获取。
+
+首先，在 CUBA Studio 中打开 *Project Properties* 编辑器：点击 *CUBA* → *Project Properties* 主菜单项。在页面上的 *App components* 列表中添加 *reports* 应用程序组件。然后启动应用。
+
+打开 *Reports* -> *Reports* 界面，然后单击 *Import* 按钮导入报表。在项目根目录中选择 Reports.zip。在表格中将出现两个报表，其中一个是 "Books by author"。此报表显示所选作者的书籍出版物列表；书籍将按书名和出版商分组。输出格式为 XLS。
+
+. <<structure,报表数据结构>>。
++
+--
+
+.报表数据结构
+
+image::sample1_structure.png[align="center"]
+
+
+我们看看报表带区。
+
+* *header* 带区 - 报表标题。它包含带有 Groovy 脚本的数据集，该脚本输出报表<<parameters,外部参数>>值：
+
+[source, groovy]
+----
+[['authorName' : (params['author'].firstName + ' ' + params['author'].lastName)]]
+----
+
+
+* *book* 带区通过执行以下 SQL 查询输出书籍列表：
+
+[source, sql]
+----
+select b.name as book_name, b.id as book_id
+from library_book b
+    join library_book_author_link ba on ba.book_id = b.id
+    join library_author a on a.id = ba.author_id
+where a.id = ${author}
+----
+
+此查询使用外部报表参数 - *author*。该参数是 *Entity* 类型，但在 SQL 查询中，可以直接将其与实体标识符字段进行比较；类型转换会自动完成。
+
+*  *publisher* 带区是 *book* 的子带区，通过执行以下 SQL 查询输出图书出版商：
+
+[source, sql]
+----
+select p.name as publisher, bp.year, p.id as publisher_id
+from library_book_publication bp
+    join library_publisher p on p.id = bp.publisher_id
+where bp.book_id = ${book.book_id}
+----
+
+此查询使用父带区字段 `++book_id++` 作为参数。以这种方式指定了父带区和子带区之间的依赖关系。
+
+* *publication* 带区是 *publisher* 带区的子项，通过执行以下 SQL 查询输出图书出版物：
+
+[source, sql]
+----
+select ld.name as department, count(bi.id) as amount
+from library_book_instance bi
+    join library_book_publication bp on bp.id = bi.book_publication_id
+    join library_library_department ld on ld.id = bi.library_department_id
+where bp.publisher_id = ${publisher.publisher_id} and bp.book_id = ${book.book_id}
+group by ld.name
+----
+
+此查询使用父带区字段作为参数 - `++book_id++` 和 `++publisher_id++`。
+
+--
+
+
+. 报表<<parameters,参数>>。
+
++
+*Parameters and Formats* 标签页包含一个声明的报表外部参数 - `Author`：
+
++
+.报表参数
+
+image::sample1_param.png[align="center"]
+
++
+运行报表时，用户必须输入此参数。作者是通过应用程序中的 `library$Author.lookup` 界面进行选择的。
+
+. 报表<<template,模板>>。
+
++
+*Templates* 标签页包含一个定义的 XLS 模板，从 `BooksByAuthor.xls` 加载
+
++
+
+.报表模板
+
+image::sample1_template.png[align="center"]
+
+. 报表名称<<localization,本地化>>。
+
+
++
+*Localization* 标签页包含俄语语言环境的报表名称：
+
++
+[source, properties]
+----
+ru = Книги по автору
+----
+
+
+可以在 *Reports* -> *Run Reports* 通用浏览界面中<<running,运行>>报表。
+

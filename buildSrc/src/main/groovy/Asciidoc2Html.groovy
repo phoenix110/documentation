@@ -101,7 +101,7 @@ class Asciidoc2Html extends DefaultTask {
             }
         }
 
-        def hideCaption = docLang == 'ru' ? 'Скрыть панель' : 'Hide panel';
+        def hideCaption = docLang == 'ru' ? 'Скрыть панель' : (docLang == 'en'?'Hide panel':'隐藏面板');
 
         def treeControl = toc.prependElement("div")
         treeControl.attr("id", "treecontrol")
@@ -118,6 +118,8 @@ class Asciidoc2Html extends DefaultTask {
         doc.body().append("<a href=\"#\" id=\"toc-position-marker\">. . .</a>");
 
         doc.head().prepend("<link rel=\"stylesheet\" href=\"styles/jquery.treeview.css\"/>")
+
+        doc.head().append("<link rel=\"stylesheet\" href=\"styles/cubacn.css\"/>")
 
         doc.head().append("<meta name=\"viewport\" content=\"width=device-width, initial-scale=0.6\">")
 

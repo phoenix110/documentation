@@ -1,0 +1,41 @@
+:sourcesdir: ../../../../source
+
+[[custom_json]]
+==== 使用 JSON 配置
+
+需要配置图表，除了使用 XML 属性之外，还可以使用 http://docs.amcharts.com/3/javascriptcharts[AmCharts 文档] 描述的自定义 JSON。
+
+比如，对于 serialChart：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/custom_json_1.xml[]
+----
+
+这个图有些数据：
+
+[source,java]
+----
+include::{sourcesdir}/chart/custom_json_2.java[]
+----
+
+.序列图
+image::chart/chart_custom_json.png[align="center"]
+
+现在可以改变图表的配置。举个例子，给图表添加一个标题：
+
+[source,java]
+----
+include::{sourcesdir}/chart/custom_json_3.java[]
+----
+
+.带有 JSON 标题的序列图
+image::chart/chart_custom_json_title.png[align="center"]
+
+也可以在 XML 设置 JSON 配置：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/custom_json_4.xml[]
+----
+

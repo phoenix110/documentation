@@ -1,0 +1,15 @@
+:sourcesdir: ../../source
+
+[[quick_start]]
+== 快速开始
+
+我们创建了一个小项目用来示范怎么通过 BI 报表增强 CUBA 应用。这个 demo 应用是演示客户（customers）和订单（orders）的管理，包含一个运行在 Pentaho 服务的嵌入式 Saiku 报表。
+
+include::quick_start/qs_setup_sample.adoc[]
+
+include::quick_start/qs_load_data.adoc[]
+
+include::quick_start/qs_analysis_report.adoc[]
+
+include::quick_start/bi_widget.adoc[]
+

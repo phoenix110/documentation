@@ -1,0 +1,65 @@
+:sourcesdir: ../../../../source
+
+[[template_jasper]]
+==== JasperReports 模板
+
+JasperReports 格式化器允许使用 JasperReports 模板输出 CUBA 报表提取的信息。模板将由 CUBA 报表引擎处理，支持定义的几种输出类型，请参阅<<template_to_output>>。
+
+可以使用 JasperReports 工具（例如，Jaspersoft Studio）或在简单的文本编辑器中创建 JRXML 模板。报表数据结构中定义的每个报表带区必须在模板
+中有相应的 `band` 元素，模板中的 `band` 元素（在 JasperReports 术语中也称为带区）被放置在标准 JasperReports 报表区内：`title` 、 `pageHeader` 、 `columnHeader` 、 `detail` 等。
+
+报表引擎将所有报表带区数据放在一个数据源中：`JRBandDataDataSource`，它以树形结构组织数据，`Root` 带区为根带区，并将 `CubaJRFunction` 实例作为主数据源传递给模板，可以通过参数 `REPORTING` 引用 `CubaJRFunction`。在报表模板中可以不声明此参数，这时它会被自动添加，但如果要在 JasperReports IDE 中编译模板，则需要显式声明此参数。
+
+`REPORTING` 参数提供两个功能：
+
+* `dataset` - 从使用的主数据源获取子数据源，例如，在表格或子报表中作为子数据集。此方法在根带区的子节点中搜索具有指定名称的报表带区，并使用搜索到的报表带区数据作为新的根创建新数据源。例如：
++
+[source, xml]
+----
+<subDataset name="Product">
+	<field name="name" class="java.lang.String"/>
+	<field name="price" class="java.lang.Long"/>
+</subDataset>
+...
+<dataSourceExpression><![CDATA[$P{REPORTING}.dataset("Product")]]></dataSourceExpression>
+----
+
+* `bitmap` - 将给定的字节数组转换为 `ByteArrayInputStream`，可用于将图片嵌入到报表中。例如：
+
+[source, xml]
+----
+<field name="Main.image" class="java.lang.Object"/> //image from DB as byte array
+...
+<imageExpression><![CDATA[$P{REPORTING}.bitmap($F{Main.image})]]></imageExpression>
+----
+
+每个报表带区只能在模板中使用一次，因此如果需要在一个报表中以不同的形式表示相同的数据（例如，作为表格和图表），需要创建与模板中 `band` 元素一样多的报表带区。不支持嵌套报表带区，所有带区都应该是 *Root* 区的直接子节点。
+
+可以使用以下语法从数据源获取数据： `$F{<field name>}`。例如：
+
+[source, xml]
+----
+<textField>
+    <textFieldExpression><![CDATA[$F{library_department_name}]]></textFieldExpression>
+</textField>
+----
+
+可以在<<example_jasper,示例报表>>章节中找到使用 JasperReports 模板的报表示例。
+
+[[template_jasper_uberJar]]
+[TIP]
+====
+如果应用程序使用 https://doc.cuba-platform.com/manual-latest/uberjar_deployment.html[UberJAR] 部署选项，请执行以下操作以使用 UberJAR 运行 JasperReports：
+
+* 将 `jasperreports-.jar` 和 `yarg-.jar` 复制到 Uber JAR 目录，
+
+* 在 Uber JAR 目录中创建一个文件 `jasperreports.properties`，
+
+* 在此文件中添加 `net.sf.jasperreports.compiler.classpath` 属性，将复制的 JAR 的名称作为属性值，例如：
+
+[source, plain]
+----
+net.sf.jasperreports.compiler.classpath = jasperreports-6.4.1.jar;yarg-2.0-SNAPSHOT.jar
+----
+====
+

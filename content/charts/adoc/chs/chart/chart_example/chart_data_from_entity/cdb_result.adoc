@@ -1,0 +1,15 @@
+:sourcesdir: ../../../../../source
+
+[[cdb_result]]
+
+'''
+结果::
+
+现在我们看看创建的界面在真实应用程序中的外观。 选择 *CUBA -> Start application server* 。
+::
+在登录窗口使用默认凭据登录。点击菜单 *Application -> Column3dChart* ，你将看到类似下图的界面：
+
+.3D 列图
+image::chart/column3d-chart.svg[align="center", width="800"]
+
+'''

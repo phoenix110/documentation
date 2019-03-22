@@ -1,0 +1,14 @@
+:sourcesdir: ../../../../source
+
+[[qs_start_process]]
+==== 创建合同并启动流程
+
+. 打开 *Application -> Contracts* 界面并创建新合同。填写 *Number* 和 *Date* 字段，然后单击 *Save*。
+. 单击 *Start process* 按钮，应出现启动流程表单。在模型创建过程中，我们为 *Start event* 节点定义了 `Standard form`。其属性为 `procActorsVisible=true` 和 `attachmentsVisible=true`。这就是为什么现在我们看到带有流程参与者和附件表格的表单。
+. 输入意见并添加参与者：操作人员是 `norman` 、两个管理人员是 `pierce` 和 `roberts`。
+. 使用附件表格中的 *Upload* 按钮添加附件。
++
+.开始流程表单
+image::StartProcessForm.png[align="center"]
+
+. 点击 *OK* ，现在流程开始。

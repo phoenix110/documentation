@@ -1,0 +1,26 @@
+:sourcesdir: ../../../../source
+
+[[qs_load_data_for_impatient]]
+==== Loading Data For the Impatient
+
+可以使用 demo 项目携带的准备好的 Star Schema。
+
+. 确保在 Studio 中打开 demo 项目。下面解释的导入过程将会访问项目的 HSQL 数据库。
+
+. 运行 Pentaho Data Integration（数据集成）工具:
++
+--
+* 切换到 Pentaho Data Integration 的安装目录。
+
+* 运行 `spoon.bat`.
+--
+
+. 打开 `$BI_DEMO_PROJECT/demo/kettle/bidemo.kjb`，这里 `$BI_DEMO_PROJECT` 是 demo 项目的目录。
+
+. 点击 *Run* 来更新 Star Schema。
++
+.Star Schema
+image::bi_star_schema.png[]
+
+现在可以继续<<qs_analysis_report,创建分析报表>>。
+

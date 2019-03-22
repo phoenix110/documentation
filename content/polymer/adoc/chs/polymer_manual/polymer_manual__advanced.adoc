@@ -1,0 +1,17 @@
+:sourcesdir: ../../../source
+
+[[polymer_manual__advanced]]
+=== Polymer 核心原理进阶
+
+尽管章节名称起的有点高级的样子，但是本章节介绍的技术在构建几乎所有的有多个组件组成的 web app 时都是需要的。
+
+include::polymer_manual__advanced/polymer_manual__advanced__dom.adoc[]
+
+include::polymer_manual__advanced/polymer_manual__advanced__computed.adoc[]
+
+include::polymer_manual__advanced/polymer_manual__advanced__observers.adoc[]
+
+include::polymer_manual__advanced/polymer_manual__advanced__lifecycle.adoc[]
+
+include::polymer_manual__advanced/polymer_manual__advanced__mixins.adoc[]
+

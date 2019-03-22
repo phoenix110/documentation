@@ -1,0 +1,140 @@
+:sourcesdir: ../../../source
+
+[[run_actions]]
+=== 从界面运行报表
+
+可以使用特定操作(action)及相关的按钮或组件右键菜单从任意界面运行报表。在这种情况下，除了用户角色外，还将检查报表在此界面的<<permissions,可用性>>。
+
+下面提供操作(action)类型及其使用示例。
+
+* `com.haulmont.reports.gui.actions.RunReportAction` - 在列表中显示所有可用报表的操作。当用户从列表中选择报表时，将显示参数（如果已定义）输入表单并运行报表。
++
+示例：在界面 XML 描述声明了一个按钮，在按钮中调用此操作
+
+** XML-描述
++
+[source, xml]
+----
+<layout>
+    <groupTable id="booksTable">
+        ...
+        <buttonsPanel id="buttonsPanel">
+            ...
+            <button id="reportButton"
+                    icon="PRINT"/>
+        </buttonsPanel>
+    </groupTable>
+----
+
+** 控制器
++
+[source, java]
+----
+@Inject
+private Button reportButton;
+
+@Subscribe
+private void onInit(InitEvent event) {
+    reportButton.setAction(new RunReportAction("report"));
+}
+----
+
+** messages.properties
++
+[source]
+----
+report = Report
+----
+
+* `com.haulmont.reports.gui.actions.TablePrintFormAction` - 这个操作可用在一个实体列表表格上。该操作仅选择具有 *Entity* 或 *List of entities* 类型的外部参数的报表，并且参数的实体类型要与表格中显示的实体类型一样。如果只有一个这样的报表可用，会立即调用这个报表。如果多个报表可用，会显示一个列表供用户选择。
++
+使用以下规则将外部参数值传递给报表：
+
+** 如果参数是 *List of entities* 类型，会将表格中当前选择的实例列表传递给它。
+
+** 如果参数是 *Entity* 类型，并且在表格选择了单个实例（突出显示一行），则选中实例会传递到报表中。
+
+** 如果是 *Entity* 类型的参数，并且表中选择了多行，则报表会根据选择的实例数量运行多次。执行之后，用户将得到一个包含所有生成的报表的 ZIP 文件。
++
+下面是在表格按钮和右键菜单中使用操作(action)的示例：
+
+** XML 描述
++
+[source, xml]
+----
+<layout>
+    <groupTable id="booksTable">
+        ...
+        <buttonsPanel id="buttonsPanel">
+            ...
+            <button id="reportButton"
+                    icon="PRINT"/>
+        </buttonsPanel>
+    </groupTable>
+----
+
+** 控制器
++
+[source, java]
+----
+@Inject
+private Button reportButton;
+
+@Inject
+private GroupTable<Book> booksTable;
+
+@Subscribe
+private void onInit(InitEvent event) {
+    TablePrintFormAction action = new TablePrintFormAction("report", booksTable);
+    booksTable.addAction(action);
+    reportButton.setAction(action);
+}
+----
+
+** messages.properties
++
+[source, groovy]
+----
+report = Report
+----
+
+* `com.haulmont.reports.gui.actions.EditorPrintFormAction` - 与实体编辑器界面关联的操作。该操作仅选择外部参数类型是 *Entity* 或 *List of entities* 的报表，并且参数实体类型要与编辑的实体类型一样。如果只有一个这样的报表，则会立即调用它。如果多个，则会显示一个列表供用户选择。
++
+外部参数值 - 被编辑的实体实例被传递到报表中。如果参数是 *List of entities* 类型，则会传递一个包含单个条目的列表。
++
+下面是在一个按钮中使用这个操作的示例，这个按钮位于标准的 *OK* 和 *Cancel* 按钮旁边：
+
+** XML 描述
++
+[source, xml]
+----
+<layout expand="editActions" spacing="true">
+    ...
+    <hbox id="editActions" spacing="true">
+        <button action="windowCommitAndClose"/>
+        <button action="windowClose"/>
+        <button id="reportButton" icon="PRINT"/>
+    </hbox>
+</layout>
+----
+
+** 控制器
++
+[source, java]
+----
+@Inject
+private Button reportButton;
+
+@Subscribe
+private void onBeforeShow(BeforeShowEvent event) {
+    reportButton.setAction(new EditorPrintFormAction("report", this, null));
+}
+----
+
+** messages.properties
++
+[source, groovy]
+----
+report = Report
+----
+

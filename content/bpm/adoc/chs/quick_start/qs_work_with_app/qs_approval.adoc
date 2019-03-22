@@ -1,0 +1,48 @@
+:sourcesdir: ../../../../source
+
+[[qs_approval]]
+==== 管理人员审批阶段
+
+以 `pierce` 用户登录。
+
+
+打开当前用户的任务列表： *BPM -> Process tasks*。可以看到 `Approval` 任务。
+
+.审批任务列表
+image::TaskListApproval.png[align="center"]
+
+
+选择任务，这次单击 *Open process instance* 按钮。将打开用于处理流程实例的系统界面。
+
+.ProcInstance 编辑审批
+image::ProcInstanceEditApproval.png[align="center"]
+
+
+在这个界面显示流程的开始时间、发起人、附件列表、参与者和流程实例任务列表等信息。该界面还允许打开关联实体编辑界面并执行流程操作。
+
+
+注意 *Tasks* 表格。上一个任务 `Validation` 已经完成，并且输出为 `Valid`，同时已经为管理员 `pierce` 和 `roberts` 创建了两个新的 `Approval` 任务。
+
+
+点击 *Approve* 按钮审批合同。
+
+
+然后以 `roberts` 登录。从 *Application -> Contracts* 的列表中打开合同。
+
+
+用户 `roberts` 有一个未完成任务，所以 `procActionsFrame` 显示 *Approve* 和 *Reject* 操作。点击 *Reject* 按钮。
+
+.审批表单
+image::CompleteApprovalForm.png[align="center"]
+
+
+在模型设计器中定义 `Reject` 输出时，将 `commentRequired` 表单参数设置为 `true`，因此会看到任务完成表单中需要输入意见。输入意见并点击  *OK*。
+
+
+其中一位管理人员拒绝了合同，因此应将 `Not approved` 状态分配给合同。我们检查一下，打开合同。
+
+.不批准
+image::ContractEditNotApproved.png[align="center"]
+
+
+审批流程以 `Not approved` 状态完成。

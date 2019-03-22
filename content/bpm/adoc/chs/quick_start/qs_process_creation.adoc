@@ -1,0 +1,11 @@
+:sourcesdir: ../../../source
+
+[[qs_process_creation]]
+=== 创建流程
+
+在本节中，将创建和部署这个合同审批流程。
+
+include::qs_process_creation/qs_process_model_creation.adoc[]
+
+include::qs_process_creation/qs_process_model_deployment.adoc[]
+

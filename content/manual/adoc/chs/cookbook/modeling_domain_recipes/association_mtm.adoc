@@ -1,0 +1,13 @@
+:sourcesdir: ../../../../source
+
+[[association_mtm]]
+==== 多对多关联
+
+多对多关联表示一个表中的多条记录与另一个表中的多条记录相关。连接表(joining table)将存储两个相关实体的主键。此表也可以包含其它列。
+
+根据是否需要在连接表中添加其它字段，多对多关联的实现分为两种方法：添加额外的实体、不添加额外的实体。以下示例说明了这两种方法。
+
+include::association_mtm/association_mtm_recipe_1.adoc[]
+
+include::association_mtm/association_mtm_recipe_2.adoc[]
+

@@ -1,0 +1,113 @@
+:sourcesdir: ../../../source
+
+[[recipes__i18n]]
+=== 国际化语言支持
+
+对许多项目来说，国际化语言支持是常见任务。即便我们不需要支持多语言，集中保存所有用户的文字信息也很有用，能更清晰并且防止重复定义。
+
+CUBA 提供了 `CubaLocalizeBehavior` 可以帮助您完成这个任务。基本上，它只是提供 `msg()` 方法，这个方法按照当前地区（locale）设置从 `messages` 属性获取信息。看看下面的例子。
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/recipes/i18n/simple-greeting-component.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <simple-greeting-component></simple-greeting-component>
+</body>
+</html>
+----
+
+.src/recipes/i18n/simple-greeting-component.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/i18n/simple-greeting-component.html[]
+----
+
+*结果*
+
+[subs="none"]
+++++
+    <iframe
+        height="100"
+        class="polymer-iframe-container"
+        src="html/src/recipes/i18n/stub/simple-greeting-component-stub.html"></iframe>
+++++
+
+`CubaLocalizeBehavior` 需要一个初始化了的 <<cuba_app,cuba-app>>。
+
+默认的 locale 怎么设置：可以在组件初始化的时候设置 locale，或者提供某种语言的切换功能来更改 locale。下面是切换 locale 的示例。
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/recipes/i18n/locale-switcher.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <locale-switcher></locale-switcher>
+</body>
+</html>
+----
+
+.src/recipes/i18n/locale-switcher.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/i18n/locale-switcher.html[]
+----
+
+*结果*
+
+[subs="none"]
+++++
+    <iframe
+        height="100"
+        class="polymer-iframe-container"
+        src="html/src/recipes/i18n/stub/locale-switcher-stub.html"></iframe>
+++++
+
+还是说如果有个单一的地方存放所有的消息文本信息会更方便。这个很容易，创建一个 `CubaLocalizeBehavior` 和应用中其它部分之间的代理。
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/recipes/i18n/calcium-adv.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <calcium-adv></calcium-adv>
+</body>
+</html>
+----
+
+.src/recipes/i18n/calcium-adv.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/i18n/calcium-adv.html[]
+----
+
+.src/recipes/i18n/i18n-mixin.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/i18n/i18n-mixin.html[]
+----
+
+*结果*
+
+[subs="none"]
+++++
+    <iframe
+        height="200"
+        class="polymer-iframe-container"
+        src="html/src/recipes/i18n/stub/calcium-adv-stub.html"></iframe>
+++++
+
+可以看到，这个组件只是实现了 `I18nMixin` 并没有包含任何实际的消息文本。
+

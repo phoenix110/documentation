@@ -1,0 +1,109 @@
+:sourcesdir: ../../source
+
+[[setup_pentaho]]
+== 配置 Pentaho
+
+. 下载并安装 Pentaho 社区版。
+
+. 从 http://www.pentaho.com/marketplace/ 下载 Saiku Analytics 插件 (Meteorite BI)，然后安装。
+
+. 将 `saiku` 移到 `$PENTAHO_HOME$/pentaho-server/pentaho-solutions/system` 下面，这里 `$PENTAHO_HOME` 是 Pentaho 安装的目录。
+
+. 如果 Saiku 插件跟最新版本的 Pentaho 服务器不兼容的话，按照下面步骤解决：
++
+--
+* 从 `$PENTAHO_HOME$/pentaho-server/pentaho-solutions/system/saiku/lib` 目录删除 `cpf-core-6.0.0.0-353.jar` 和 `cpf-pentaho5-6.0.0.0-353.jar`。
+
+* 从 Pentaho 的安装目录（比如 `$PENTAHO_HOME$/pentaho-server/pentaho-solutions/system/sparkl/lib` 或者 `.../cgg/lib`）拷贝新的 lib 到 `$PENTAHO_HOME$/pentaho-server/pentaho-solutions/system/saiku/lib` 目录。
++
+[source, plain]
+----
+cpf-core-7.1.0.0-12.jar
+
+cpf-pentaho-7.1.0.0-12.jar
+
+cpk-core-7.1.0.0-12.jar
+
+cpk-pentaho5-7.1.0.0-12.jar
+----
++
+[TIP]
+====
+也许安装的 Pentaho 版本不带 `cpk-core...` 和 `cpk-pentaho...` Jar 包。这样的话只需要使用 `cpf-core` 和 `cpf-pentaho` Jar 包。
+====
+--
+
+. 访问 http://licensing.meteorite.bi 并且注册一个新账号。验证了账号之后，创建一个公司，并且为公司生成一个社区版许可：
++
+--
+* 登录系统点击 CREATE NEW LICENSE 按钮。
+
+* 在创建新许可的页面设置许可类型为：COMMUNITY_EDITION。
+
+* 保存然后下载许可。重命名许可文件为 `license.lic` 然后拷贝该文件到 `$PENTAHO_HOME$/pentaho-server/pentaho-solutions/system/saiku` 目录。
+--
+
+. 下载并安装 Pentaho Data Integration 工具。
+
+. 更改 Pentaho 默认端口为 18081：
++
+--
+* 目录切换到 `$PENTAHO_HOME/pentaho-server/tomcat/conf`。
+
+* 在 `server.xml` 文件中修改 Tomcat 默认端口为 18081：
+
+[source,xml]
+----
+include::{sourcesdir}/bi_port.xml[]
+----
+--
+
+. 在 `server.xml` 修改 Tomcat shutdown 端口为 8015，避免跟 CUBA 默认的 shutdown 端口冲突：
++
+--
+[source,xml]
+----
+include::{sourcesdir}/bi_shutdown_port.xml[]
+----
+--
+
+. 在 Pentaho 设置 CUBA 用户的认证：
++
+--
+* 下载 https://dl.bintray.com/cuba-platform/main/com/haulmont/addon/bi/cuba-bi-pentaho/1.5.0/cuba-bi-pentaho-1.5.0.jar[cuba-bi-pentaho-1.5.0.jar] 然后拷贝到 `$PENTAHO_HOME$/pentaho-server/tomcat/webapps/pentaho/WEB-INF/lib`。
+
+* 下载 https://dl.bintray.com/cuba-platform/main/com/haulmont/addon/bi/cuba-bi-pentaho/1.5.0/cuba-bi-pentaho-1.5.0-plugin.zip[cuba-bi-pentaho-1.5.0-plugin.zip]，解压后拷贝 `saiku-cuba-bi` 目录到 `$PENTAHO_HOME/pentaho-server/pentaho-solutions/system`。
+
+* 在 `$PENTAHO_HOME/pentaho-server/pentaho-solutions/system` 目录创建新文件 `cuba-pentaho-community-authentication.xml`，并添加如下内容：
++
+[source,xml]
+----
+include::{sourcesdir}/cuba-pentaho-community-authentication.xml[]
+----
++
+[TIP]
+====
+在 `cubaAuthenticationFilter` bean 中的 `cubaConnectionUrl` 属性设置 CUBA 应用程序的 URL：
+
+[source, xml]
+----
+<property name="cubaConnectionUrl" value="http://localhost:8080/app"/>
+----
+====
+
+* 在 `pentaho-solutions/system` 目录下编辑 `pentaho-spring-beans.xml` 文件在 `<import resource="applicationContext-spring-security.xml" />` 后添加一行 `<import resource="cuba-pentaho-community-authentication.xml" />`：
++
+[source,xml]
+----
+include::{sourcesdir}/bi_beans.xml[]
+----
+--
+
+. 启动 Pentaho 服务:
++
+--
+* 切换到 `$PENTAHO_HOME/pentaho-server` 目录。
+
+* 运行 `start-pentaho.bat`
+--
+

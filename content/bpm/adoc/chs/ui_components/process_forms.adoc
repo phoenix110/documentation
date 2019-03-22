@@ -1,0 +1,65 @@
+:sourcesdir: ../../../source
+
+[[process_forms]]
+=== 流程表单
+
+[[proc_form_interface]]
+流程表单接口::
++
+--
+在模型编辑界面中声明用户任务输出或启动事件节点时，可以设置将显示给用户的表单。表单类应该实现 `ProcForm` 接口。
+
+`ProcForm` 接口的方法:
+
+[[proc_form_getComment]]
+* `getComment(): String` - 如果表单在流程启动时显示，则返回要被写入 `ProcTask` 对象 `comment` 字段或 `procInstance` 对象的 `startComment` 字段的值。
+
+[[proc_form_getFormResult]]
+* `getFormResult(): Map<String, Object>` - 返回表单提交后将被添加到流程变量的对象列表。
+--
+
+[[bpm_forms]]
+用于流程模型设计器的表单列表::
++
+--
+根据 `bpm.formsConfig` 应用程序属性中定义的配置文件构建在流程模型设计器中可用的表单列表。要添加新的流程表单，请执行以下操作：
+
+. 创建并注册表单的界面。界面控制器必须实现 `ProcForm` 接口。
+
+. 创建一个 XML 文件，例如 `app-bpm-forms.xml`，它将包含自定义表单的描述，并将其放在 *web* 或 *gui* 模块的 `src` 目录下。例如：
++
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<forms xmlns="http://schemas.haulmont.com/cuba/bpm-forms.xsd">
+    <form name="myCustomForm" default="true">
+        <param name="someParam" value="hello"/>
+        <param name="otherParam"/>
+    </form>
+</forms>
+----
++
+这里的 `myCustomForm` 是界面 id。
++
+上述配置还描述了可用的表单参数及其名称和默认值。
++
+具有 `default="true"` 属性的表单将在模型中被用作默认表单。
+
+. 覆盖 `web-app.properties` 文件中的 `bpm.formsConfig` 属性。
++
+[source]
+----
+bpm.formsConfig = bpm-forms.xml app-bpm-forms.xml
+----
+--
+
+'''
+
+API::
+<<proc_form_getComment,getComment>> -
+<<proc_form_getFormResult,getFormResult>>
+
+'''
+
+:proj_bpm_samples: https://github.com/cuba-labs/bpm-samples
+

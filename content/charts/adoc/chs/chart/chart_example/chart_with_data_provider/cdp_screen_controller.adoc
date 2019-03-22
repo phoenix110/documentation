@@ -1,0 +1,14 @@
+:sourcesdir: ../../../../../../source
+
+[[cdp_screen_controller]]
+====== 界面控制器
+
+打开 `StackedareaChart` 界面控制器，然后用下面的代码替换其内容：
+
+[source,java]
+----
+include::{sourcesdir}/chart/StackedAreaChart.java[]
+----
+
+`onInit` 方法将数据作为滚动值提交给了图表。这种类型的图表展示各部分在总和中的占比。
+

@@ -1,0 +1,26 @@
+:sourcesdir: ../../../source
+
+[[map_project_setup]]
+=== 配置应用程序项目
+
+为了在应用程序中展示地图，需要添加 *charts* 应用程序组件，正如在图表展示扩展中<<chart_project_setup,描述的>>。另外，需要为 *Web Client* block 定义下列应用程序属性：
+
+* 需要定义下列参数之一（这些参数的详细信息，可以参阅 https://developers.google.com/maps/documentation/javascript/get-api-key[Google 地图 API 文档] ）：
+** `charts.map.apiKey` – 浏览器的 API 键值。
+** `charts.map.clientId` – 客户端 ID。
+
+* 可选参数：
+** `charts.map.defaultZoom` – 地图的默认缩放级别。
+** `charts.map.defaultLatitude` – 默认地图中心的纬度。
+** `charts.map.defaultLongitude` – 默认地图中心的经度。
+
+`web-app.properties` 文件示例：
+
+[source, properties]
+----
+charts.map.apiKey = my_key
+charts.map.defaultZoom = 13.0
+charts.map.defaultLatitude = 51.5001
+charts.map.defaultLongitude = -0.1262
+----
+

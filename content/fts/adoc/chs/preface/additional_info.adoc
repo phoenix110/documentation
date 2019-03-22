@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[additional_info]]
+=== 附加材料
+
+本指南以及任何其它 CUBA 框架文档均可从 https://www.cuba-platform.com/documentation 获取。
+
+CUBA 全文搜索插件基于 *Apache Lucene* 框架，因此熟悉该框架对于理解全文搜索会有很大的帮助。见 http://lucene.apache.org/core 。
+

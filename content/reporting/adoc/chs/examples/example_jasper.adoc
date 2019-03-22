@@ -1,0 +1,94 @@
+:sourcesdir: ../../../source
+
+[[example_jasper]]
+=== JRXML 报表示例
+
+该示例也是基于示例 *Library* 应用程序，源代码可在 https://github.com/cuba-platform/sample-library-cuba7[GitHub] 上获取。
+
+首先，在 CUBA Studio 中打开 *Project Properties* 编辑器：点击 *CUBA* → *Project Properties* 主菜单项。在页面上的 *App components* 列表中添加 *reports* 应用程序组件。然后启动应用。
+
+打开 *Reports* -> *Reports* 界面，然后单击 *Import* 按钮导入报表。在项目根目录中选择 Reports.zip。在表格中将显示两个报表，其中一个报表显示每个图书类目中可用的书籍。这个报表显示选中的类目下的图书出版物列表；默认输出格式为 XLS。我们为此报表创建新的 JasperReports 模板。
+
+. <<structure,报表数据结构>>.
++
+--
+
+.报表数据结构
+
+image::sample_jasper.png[align="center"]
+
+
+报表带区：
+
+
+* *Header* 带区 - 报表标题。它是包含 Groovy 脚本的数据集，该脚本输出报表<<parameters,外部参数>>值：
+
++
+[source, groovy]
+----
+[['library_department_name' : params['library_department'].name]]
+----
+
+* *Data* 带区通过运行以下 Groovy 脚本输出指定类目下的实例列表，这个类目根据传递的参数确定：
+
++
+[source, groovy]
+----
+include::{sourcesdir}/example_jasper.groovy[]
+----
+
++
+此查询使用外部报表参数 -  `library_department`。这个参数是 *Entity* 类型，但可以直接将其与实体标识符字段进行比较，类型转换会自动完成。
+
+--
+
+. 报表<<parameters,参数>>.
+
+
++
+*Parameters and Formats* 标签页包含一个声明的报表外部参数 - *Department*：
+
++
+.报表参数
+
+image::sample_jasper_2.png[align="center"]
+
++
+运行报表时，用户必须输入此参数。部门是通过应用程序中的 `library$LibraryDepartment.lookup` 界面选择的。
+
+
+
+. 报表<<template_jasper,模板>>。
+
+
+
++
+--
+*Templates* 标签页包含一个定义好的 XLS 模板，从 `BookAvailability.xls` 加载。
+
+
+使用以下内容创建新的 JRXML 文件：
+
+[source, xml]
+.BookAvailability.jrxml
+----
+include::{sourcesdir}/jasper.jrxml[]
+----
+
+这个模板中的表格绑定到子数据集（subDataset）。`title` 元素直接使用 *Header* 区数据。可以在 JasperReports 可视化设计器中打开模板文件来查看报表布局。
+
+
+将新模板上传到应用程序，选择任何一种输出类型，并将其设置为默认值：
+
+.报表模板
+
+image::sample_jasper_3.png[align="center"]
+--
+
+
+<<running,运行>>一下报表以确定报表定义正确：
+
+.报表结果
+
+image::sample_jasper_4.png[align="center"]
+

@@ -1,0 +1,76 @@
+:sourcesdir: ../../../../source
+
+[[section_incremental_data_update]]
+==== 创建带增量数据更新的图表
+
+
+这种图表从 {main_man_url}/gui_data_containers.html[数据容器] 中获取数据，并且数据会被自动更新。当数据容器中添加了新数据时，图表没有完全刷新：数据点每两秒添加一次。此方法非常有用，比如，用来创建自动更新的仪表板。
+
+在此例中，我们将使用 https://github.com/cuba-platform/sample-sales-cuba7[Sales] 示例应用程序中的 `Order` 实体来显示新订单金额的动态。
+
+. 下载 *Sales* 应用程序然后按照 <<chart_project_setup>> 的描述添加 *charts* 组件。
+
+. 用 Studio 创建一个新界面，名称为 *orders-history*，因为要用这个界面来显示新订单条目的历史仪表板。
+
+. 在界面布局中添加 `serialChart` 组件。要使用增量数据更新功能，我们必须创建一个 `CollectionContainer` 类型的 {main_man_url}/gui_collection_container.html[数据容器] ，并将图表与其绑定。在此示例中，我们不会从数据窗口加载数据，而是动态生成示例数据，因此您无需创建加载器(loader)。
++
+设置分类轴的 `date` 属性和数值轴的 `amount` 属性。
++
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_incremental-update.xml[]
+----
+
+. 我们将使用 {main_man_url}/gui_Timer.html[定时器] 动态更新图表，定时器是一个特殊的 UI 组件，能将 HTTP 请求发送到服务端。
++
+* 切换到 *Designer* 标签页。
+* 在工具箱的 *Non-visual components* 分组中选择 *Timer* 组件。
+* 将这个组件拖放到界面组件树（hierarchy）面板。
+* 在界面组件树中选中 *timer* 组件，然后切换到属性面板的 *Properties* 标签页。
+* 给 timer 组件设置 *id*.
+* 比如说数据需要两秒更新一次， 那么我们设置 *delay* 属性为 2000 毫秒.
+* 在 *onTimer* 定义 java 方法名为 `updateChart` 。这个方法在 timer 组件每次触发事件时都会调用。 点击 *>>*  按钮可以在控制器中生成这个方法。
+* 选中 *repeating* 和 *autostart* 复选框。
++
+.创建定时器
+image::chart/chart_incremental-update.png[align="center"]
+
+. 在处理定时器逻辑之前，先注入必要的依赖：`timeSource`，`metadata` 和数据源实例。每次触发定时器事件时，我们都会生成一个带有随机价格的新 `Order` 实例。使用 `includeItem()` 方法将新实例添加到数据源。
+. 切换到 `OrdersHistory` 控制器。在开始实现定时器逻辑之前， 注入必要的依赖： `timeSource`、`metadata` 和 `Order` 实体的数据容器。 每次触发计时器事件时，我们会生成一个新的 `Order` 实例，这个实例的 amount 属性使用一个随机值。 使用 `getMutableItems().add()` 方法将新实例添加到集合数据容器中。
+
++
+使用跟创建随机 `Order` 实例相同的逻辑在 `onInit()` 方法中初始化图表。
++
+[source, java]
+----
+include::{sourcesdir}/chart/chart_incremental-update.java[]
+----
++
+此时，图表已经能正常运行，但是数据容器中的实例数量会快速增加，所以我们需要限制显示的条目数量。
++
+.数据每两秒自动更新
+image::chart/chart_incremental-update_2.png[align="center"]
+
+. 创建 `Queue` 的队列。每次触发定时器事件时，生成的条目都会添加到 `itemsQueue` 的顶端。当队列大小超过 10 个时，删掉最早创建的条目。
++
+[source, java]
+----
+private Queue<Order> itemsQueue = new LinkedList<>();
+----
++
+[source, java]
+----
+include::{sourcesdir}/chart/chart_incremental-update_2.java[]
+----
+
+'''
+
+结果::
+
+所有数据都会以递增方式发送到浏览器。如果在 Chrome 开发者控制台打开 *Network* 标签页，则会看到我们的网页每 2 秒向后端发送一个 HTTP 请求，并且后端会响应这个请求送回非常小的 JSON 消息。JSON 包含对价格值的一个 `add` 和 `remove` 操作。所以，并没有重新发送所有数据。
+
+.图表每次只显示 10 条记录
+image::chart/chart_incremental-update_3.gif[align="center"]
+
+'''
+

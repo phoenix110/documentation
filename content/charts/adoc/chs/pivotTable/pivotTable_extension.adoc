@@ -1,0 +1,55 @@
+:sourcesdir: ../../../source
+
+[[pivotTable_extension]]
+=== 导出透视表数据
+
+`PivotTableExtension` 是 `PivotTable` 组件的扩展，提供带有聚合数据的表格下载 API，下载格式为 XLS。
+
+需要使用类构造器（而不是 `UiComponents` bean）在界面控制器中创建此扩展的实例。示例：
+
+[source, java]
+----
+include::{sourcesdir}/pivot/pivotTableExtension.java[]
+----
+
+[TIP]
+====
+该扩展仅适用于以下<<chart_PivotTable_renderers,渲染器>>类型：TABLE，TABLE_BAR_CHART，HEATMAP，COL_HEATMAP，ROW_HEATMAP，并且不能取到单元格的颜色。
+====
+
+[[pivotTable_extension_xls]]
+可以使用 `exportTableToXls()` 方法下载 XLS 格式的表格数据，比如，在点击按钮时：
+
+[source, java]
+----
+extension.exportTableToXls();
+----
+
+默认情况下，下载文件名跟 `PivotTable` 数据容器中实体的本地化名称一致。也可以使用 `setFileName()` 方法定义文件名：
+
+[source, java]
+----
+extension.setFileName("Orders of " + new Date());
+----
+
+[TIP]
+====
+XLS 格式的文件最多只能存 65536 行数据。如果 `PivotTable` 包含多于 65536 行，那么表格内容只能导出到限制的最后一行，系统也会弹出相应的警告信息。
+====
+
+[[pivotTable_extension_data]]
+另外，`PivotTableExtension` 提供了另外两个获取 `PivotTable` 数据的方法：
+
+* JSON 格式：
++
+[source, java]
+----
+extension.getPivotDataJSON();
+----
+
+* 序列化的 `PivotData` 类对象：
++
+[source, java]
+----
+extension.getPivotData();
+----

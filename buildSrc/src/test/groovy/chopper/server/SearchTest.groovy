@@ -40,10 +40,10 @@ class SearchTest extends Specification {
         results[0].captionPath == "file3"
     }
 
-    def "less than 3 symbols in quotes return empty list"() {
+    def "less than 1 symbols in quotes return empty list"() {
         when:
 
-        def results = searcher.search("\"on\"", false)
+        def results = searcher.search("\"\"", false)
 
         then:
 

@@ -1,0 +1,43 @@
+:sourcesdir: ../../../../../source
+
+[[html_to_pdf]]
+===== 将 HTML 转换为 PDF
+
+具有 HTML 格式和 PDF 输出格式的模板的报表容易显示出错误的字体。要解决此问题，请将带有所需 `.ttf` 字体的 `cuba/fonts` 子目录添加到中间层配置目录（默认部署配置中的 `tomcat/conf/app-core`）。此外，可以通过在<<reporting.fontsDir,reporting.fontsDir>>应用程序属性中指定其路径来使用现有的操作系统字体。
+
+要解决 Ubuntu 服务器上的字体问题，应该执行以下操作：
+
+* 安装 `ttf-mscorefonts-installer` 包：
++
+----
+$ sudo apt-get install ttf-mscorefonts-installer
+----
+
+* 设置 <<reporting.fontsDir,reporting.fontsDir>> 应用程序属性:
++
+----
+reporting.fontsDir = /usr/share/fonts/truetype/msttcorefonts
+----
+
+* 在 HTML 模板中明确指定字体，例如：
+
+[source, html]
+----
+<html>
+<head>
+    <style type="text/css">
+        * {
+            font-family: Times New Roman;
+        }
+    </style>
+----
+
+另外要提到的是解析特殊字符。为避免将 HTML 转换为 PDF 时出错，建议将字段封装在 HTML 模板文件的 `<![CDATA[ ]]>` 标签中：
+[source, html]
+----
+<tr>
+	<td> <![CDATA[${(row.fields('book_name'))!?string!}]]> </td>
+	<td> <![CDATA[${(row.fields('author'))!?string!}]]> </td>
+</tr>
+----
+

@@ -1,0 +1,40 @@
+:sourcesdir: ../../../source
+
+[[chart_data_binding]]
+=== 连接数据
+
+有两种方法可以向图表传递数据：通过 `DataProvider` 接口或者使用<<chart_data_simplified,简化的数据绑定 API>>。简化的数据绑定 API 可以直接使用 `addData()` 方法和 `MapDataItem` 类构造器为没有绑定数据源的图表来添加数据。<<chart_example>>包含了为图标提供数据的所有方法的介绍。
+
+[[chart_data_provider]]
+DataProvider: ::
++
+--
+`DataProvider` 接口有两个标准实现： `ListDataProvider` 类和 `ContainerDataProvider` 类。
+
+* `ListDataProvider` 包含了一个 `DataItem` 实例的列表，图表的数据将从这个列表里获取。`DataItem` 接口有一些标准实现：
+
+** `EntityDataItem` - 表示任意实体类的实例。
+** `MapDataItem` - 键值对集合。
+** `SimpleDataItem` - 表示任意 `public` 类的实例。
+
+* `ContainerDataProvider` 用于给 `Chart` 组件分配一个{main_man_url}/gui_collection_container.html[CollectionContainer]。 这种方式需要一个实体来表示图表数据。 如果应用程序数据模型中已经存在这样的实体，并且图表数据是要显示为表格时，这种方式可能就比较方便。
+
+`DataProvider` 的实例被传递给图表(chart configuration)配置的 `setDataProvider()` 方法。 这种提供图表数据的方法是最通用的，但它需要在界面控制器中创建 `DataProvider` 或 `DataItem` 的实例。
+
+在 `DataProvider` 实例中包含用来展示的实体属性或者值需要在图表属性中定义。根据图表类型的不同，图表属性集合也不一样。比如，对于 `chart:pieChart` 组件，需要定义 `valueField` 和 `titleField` 属性。属性值可以使用这些类型：`Integer` 、 `Long` 、 `Double` 、  `String` 、 `Boolean` 、 `Date`。
+
+DataProvider 机制支持对已经渲染的图表动态添加数据。
+--
+
+[[chart_data]]
+chart:data 元素: ::
++
+--
+这个元素可以用来快速的做图表原型。使用 `chart:data` 和内部嵌套的 `item` 元素可以直接在图表的 XML 描述中设置键值对类型的数据，示例：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/chart_data.xml[]
+----
+--
+

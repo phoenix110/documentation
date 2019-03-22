@@ -1,0 +1,111 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__basic__properties]]
+==== 属性
+
+属性用来做数据绑定，是现代 web 框架必不可少的部分。
+
+下面这个示例用一个组件来演示 Polymer 的数据绑定。示例中有一个输入框供用户输入内容，然后输入的所有内容都会使用属性绑定复制到输入框下面。
+
+*猜谜者组件*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-basic/properties/name-guesser.html">
+
+<div class="polymer-demo-container">
+    <name-guesser placeholder="Your name goes here"></name-guesser>
+</div>
+
+++++
+
+*源代码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-basic/properties/name-guesser.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <name-guesser placeholder="Your name goes here"></name-guesser>
+</body>
+</html>
+----
+
+.src/polymer-basic/properties/name-guesser.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-basic/properties/name-guesser.html[]
+----
+
+有两种类型的数据绑定：
+
+* `++[[ ]]++` - 单向绑定。内部组件监听属性的改动，然后更新组件的状态。换句话说，数据向下传递 - 从宿主组件传向子组件
++
+在上面的例子中，`placeholder` 使用了单向绑定：我们只是将它的值向下传递给 `input` 组件。
+
+* `++{{ }}++` - 双向绑定。内部组件不只是监听属性改动，而且能自己修改属性。也就是说数据可以双向传递 - 从宿主到子组件或者反过来。
++
+在上面的例子中，`name` 属性使用了双向绑定，从 `iron-input` 组件接收值然后在 `div` 显示。
+
+这里对所有属性也可以使用双向绑定，此时组件也能按照预想的工作。但是选择正确的绑定方法很重要，因为这提高了代码的可读性，使得重构更简单。一般来说都使用单项绑定，只是在需要的时候使用双向绑定。
+
+Polymer 组件可以在 `properties` 的 getter 的返回对象中配置所有的属性。可以只是指定属性的类型（String, Boolean, Number, Object, Array, Date）或者提供一些不同的参数。其中有一个参数是 `value` 用来指定属性的默认值。
+
+我们的例子中，`placeholder` 属性有默认值 "Your name please"。但是被从 `index.html` 里面定义的宿主 `name-guesser` 组件传递的 "Your name goes here" 覆盖了。我们也可以提供一个 name，示例：
+
+[source, html]
+----
+<name-guesser name="Charlie"></name-guesser>
+----
+
+这样会导致输入框在初始化的时候就有值：
+
+[subs="none"]
+++++
+
+<div class="polymer-demo-container">
+    <name-guesser name="Charlie" placeholder="Your name goes here"></name-guesser>
+</div>
+
+++++
+
+除了 `value` 之外，一个属性还可以有一些其它的参数（`observer`, `notify` 等等），部分会在后面提到。
+
+需要注意下面这个重要的细节：属性在 JavaScript 中都是用驼峰（CamelCase）命名，但是在 HTML 中使用的减号分隔命名（kebab-case）。比如，`iron-input` 组件的 `bind-value` 属性在组件的源码中定义：
+
+[source, javascript]
+----
+...
+properties: {
+
+  /**
+   * Use this property instead of `value` for two-way data binding.
+   */
+  bindValue: {
+    type: String
+  },
+  ...
+----
+
+另外，还有些 https://www.polymer-project.org/2.0/docs/devguide/data-binding#native-binding[原生属性] 比如 `class` 不支持属性绑定。需要使用 https://www.polymer-project.org/2.0/docs/devguide/data-binding#attribute-binding[参数绑定] 来跟这些原生的属性交互。
+
+目前我们学到的::
++
+--
+* 使用 `++[[ ]]++` 做单向绑定。
+
+* 使用 `++{{ }}++` 做双向绑定。
+
+* 在 `properties` 的 getter 的返回对象中描述所有的属性。
+
+* 对于每个属性，可以定义类型，默认值和一系列其它参数。
+
+* 可以通过 HTML 属性在 Polymer 组件之外给组件属性赋值。
+
+* `iron-input` 是一个 Polymer 组件，可以在 `input` 元素使用双向绑定。
+--
+

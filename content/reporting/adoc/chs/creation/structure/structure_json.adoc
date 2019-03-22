@@ -1,0 +1,48 @@
+:sourcesdir: ../../../../source
+
+[[structure_json]]
+==== JSON 数据集
+
+*JSON* 数据集是通过 JSON 数据生成的。可以从以下来源获取此数据：
+
+. *Groovy script*
++
+--
+用户提供的脚本应该以字符串形式返回 JSON 数据。
+
+例如:
+
+[source, json]
+----
+include::{sourcesdir}/json.groovy[]
+----
+--
+
+. *URL*
++
+--
+报表引擎将对 URL 执行 GET HTTP 查询。
+
+例如:
+
+[source, plain]
+----
+https://jsonplaceholder.typicode.com/users
+----
+--
+
+. *字符串类型的参数*
++
+--
+必须在 *Parameters and Formats* 标签页中描述包含 JSON 数据的 String 类型的报表外部参数。
+--
+
+使用 JsonPath 查询获取 JSON 树。例如，可以使用 `$.store.book[*]` JsonPath 返回以下 JSON 树中的所有书籍：
+
+[source, json]
+----
+include::{sourcesdir}/json.json[]
+----
+
+有关 JsonPath 表达式的更多详细信息，请参阅 http://goessner.net/articles/JsonPath/ 。
+

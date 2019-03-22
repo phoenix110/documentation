@@ -1,0 +1,22 @@
+:sourcesdir: ../../../../source
+
+[[chart_data_from_entity]]
+==== 使用实体创建图表
+
+
+
+在本章节我们将创建类似 AmCharts 示例中 https://www.amcharts.com/demos/3d-stacked-column-chart/[3D 重叠列图]的图表。这个图将从数据库获取数据，所以必须要定义 `dataContainer` 属性。amCharts 用来定义这种图所使用的 `JavaScript` 如下：
+
+[source,javascript]
+----
+include::{sourcesdir}/chart/column3d-chart.js[]
+----
+
+include::chart_data_from_entity/cdb_create_model.adoc[]
+
+include::chart_data_from_entity/cdb_xml_descriptor.adoc[]
+
+include::chart_data_from_entity/cdb_screen_controller.adoc[]
+
+include::chart_data_from_entity/cdb_result.adoc[]
+

@@ -1,0 +1,23 @@
+:sourcesdir: ../../../../source
+
+[[qs_demo_report]]
+==== 使用 Demo 报表
+
+下面是查看 Saiku 报表样式的最简单方法，只需要导入带有分析和报表结构的 ZIP 文件。
+
+. 点击 *Import Analysis - 导入分析*.
+
+. 选择 `BIDemo` 数据源并且导入 `$BI_DEMO_PROJECT/demo/pentaho/BiDemo.zip` Mondrian 文件，报表的结构也会被导入。
++
+.导入分析
+image::bi_pentaho_3.png[]
+
+. 点击 New → Saiku Analytics → Create a new query。选择 `BiDemo` Cube 然后按照这个页面填写 measure, columns, 以及 rows：
++
+.创建查询
+image::bi_pentaho_5.png[]
+
+. 在 `/home/admin` 目录保存报表，名称为 `ProductsByTypeAndLocation`。
+
+现在可以在 <<bi_widget,CUBA 应用>>中打开 Saiku 报表。
+

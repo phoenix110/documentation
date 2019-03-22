@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[feedback]]
+=== 反馈
+
+如果您有任何改进本手册的建议，请随时在 https://github.com/cuba-platform/documentation[GitHub] 上的源码仓库报告问题。如果你看到拼写或措辞错误、bug 或不一致，请毫不犹豫地 fork 并修复。谢谢！
+
+:sectnums:
+

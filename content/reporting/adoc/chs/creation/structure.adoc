@@ -1,0 +1,47 @@
+:sourcesdir: ../../../source
+
+[[structure]]
+=== 报表数据结构
+
+报表编辑界面的 *Report structure* 标签页如下所述：
+
+.报表数据结构
+image::report_structure.png[align="center"]
+
+顶部包含用于输入常规报表属性的字段：
+
+* *Name* - 报表名称。该名称可以在 *Localization* 标签页中本地化。
+* *Group* - 报表组，用于在标准报表浏览界面中进行分组。
+* *Default template* - 报表输出<<template,模板>>.
+* *System code* - 可选代码，可用于在应用程序代码中标识报表。
+
+报表数据结构的主要元素是带区树(band hierarchy) - *Report bands*。
+
+报表区有以下参数：
+
+* *Band name* - 报表中的唯一报带区名称。它必须只包含拉丁字母、数字和下划线。此外，如果带区名称以 *header* 开头，则其数据不会在<<table_output,表格输出>>中输出。
+* *Orientation* - 报表带区方向：*Horizontal* 、 *Vertical* 或<<crosstab_xls,交叉表>>。水平报表带区向下复制，垂直 - 向右，交叉区域 - 向右和向下复制为矩阵。水平报表带区可以包含子带区。
+* *Parent band* - 父带区。
+
+每个报表带区包括一个或多个数据集。在运行报表时，数据集将转换为行的列表，其中每行都是包含键-值对的 map。报表中出现的带区的次数与其最长数据集中的行数一样多。字段名称在报表模板中指定，并在生成报表时替换为数据集中的相应值。在描述数据集时，可以使用报表的<<parameters,外部参数>>以及其它报表带区的字段 - 这样可以创建链接带区。
+
+每个报表都有 *Root* 带区。可以在其中创建数据集并从其它带区引用字段，但不能在报表模板中使用 *Root* 带区。
+
+*Dataset name* 列的值仅为方便用户。
+
+*Link field* 用于合并来自一个带区内的多个数据集的数据。当单个查询或 Groovy 脚本无法满足报表行的整个数据时，可以使用它。
+
+支持的数据集类型如下所述。
+
+include::structure/structure_sql.adoc[]
+
+include::structure/structure_jpql.adoc[]
+
+include::structure/structure_groovy.adoc[]
+
+include::structure/structure_entity.adoc[]
+
+include::structure/structure_list.adoc[]
+
+include::structure/structure_json.adoc[]
+

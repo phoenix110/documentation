@@ -1,0 +1,13 @@
+:sourcesdir: ../../source
+
+[[running]]
+== 运行报表
+
+本节介绍如何运行创建的报表。
+
+include::running/run_common.adoc[]
+
+include::running/run_actions.adoc[]
+
+include::running/run_cancel.adoc[]
+

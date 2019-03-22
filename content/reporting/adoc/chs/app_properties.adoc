@@ -1,0 +1,87 @@
+:sourcesdir: ../../source
+
+[appendix]
+[[app_properties]]
+== 应用程序属性
+
+本节按字母顺序描述与报表生成器相关的应用程序属性。
+
+[[reporting.displayDeviceUnavailable]]
+reporting.displayDeviceUnavailable::
++
+--
+允许在没有窗口界面的服务器操作系统中运行 OpenOffice/LibreOffice。
+
+默认值: `false`
+
+用于 *Middleware* block。
+--
+
+[[reporting.enableTabSymbolInDataSetEditor]]
+reporting.enableTabSymbolInDataSetEditor::
++
+--
+
+定义是否应将 TAB 键作为 `\t` 符号处理，而不是在报表编辑界面的脚本字段中进行焦点切换。
+
+默认值: `false`
+
+用于客户端 block。
+--
+
+[[reporting.fontsDir]]
+reporting.fontsDir::
++
+--
+指定 HTML 转换为 PDF 时使用的字体目录的路径。
+
+例如: `reporting.fontsDir = C:/Windows/Fonts`。
+
+用于 *Middleware* block。
+--
+
+[[reporting.openoffice.docx.useOfficeForDocumentConversion]]
+reporting.openoffice.docx.useOfficeForDocumentConversion::
++
+--
+开启使用 OpenOffice 将含有 DOCX 模板的报表转换为 HTML/PDF 的功能，这样可以显著提高转换的准确性。
+
+默认值: `false`
+
+用于 *Middleware* block。
+--
+
+[[reporting.openoffice.path]]
+reporting.openoffice.path::
++
+--
+设置 OpenOffice 的路径。
+
+默认值: `/`
+
+用于 *Middleware* block。
+--
+
+[[reporting.openoffice.ports]]
+reporting.openoffice.ports::
++
+--
+为 OpenOffice/LibreOffice 指定用逗号或竖直分隔符隔开的可用端口列表。
+
+例如: `reporting.openoffice.ports = 8100|8101|8102|8103|8104|8105`.
+
+默认值: `8100, 8101, 8102, 8103`.
+
+用于 *Middleware* block。
+--
+
+[[reporting.putEmptyRowIfNoDataSelected]]
+reporting.putEmptyRowIfNoDataSelected::
++
+--
+设置当报表带区的数据集没有返回记录时是否仍然将带区显示一次。
+
+默认值: `true`
+
+用于 *Middleware* block。
+--

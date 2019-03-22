@@ -1,0 +1,75 @@
+:sourcesdir: ../../../../../source
+
+[[association_mtm_recipe_2]]
+===== 使用连接实体进行多对多关联
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo2.cuba-platform.com/model/open?screen=sample$DutyFree.browse" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+多对多关联的实现始终要用到一个连接表(joining table)，但是，为这个中间表创建对应的实体却不是必须的。如果需要在连接表中存储一些其它字段，这时就有必要创建连接实体了。
+
+以 `Airport` 和 `DutyFree` 实体为例来演示这种方法。许多不同的免税店可以在一个机场内，并且一个品牌的免税店可以出现在许多不同机场中。假设我们想要存储机场和免税店的对应关系以及此关系中可使用的货币信息：
+
+image::cookbook/association_recipe_2.png[align="center"]
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/entity/airports/Airport.java[Airport.java] - `Airport` 实体包含 `AirportDutyFree` 实例的一对多组合。
++
+在 Studio 实体设计器中，设置 `dutyFreeShops` 属性： *Attribute type* - `COMPOSITION`，*Cardinality* - `ONE_TO_MANY`。
++
+[source, java]
+----
+@Composition
+@OnDelete(DeletePolicy.CASCADE)
+@OneToMany(mappedBy = "airport")
+protected List<AirportDutyFree> dutyFreeShops;
+----
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/entity/airports/DutyFree.java[DutyFree.java] -  `DutyFree` 实体也包含 `AirportDutyFree` 实例的一对多组合。
++
+在 Studio 实体设计器中，设置 `airports` 属性：属性类型 - `COMPOSITION`，Cardinality - `ONE_TO_MANY`.
++
+[source, java]
+----
+@Composition
+@OnDelete(DeletePolicy.CASCADE)
+@OneToMany(mappedBy = "dutyFree")
+protected List<AirportDutyFree> airports;
+----
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/entity/airports/AirportDutyFree.java[AirportDutyFree.java] - 因此，`AirportDutyFree` 实体包含两个多对一引用： `airport` 和 `dutyFree`。
++
+[source, java]
+----
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "AIRPORT_ID")
+protected Airport airport;
+
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "DUTY_FREE_ID")
+protected DutyFree dutyFree;
+
+@Column(name = "CURRENCY")
+protected Integer currency;
+----
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/global/src/com/company/sample/views.xml[views.xml] - 机场编辑界面的 `airport-dutyfree` 视图组合了带有 `dutyFree` 和 `currency` 属性的 `dutyFreeShops` （引用 `AirportDutyFree` 关联实体）实体。
++
+`dutyFree-airport` 视图遵循相同的逻辑：组合了带有 `airport` 和 `currency` 属性的 `airports` （引用 `AirportDutyFree` 关联实体）实体。（参考 views.xml 内容进行理解）
+
+* https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/dutyfree/duty-free-edit.xml[duty-free-edit.xml] - 免税店编辑界面的 XML 描述定义了 `DutyFree` 实例的数据源和其机场实例的嵌套数据源。还包含一个显示机场的表格和直接选择机场的自定义操作，而不使用 `AirportDutyFree` 编辑界面。
+
+因此，编辑 `DutyFree` 实例的工作方式如下：
+
+`DutyFree` 编辑界面显示一个机场列表和货币下拉列表。
+
+用户可以点击 *Add airport*，将打开 `Airport` 查找，且用户可以选择要添加的机场或打开其编辑界面。当用户选择机场时，新的 `AirportDutyFree` 实例使用默认货币 https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/dutyfree/DutyFreeEdit.java#L29[进行创建]。这个实例不会保存到数据库中，而是添加到 `DutyFree` 编辑界面的 `airportsDs` 数据源中。
+
+在 https://github.com/cuba-platform/sample-model/blob/master/modules/web/src/com/company/sample/web/airports/airport/airport-edit.xml[`Airport` 编辑界面] 中点击确定时，更新后的机场实例既保存到数据库又保存到 `DutyFree` 编辑界面的 `airportsDs` 数据源，因为 `Airport` 实体是完全独立的。
+
+用户可以创建新机场和移除现有机场，所有更改将在单独的事务中保存到数据库，同时也保存到 `airportsDs` 数据源。
+
+当用户在免税店编辑界面中点击确定时，更新的 `DutyFree` 实例与所有更新的 `AirportDutyFree` 实例将一起被提交到中间层的 <<dataManager,DataManager>>.commit() 方法并使用单个事务保存到数据库中。
+

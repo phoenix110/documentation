@@ -1,0 +1,68 @@
+:sourcesdir: ../../source
+
+[[fts_properties]]
+[appendix]
+== 应用属性
+
+本节列出了与全文搜索插件相关的应用程序属性。
+
+[[cuba.ftsConfig]]
+cuba.ftsConfig::
+
+定义项目的 FTS 配置文件的累加属性。
++
+该文件使用 `Resources` 接口加载，因此它可以位于类路径或配置目录中。
++
+用于中间件 block。
++
+例如:
++
+[source, properties]
+----
+cuba.ftsConfig = +com/company/sample/fts.xml
+----
+
+下面描述的所有属性都是存储在数据库中的运行时参数，可通过 `FtsConfig` 配置接口在应用程序代码中使用。
+
+[[fts.enabled]]
+fts.enabled::
+在项目中启用 FTS 功能的标志。
++
+可以通过 `app-core.fts:type=FtsManager` JMX bean 的 *Enabled* 属性进行更改。
++
+默认值: `false`
+
+[[fts.indexDir]]
+fts.indexDir::
+存储索引文件目录的绝对路径。如果未指定，则使用应用程序工作目录（由 cuba.dataDir 属性定义）的 `ftsindex` 子目录;在默认部署的配置中，它是 *tomcat/work/app-core/ftsindex*。
++
+默认值: 未指定
+
+[[fts.indexingBatchSize]]
+fts.indexingBatchSize::
+每次调用 `processQueue()` 从索引队列中获取的记录数。
++
+此限制对于索引队列包含大量记录的情况下很重要，例如，在执行 `app-core.fts:type=FtsManager` JMX bean 的 `reindexAll()` 方法之后。在这种情况下，索引是分批完成的，这需要更多时间，但产生的服务器负载将是有限且可预测的。
++
+默认值: `300`
+
+[[fts.reindexBatchSize]]
+fts.reindexBatchSize::
++
+--
+每次调用 `reindexNextBatch()` 时放入索引队列的记录数。
+
+默认值: `5000`
+--
+
+[[fts.maxSearchResults]]
+fts.maxSearchResults::
+搜索结果中实体的最大数。
++
+默认值: `100`
+
+[[fts.searchResultsBatchSize]]
+fts.searchResultsBatchSize::
+搜索结果中单批次的元素个数。用户需要在结果界面上单击 *More* 以查看下一批次结果。
++
+默认值: `5`

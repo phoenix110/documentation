@@ -1,0 +1,10 @@
+:sourcesdir: ../../../../source
+
+[[integration_tests_client]]
+==== 客户端层集成测试
+
+[WARNING]
+====
+很快更新。
+====
+

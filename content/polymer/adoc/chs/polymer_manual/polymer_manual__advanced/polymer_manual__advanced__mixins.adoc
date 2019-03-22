@@ -1,0 +1,89 @@
+:sourcesdir: ../../../../source
+
+[[polymer_manual__advanced__mixins]]
+==== Mixins
+
+在 Polymer 中，继承通过名称为 *mixins* 的方式实现。一个 mixin 是由一组方法、属性、观察者和生命周期回调方法组成，其它的 Polymer 组件可以继承。
+
+每个 web 组件可以使用任意数量的 mixins。Web 组件可以像使用他们自己的方法和属性一样使用 mixin 的方法和属性。mixins 也能使用 web 组件的方法和属性。
+
+下面是一个演示怎么编写和使用 mixins 的例子。这是个拼写改进程序，用来提供给用户以输入单词。如果用户出了拼写错误，这个输入框会显示红色高亮。然后再输入任何字符，会移除这些高亮。组件内实现设置/移除错误状态时通过 `ValidatedElementMixin` mixin 实现的。
+
+*拼写检查*
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/polymer-advanced/mixins/spelling-checker.html">
+
+<div class="polymer-demo-container">
+    <spelling-checker word="Elephant"></spelling-checker>
+</div>
+
+++++
+
+*源码*
+
+.index.html
+[source, html]
+----
+<html>
+<head>
+	<link rel="import" href="src/polymer-advanced/mixins/spelling-checker.html">
+	<script src="bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+</head>
+<body>
+    <spelling-checker word="Elephant"></spelling-checker>
+</body>
+</html>
+----
+
+.src/polymer-advanced/mixins/spelling-checker.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/mixins/spelling-checker.html[]
+----
+
+.src/polymer-advanced/mixins/input-with-validation.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/mixins/input-with-validation.html[]
+----
+
+.src/polymer-advanced/mixins/validated-element-mixin.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/polymer-advanced/mixins/validated-element-mixin.html[]
+----
+
+`input-with-validation` 展现了一个支持验证的通用 UI 组件。
+`ValidatedElementMixin` 可以跟其它类型的元素一起使用：comboboxes, text areas, radio-buttons 等等。
+
+[TIP]
+====
+需要注意的是，我们在 `input-with-validation.html` 里的 `value` 属性用了 `notify` 参数。如果要允许使用此元素的地方用这个属性做双向绑定，notify 是必须的。
+====
+
+这个例子中，我们只使用了一个 mixin，但是可以通过将 mixin 一个包一个的方法使用任意数量的 mixin。比如，我们可以创建类似这样的包含方式：
+
+[source, javascript]
+----
+class PowerfulInput extends ElementWithDebounceMixin(SelfPersistedElementMixin(ValidatedElementMixin(Polymer.Element)))
+----
+
+[TIP]
+====
+注意在 2.0 版本之前，Polymer 使用 *behaviors*，而不是 mixin。跟 mixin 类似，有相同的目的和可能性，但是使用的不同的语言创建和使用。在 2.0 的代码内不需要创建和使用 behaviors，但是可能在第三方组件中会遇到。更多细节参考 https://www.polymer-project.org/1.0/docs/devguide/behaviors 。
+====
+
+目前我们学到的::
++
+--
+* 可以使用 mixins 来实现一些通用逻辑，并且在组件之间共享。
+
+* Mixins 能包含方法、属性、生命周期回调函数和观察者。
+
+* 在扩展 mixin 之后，Polymer 组件并不知道哪些属性、方法是通过继承得来的，哪些不是。所以对组件来说，它们都一样。
+
+* 为了允许客户端能使用某些属性进行双向绑定，我们可以使用属性的 `notify` 参数。
+--
+

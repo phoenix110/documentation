@@ -1,0 +1,21 @@
+:sourcesdir: ../../source
+
+[[overview]]
+== 插件概览
+
+此 BI 插件提供以下功能：
+
+* 注册和运行 Pentaho 报表的通用界面。访问注册报表可以通过 CUBA 安全角色进行限制。
+
+* 提供可以将 Pentaho 报表嵌入到任何应用页面的可视化组件。
+
+* 在 CUBA 应用和 Pentaho 之间做单点登录。机制如下：
+
+** 用户需要在 CUBA 应用和 Pentaho 有相同的登录名。
+
+** 当用户打开一个报表的时候，CUBA 应用为用户生成一个 ticket，并且将用户名和 ticket 添加到 Pentaho 请求中。ticket 保存在用户会话里。
+
+** 在 Pentaho 服务器的 CUBA <<setup_pentaho,插件>>检测到跟请求一起发送的 ticket，然后调用应用程序检查 ticket 是否有效。
+
+** 如果 ticket 有效，在 Pentaho 服务的 CUBA 插件会使用为 Pentaho 平台配置的用户角色来给用户做认证。
+

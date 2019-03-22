@@ -1,0 +1,61 @@
+:sourcesdir: ../../../source
+
+[[qs_conf]]
+=== 设置配置文件
+
+当添加 `fts` 基础项目时，将在 *core* 模块的源码目录中创建新的 `fts.xml` 文件，其中包含以下内容：
+
+[source, xml]
+----
+<fts-config>
+    <entities>
+
+        <entity class="com.sample.library.entity.Author">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.Book">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.BookInstance">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.BookPublication">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.LibraryDepartment">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.LiteratureType">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.Publisher">
+            <include re=".*"/>
+        </entity>
+
+        <entity class="com.sample.library.entity.Town">
+            <include re=".*"/>
+        </entity>
+
+    </entities>
+</fts-config>
+----
+
+这是 FTS 配置文件，在示例中它可以为所有领域模型实体及其所有属性建立索引。
+
+以下属性会自动添加到应用程序 *core* 模块的 `app.properties` 文件中：
+
+[source, properties]
+----
+cuba.ftsConfig = +com/sample/library/fts.xml
+----
+
+这样，索引将包括平台的 `com/haulmont/fts/fts.xml` 文件和项目的 `fts.xml` 文件中定义的实体。
+
+重启应用服务。从现在开始，全文搜索应该适用于应用程序模块的所有实体以及平台安全子系统的实体：`Role`、`Group`、`User`。
+

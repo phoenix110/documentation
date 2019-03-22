@@ -1,0 +1,35 @@
+:sourcesdir: ../../../source
+
+[[localization]]
+=== 本地化
+
+流程可能包含用于在用户界面中显示任务或输出的本地化消息。
+
+要打开本地化消息编辑界面，请在模型属性面板中选择 *Localization property*。
+
+要本地化任务名称，请创建一个以任务 ID 作为键的记录。
+
+要本地化任务输出名称，请使用类似 `TASK_ID.OUTCOME_NAME` 的表达式作为键创建记录。
+
+要本地化流程角色名称，请使用角色代码作为键创建记录。
+
+本地化消息：
+
+[source,xml]
+----
+<process id="testProcess" name="Test process">
+    <extensionElements>
+        <cuba:localizations>
+            <cuba:localization lang="en">
+                <cuba:msg key="key1" value="value1"/>
+                <cuba:msg key="key2" value="value2"/>
+            </cuba:localization>
+            <cuba:localization lang="ru">
+                <cuba:msg key="key1" value="value1"/>
+                <cuba:msg key="key2" value="value2"/>
+            </cuba:localization>
+      </cuba:localizations>
+    </extensionElements>
+</process>
+----
+

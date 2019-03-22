@@ -1,0 +1,16 @@
+:sourcesdir: ../../../source
+
+[[indexing]]
+=== 索引
+
+如果将 FTS 插件添加到应用程序，并且启用了 <<fts.adoc#fts.enabled,fts.enabled>> 属性，那么每次将可索引实体保存到数据库时，其标识符都会添加到索引队列表 - *SYS_FTS_QUEUE*  。
+
+要使索引进程在后台自动运行，需要创建并激活<<qs_indexing,计划任务>>。然后，单独的异步进程定期从队列中提取已更改实体的标识符,加载实体实例并对其进行索引。索引机制使用 *Apache Lucene* 库执行索引。Lucene 文档包含以下字段：
+
+* 实体名称和实例标识符。
+* `all` - 被索引实体的所有属性值的连接起来的字符串，其中仅包含 local 和 `FileDescriptor` 类型属性。如果属性具有 `FileDescriptor` 类型，则系统将索引相应文件的内容。本地属性可以是以下类型：字符串、数字、日期、枚举。
+* `links` - 一些实体标识符的连接起来的字符串，这些标识符是引用类型的属性值对应的标识符。
+
+被索引的属性是实体和相关实体（如果有）的属性，它们在 FTS 描述中定义。
+
+索引存储在文件系统中; 默认情况下，它位于应用程序工作目录的 `ftsindex` 子文件夹中（由 `cuba.dataDir 属性` 定义）; 对于标准部署，此目录是 `tomcat/work/app-core/ftsindex`。可以使用<<fts.adoc#fts.indexDir,fts.indexDir>>属性更改索引位置。

@@ -1,0 +1,29 @@
+:sourcesdir: ../../../source
+
+[[task_outcomes]]
+=== 任务输出
+
+通常，期望用户对任务做出决定，例如，批准或拒绝合同。流程的下一个路线取决于此决定。*User task* 节点的 *Task outcomes* 属性用于定义输出列表。可以分别为每个输出定义选择输出时应显示的名称和表单。应该传递给表单的参数也可以进行定义（参阅<<process_forms>>）。
+
+任务结果:
+
+[source, xml]
+----
+<userTask id="managerApproval" name="Manager approval">
+    <extensionElements>
+        <cuba:outcomes>
+            <cuba:outcome name="approve">
+                <cuba:form name="standardProcessForm">
+                    <cuba:param name="commentRequired">true</cuba:param>
+                    <cuba:param name="attachmentsVisible">true</cuba:param>
+                </cuba:form>
+            </cuba:outcome>
+            <cuba:outcome name="reject">
+                <cuba:form name="someOtherProcessForm">
+                </cuba:form>
+            </cuba:outcome>
+        </cuba:outcomes>
+    </extensionElements>
+</process>
+----
+

@@ -1,0 +1,47 @@
+:sourcesdir: ../../../source
+
+[[deployment_variants]]
+=== 部署选项
+
+本章节介绍了部署 CUBA 应用程序的不同方法：
+
+* <<fast_deployment,Tomcat 中快速部署>>
+
+* <<war_deployment,部署 WAR 到 Jetty>>
+
+* <<wildfly_war_deployment,部署 WAR 到 WildFly>>
+
+* <<tomcat_war_deployment,部署 WAR 到 Tomcat Windows 服务>>
+
+* <<tomcat_war_deployment_linux,部署 WAR 到 Tomcat Linux 服务>>
+
+* <<uberjar_deployment,部署 UberJAR>>
+
+* <<jelastic_deployment,部署至 Jelatic Cloud>>
+
+* <<bluemix_deployment,部署至 Bluemix Cloud>>
+
+* <<heroku_deployment,部署至 Heroku Cloud>>
+
+* <<docker_deployment,使用 Docker 部署 UberJAR>>
+
+include::deployment_variants/fast_deployment.adoc[]
+
+include::deployment_variants/war_deployment.adoc[]
+
+include::deployment_variants/wildfly_war_deployment.adoc[]
+
+include::deployment_variants/tomcat_war_deployment.adoc[]
+
+include::deployment_variants/tomcat_war_deployment_linux.adoc[]
+
+include::deployment_variants/uberjar_deployment.adoc[]
+
+include::deployment_variants/jelastic_deployment.adoc[]
+
+include::deployment_variants/bluemix_deployment.adoc[]
+
+include::deployment_variants/heroku_deployment.adoc[]
+
+include::deployment_variants/docker_deployment.adoc[]
+

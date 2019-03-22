@@ -1,0 +1,43 @@
+:sourcesdir: ../../../../../source
+
+[[private_repo_install]]
+===== 安装仓库管理软件
+
+这里使用 Sonatype Nexus OSS 仓库管理软件和微软 Windows 操作系统作为示例。
+
+- link:http://www.sonatype.org/downloads/nexus-latest-bundle.zip[下载] Sonatype Nexus OSS 版本 2.x (2.14.3 测试通过)
+- 解压压缩包至 `c:\nexus-2.14.3-02`
+- 修改配置文件内容 `c:\nexus-2.14.3-02\conf\nexus.properties`:
++
+** 可以配置服务器端口，默认是 8081
++
+** 配置仓库数据目录：
++
+--
+替换掉
+--
++
+[source]
+----
+nexus-work=${bundleBasedir}/../sonatype-work/nexus
+----
++
+--
+使用方便缓存数据的目录，比如
+--
++
+[source]
+----
+nexus-work=${bundleBasedir}/nexus/sonatype-work/content
+----
+- 切换到目录 `c:\nexus-2.14.3-02\bin`
+- 安装 wrapper（以管理员身份运行），用来以服务的方式启动和停止 Nexus：
++
+[source]
+----
+nexus.bat install
+----
+
+- 启动 *nexus* 服务
+- 在浏览器打开 `++http://localhost:8081/nexus++`，用默认的管理员账号登录：用户名 `admin`，密码 `admin123`。
+

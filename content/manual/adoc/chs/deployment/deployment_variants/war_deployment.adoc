@@ -1,0 +1,79 @@
+:sourcesdir: ../../../../source
+
+[[war_deployment]]
+==== 部署 WAR 至 Jetty
+
+以下是一个部署 WAR 包到 *Jetty* web 服务器的示例，假设应用程序使用的是 PostgreSQL 数据库。
+
+. 使用 Studio 中的 *Deployment > WAR settings* 界面或者手动在 <<build.gradle,build.gradle>> 末尾添加 <<build.gradle_buildWar, buildWar>> 任务。
++
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_1.groovy[]
+----
++
+需要注意的是，这里给 Middleware 和 web 客户端构建了单独的两个 WAR 文件。
+
+. 从命令行启动 `buildWar` 任务（假设已经预先创建了 Gradle wrapper）：
++
+[source, plain]
+----
+gradlew buildWar
+----
++
+如果成功的话，会在项目的 `build\distributions\war` 目录创建 `app-core.war` 和 `app.war`。
+
+. 创建一个<<app_home,应用程序主目录>>目录，比如，`c:\work\app_home`。
+
+. 下载并安装 Jetty 到本地目录，比如 `c:\work\jetty-home`。本示例使用 `jetty-distribution-9.3.6.v20151106.zip` 测试通过。
+
+. 创建 `c:\work\jetty-base` 目录，并且在这个目录打开命令行窗口执行以下命令：
++
+[source, plain]
+----
+java -jar c:\work\jetty-home\start.jar --add-to-start=http,jndi,deploy,plus,ext,resources
+----
+
+. 创建 `c:\work\jetty-base\app-jetty.xml` 文件，添加以下内容（假设使用名为 `test` PostgreSQL 数据库）：
++
+[source, xml]
+----
+include::{sourcesdir}/deployment/warDeployment_2.xml[]
+----
++
+MS SQL 数据库的 `app-jetty.xml` 文件需要使用下面这个模板：
++
+[source, xml]
+----
+include::{sourcesdir}/deployment/warDeployment_5.xml[]
+----
+
+. 或许（比如对于 MS SQL 数据库），需要下载以下这些 JAR 并且添加到 `c:\work\jetty-base\lib\ext` 目录。
++
+[source, plain]
+----
+commons-pool2-2.4.2.jar
+commons-dbcp2-2.1.1.jar
+commons-logging-1.2.jar
+----
+
+. 将下面这些添加到 `c:\work\jetty-base\start.ini` 文件的开头：
++
+[source, plain]
+----
+include::{sourcesdir}/deployment/warDeployment_3.ini[]
+----
+
+. 拷贝数据库的 JDBC 驱动到 `c:\work\jetty-base\lib\ext` 目录。可以从 CUBA Studio 的 `lib` 目录或者项目的 `build\tomcat\lib` 目录拷贝这些驱动。比如对于 PostgreSQL，驱动文件是 `postgresql-9.1-901.jdbc4.jar`。
+
+. 拷贝 WAR 文件到 `c:\work\jetty-base\webapps` 目录。
+
+. 在 `c:\work\jetty-base` 目录打开命令行窗口并且执行：
++
+[source, plain]
+----
+java -jar c:\work\jetty-home\start.jar
+----
+
+. 在浏览器打开 `++http://localhost:8080/app++`。
+

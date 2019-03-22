@@ -1,0 +1,6 @@
+:sourcesdir: ../../../../source
+
+[[jelastic_deployment]]
+==== 部署至 Jelastic Cloud
+
+使用<<build.gradle_deployWar>> Gradle 任务将 WAR 文件部署到 Jelastic 。

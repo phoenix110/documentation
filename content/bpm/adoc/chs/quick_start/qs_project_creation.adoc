@@ -1,0 +1,29 @@
+:sourcesdir: ../../../source
+
+[[qs_project_creation]]
+=== 创建项目
+
+. 在 Cuba Studio 中创建一个新项目：
+
+* 项目名称：`bpm-demo`
+
+* 项目命名空间：`demo`
+
+* 根包：`com.company.bpmdemo`
+
+.新项目
+image::StudioNewProject.png[align="center"]
+
+[start=2]
+. 打开项目属性窗口（*Project properties* 部分，*Edit* 按钮）。
+
+
+. 在 *App components* 列表中激活 BPM 子系统。
+
+.选择 BMP 模块
+image::StudioSelectBpmModule.png[align="center"]
+
+[start=4]
+
+. 在项目属性页面按下 *OK* 按钮。系统将要求确认，点同意。
+

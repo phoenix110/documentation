@@ -1,0 +1,85 @@
+:sourcesdir: ../../source
+
+[appendix]
+[[open_office]]
+== 安装和配置 OpenOffice
+
+报表生成器使用 *OpenOffice / LibreOffice* 程序包来输出 PDF 和 DOC <<template_to_output,格式>>的报表。需要在计算机上安装应用服务并进行配置。
+
+*在 Windows 上安装和配置 Openoffice*
+
+* 在 http://openoffice.org 下载应用程序。
+* 安装应用程序。
+* 在 *core* 模块的 `app.properties` 文件中的<<app_properties.adoc#reporting.openoffice.path, reporting.openoffice.path>>应用程序属性中指定 *OpenOffice.org* 的路径，例如：
+
+[source, properties]
+----
+reporting.openoffice.path = C:/Program Files (x86)/OpenOffice.org 3/program
+----
+
+*在 Windows 上安装和配置 LibreOffice*
+
+* 在 http://www.libreoffice.org/download/download/ 下载应用程序。
+* 安装应用程序。
+* 在 *core* 模块的 `app.properties` 文件中的<<app_properties.adoc#reporting.openoffice.path,reporting.openoffice.path>>应用程序属性中，指定 *LibreOffice* 的路径，例如：
+
+[source, properties]
+----
+reporting.openoffice.path = C:/Program Files (x86)/LibreOffice 5/program
+----
+
+*在 Ubuntu Server 上安装和配置 LibreOffice*
+
+* 通过运行以下命令来安装 `libreoffice` 包，例如：
++
+[source, properties]
+----
+$ sudo apt-get install libreoffice`
+----
+    
+* 在 *core* 模块的 `app.properties` 文件中的<<app_properties.adoc#reporting.openoffice.path, reporting.openoffice.path>>应用程序属性中，指定 LibreOffice 的路径：
++
+[source, properties]
+----
+reporting.openoffice.path = /usr/lib/libreoffice/program
+----
+
+* 如果服务不是通过界面操作的方式安装，LibreOffice 启动时将出现错误，`Caused by: java.awt.HeadlessException: No X11 DISPLAY variable was set, but this program performed an operation which requires it`，或者只是停止运行而没有错误消息。要解决此问题，请设置<<app_properties.adoc#reporting.displayDeviceUnavailable, reporting.displayDeviceUnavailable>>应用程序属性：
++
+[source, properties]
+----
+reporting.displayDeviceUnavailable = true
+----
+
+* 启动 LibreOffice 时，可以运行以下命令来诊断错误：
++
+[source, properties]
+----
+$ strace -e trace=signal /usr/lib/libreoffice/program/soffice.bin --headless --accept="socket,host=localhost,port=8100;urp" --nologo --nolockcheck
+----
+
+[TIP]
+====
+对于使用 `apt` 安装 tomcat 的 Ubuntu 用户，需要将 `~/.config/libreoffice` 复制到 `$CATALINA_HOME`。对于 tomcat8，这个目录是 `/usr/share/tomcat8`。
+
+之后，应该更改此文件夹的所有者：
+
+[source, properties]
+----
+sudo mkdir /usr/share/tomcat8/.config
+sudo cp -pr ~/.config/libreoffice /usr/share/tomcat8/.config/
+sudo chown -R tomcat8.tomcat8 /usr/share/tomcat8/.config/
+----
+====
+
+*在 macOS 上安装和配置 LibreOffice*
+
+* 在 https://www.libreoffice.org/get-help/install-howto/os-x/ 下载应用程序。
+* 安装应用程序。
+* 在<<app_properties.adoc#reporting.openoffice.path, reporting.openoffice.path>>应用程序属性中，指定 *LibreOffice.app* 的路径，例如：
+
+[source, properties]
+----
+reporting.openoffice.path = /Applications/LibreOffice.app
+----
+

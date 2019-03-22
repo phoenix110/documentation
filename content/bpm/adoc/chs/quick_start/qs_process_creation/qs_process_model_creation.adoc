@@ -1,0 +1,141 @@
+:sourcesdir: ../../../../source
+
+[[qs_process_model_creation]]
+==== 创建流程模型
+
+
+流程模型的最终版本将如下所示：
+
+.完整流程
+image::ProcessFull.png[align="center"]
+
+我们看看创建模型所需要的步骤。
+
+在正在运行的应用程序的 web 界面中，打开 *BPM -> Process Models* 界面，然后单击 *Create*。输入 `Contract approval` 作为模型名称，然后单击 *OK*。*Model Editor* 会在新的浏览器标签页中打开。
+
+[TIP]
+====
+在创建或复制流程模型时，在应用程序窗口右下角会显示一个弹窗通知，上面有打开流程模型编辑页面的链接。如果点击 *Edit* 按钮，会在新的标签页中打开流程模型编辑页面。
+====
+
+在模型属性面板中选择 *Process roles* 属性。会打开流程角色编辑窗口。
+
+.流程角色属性
+image::ProcessRolesProperty.png[align="center"]
+
+有两种类型的参与者参与此流程：管理人员和操作人员。创建两个角色： `Manager` 和 `Controller`。
+
+.流程角色编辑界面
+image::ProcessRolesEditor.png[align="center"]
+
+将 *Start event* 节点从 *Start Events* 组拖动到工作区。
+
+我们需要在流程开始时显示一个表单来选择流程参与者。选择开始事件节点。在其属性面板中选择 *Start form* - 将出现一个表单选择窗口。在 *Form name* 字段中选择 `Standard form`。然后添加两个表单参数：
+
+* `procActorsVisible` 的值为 `true` 表示表单上将显示用于选择流程参与人员的表格。
+
+* `attachmentsVisible` 的值为 `true` 表示表单上将显示用于上传附件的表格。
+
+.Start Form
+.开始表单
+image::StartForm.png[align="center"]
+
+
+将 *Activities* 组的 *User task* 节点添加到模型中,并命名为 `Validation`。
+
+.模型验证节点
+image::ModelValidationNode.png[align="center"]
+
+选择此节点并将 `controller` 值分配给属性面板上的 *Process role* 属性，这样我们就可以定义任务将其被分配给具有 `controller` 角色的流程参与者。
+
+.为 Validation 节点选择流程角色
+image::SelectProcRoleForValidation.png[align="center"]
+
+接下来，选择 *Task outcomes* 属性。将打开任务输出编辑窗口。输出(outcome)定义用户接收任务时可能进行的操作。创建两个输出：`Valid` 和 `Not valid`。为两种输出定义 `标准表单`。为 `Not valid` 输出添加表单参数 `commentRequired=true`，因为我们想让用户在选择合同无效时添加意见。
+
+.验证结果
+image::OutcomesForValidation.png[align="center"]
+
+
+根据操作人员的决定，我们必须将合同发送给管理人员批准或以 `Not valid` 状态完成流程。*Gateways* 组中 *Exclusive gateway* 节点用于控制流程。将其添加到工作区，然后添加另外两个元素：名称是 `Set 'Not valid' state` 的 *Script task* 和名称是 `Approval` 的 *User task*。将 *Script task* 的流转(flow)命名为 `Not valid`，将 *User task* 的流转(flow)命名为 `Valid`。
+
+.模型验证排他网关
+image::ModelValidationExclGateway.png[align="center"]
+
+
+选择 `Not valid` 流。从属性面板中展开 *Flow outcome* 下拉列表。列表中显示了网关之前的任务输出。选择 `Not valid` 值。
+
+. Not Valid 流输出
+
+image::NotValidFlowOutcome.png[align="center"]
+
+现在，如果选择 `Not valid` 输出，流程将转向这个流。
+
+应将 `Valid` 流标记为默认流（如果没有其它流条件为 true ）。选择 `Valid` 流并勾选 *Default flow* 属性。
+
+[WARNING]
+====
+对于标记为默认的流，*Flow outcome* 下拉列表中不能选择任何值。
+====
+
+
+接下来，选择 *Exclusive gateway* 并打开其 *Flow order* 属性编辑界面。确保 `Not valid` 流位于列表中第一位，必要时请更改流顺序。
+
+.Validation 流顺序
+image::ValidationFlowOrder.png[align="center"]
+
+
+选中 `Set 'Not valid' state` 节点。在这个任务中需要将 Contract 实体的 `state` 属性设置为 `Not valid` 值。选择节点，将 *Script format* 属性值设置为 `groovy`。单击 *Script* 属性字段 - 将打开脚本编辑界面。复制并粘贴以下代码：
+
+[source,groovy]
+----
+def em = persistence.getEntityManager()
+def contract = em.find(com.company.bpmdemo.entity.Contract.class, entityId)
+contract.setState('Not valid')
+----
+
+在脚本中可以使用流程变量和 `persistence` 以及 `metadata` 平台对象（请参阅开发人员手册）。`entityId` 变量在流程启动时创建并存储关联实体的标识符。
+
+合同状态改变之后，应结束该流程。我们将 *End events* 组中的 *End event* 节点添加到工作区并与 `Set 'Not valid' state` 节点连接。
+
+
+返回到 `Approval` 任务。像我们为第一个任务所做的那样为其定义 `manager` 流程角色。为了将任务同时分配给多个管理人员，请将其 *Multi-instance type* 属性设置为 `Parallel（并行）`。
+
+.多实例批准类型
+image::ApprovalMutlInstanceType.png[align="center"]
+
+创建两种任务输出：`Approve` 和 `Reject`（*Task outcomes* 属性）。对这两种输出设置 `Standard form` 表单，并将 `Reject` 输出的 `commentRequired` 参数设置为 `true`。
+
+审批完成后，应根据审批结果为合同分配 `Approved` 或 `Not approved` 状态。在 `Approval 任务` 之后添加一个 *Exclusive gateway* 节点。在排他网关之后添加两个 *Service task* ：`Set 'Approved' state` 和 `Set 'Not approved' state`。它们将与我们之前添加的 *Script task* 实现同样的功能，但是以不同的方式来实现：通过调用 Spring bean 方法。将 `Set 'Approved' state` 流命名为 `Approved`，将 `Set 'Not approved' state` 流命名为 `Not approved`。
+
+.审批模型
+image::ModelWithApproval.png[align="center"]
+
+选择 `Not approved` 流节点并在 *Flow outcome* 列表中选择 `Reject` 值。现在，如果有一个管理人员执行了 `Reject` 操作，流程将转到此流。选择 `Approved` 流节点并选中 *Default flow* 复选框。这意味着如果没有启动其它流，则将使用此流。
+
+设置 *Exclusive gateway* 的流顺序，就像我们前一个做的那样。选择 *Exclusive gateway* 并打开 *Flow order* 属性编辑界面。应首先处理 `Not approved`。
+
+.Approval 流顺序
+image::ApprovalFlowOrder.png[align="center"]
+
+我们返回到 Service task。选择 `Set 'Approved' state` 节点并为其 *Expression* 属性设置为以下值：
+
+[source,groovy]
+----
+${demo_ApprovalHelper.updateState(entityId, 'Approved')}
+----
+
+将以下脚本应用于 `Set 'Not approved' state` 节点。
+
+[source,groovy]
+----
+${demo_ApprovalHelper.updateState(entityId, 'Not approved')}
+----
+
+Activiti 引擎已经与 Spring 框架集成，因此我们可以使用名称访问 Spring 托管 bean。`entityId` 是一个流程变量，用于存储关联到流程的合同的标识符。它的值在流程开始时设置。
+
+使用 *End event* 连接两种服务类型的任务并单击保存按钮。到此，模型已准备就绪，现在我们可以继续进行模型部署。
+
+.流程模型
+image::ProcessFull.png[align="center"]
+

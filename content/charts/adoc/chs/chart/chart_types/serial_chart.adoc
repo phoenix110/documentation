@@ -1,0 +1,55 @@
+:sourcesdir: ../../../../source
+
+[[serial_chart]]
+==== 序列图
+
+使用 `SerialChart` 组件可以创建线图、区域图、列图、柱图、步进线图，平滑线图，烛台图以及蜡烛图。图表支持多坐标轴，坐标轴支持简单或者对数刻度，数据点可以等距/非等距展示或者基于时间线展示。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=line-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.线图展示的序列图
+image::chart/line-chart.png[align="center", width="800"]
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=columnline-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.列图展示的序列图
+image::chart/column-chart.svg[align="center", width="800"]
+
+该组件的 XML 名称：`chart:serialChart`
+
+数据绑定: ::
++
+--
+可以为图表指定一个 `CollectionContainer`。然后为 `serialChart` 元素定义 `categoryField` 属性，为嵌套的 `graph` 元素定义 `valueField` 属性：
+
+[source, xml]
+----
+include::{sourcesdir}/chart/serial_chart.xml[]
+----
+--
+
+`SerialChart` 事件监听器::
++
+--
+* `AxisZoomListener` – 图表坐标轴缩放。
+* `CategoryItemClickListener` – 在分类轴点击一个分类。
+* `ChartClickListener` – 点击画布。
+* `ChartRightClickListener` – 右键点击画布。
+* `CursorPeriodSelectListener` – 用光标选择显示周期。
+* `CursorZoomListener` – 用光标对图表区域进行缩放。
+* `GraphClickListener` – 点击一个图形。
+* `GraphItemClickListener` – 点击一个图形条目。
+* `GraphItemRightClickListener` – 右键点击一个图形条目。
+* `ZoomListener` – 画布的缩放。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmSerialChart[AmCharts 文档]
+

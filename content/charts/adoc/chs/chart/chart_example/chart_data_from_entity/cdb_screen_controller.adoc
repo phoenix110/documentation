@@ -1,0 +1,13 @@
+:sourcesdir: ../../../../../source
+
+[[cdb_screen_controller]]
+====== 界面控制器
+
+打开 `Column3dChart` 界面控制器，然后用下面的代码替换其内容：
+
+[source,java]
+----
+include::{sourcesdir}/chart/Column3dChart.java[]
+----
+
+`onInit` 方法为 `countryGrowthDc` 数据容器提供数据。

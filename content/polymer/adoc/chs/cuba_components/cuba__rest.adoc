@@ -1,0 +1,27 @@
+:sourcesdir: ../../../source
+
+[[cuba__rest]]
+=== 使用服务和查询
+
+在很多情况下，应用程序不只是对实体的 CRUD 操作。CUBA REST API 提供了特殊的终端（endpoints）来调用中间件 {manual-address}/rest_api_v2_services_config.html[服务] 以及运行预定义的 {manual-address}/rest_api_v2_queries_config.html[查询语句]。这里可以实施业务逻辑并且在前台通过 https://cuba-elements.github.io/cuba-elements/components/cuba-data/#cuba-service[cuba-service] 和 https://cuba-elements.github.io/cuba-elements/components/cuba-data/#cuba-query[cuba-query] 组件来调用。
+
+默认情况下，组件在初始化的时候自动加载数据。可以给 `auto` 属性设置为 `false` 来禁用此功能，然后通过编程的方式调用 `load()` 方法加载数据。
+
+*使用示例*
+
+[source, html]
+----
+    <cuba-query id="query"
+                entity-name="sec$User"
+                query-name="usersByName"
+                data="{{users}}">
+    </cuba-query>
+    ...
+    <cuba-service service-name="cuba_ServerInfoService"
+                  method="getReleaseNumber"
+                  data="{{releaseNumber}}">
+    </cuba-service>
+----
+
+https://cuba-elements.github.io/cuba-elements/components/cuba-form/#cuba-service-form[cuba-service-form] 可以用来替换 `cuba-service`，处理表单时，语义上使用表单提交比请求信息更加合理。当然，这不是必须的，而且他们底层也使用的同样的 REST API。
+

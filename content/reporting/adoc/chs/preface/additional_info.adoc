@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[additional_info]]
+=== 更多阅读材料
+
+可以在 https://www.cuba-platform.com/documentation 找到与 CUBA 框架相关的手册及附属文档。
+
+报表生成器的核心是 *YARG* 框架，是在免费的 Apache 2.0 许可下发布的。有关更多详细信息，请参阅 https://www.cuba-platform.com/blog/report-generator[blog] 中的文章。该框架文档可从 https://github.com/cuba-platform/yarg/wiki 获取。
+

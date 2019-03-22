@@ -1,0 +1,76 @@
+:sourcesdir: ../../../../source
+
+[[gantt_chart]]
+==== 甘特图
+
+使用 `GanttChart` 组件可以创建甘特图。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=gantt-chart" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.甘特图
+image::chart/gantt-chart.png[align="center", width="800"]
+
+该组件的 XML 名称：`chart:ganttChart`
+
+`chart:ganttChart` 的元素: ::
++
+--
+* `categoryAxis` – 描述分类轴的元素。
+
+* `graph` – 包含 `chart:graph` 元素集合；图形是通过 `chart:graph` 元素进行描述。
++
+** `type` 属性定义图的类型，可以是：线（line），列（column），步进线（step line），平滑线（smoothed line），蜡烛图（OHLC）以及烛台图（candlestick）。
++
+** `valueField` 属性定义数据提供者的键值对列表的键（key）。
+
+* `valueAxis` – 图表的值坐标轴。如果图表数据是基于日期或者时间的，可以设置值坐标轴类型为 `date`。
+--
+
+`chart:ganttChart` 的属性: ::
++
+--
+* `segmentsField` – 图表的分段字段。
+
+* `additionalSegmentFields` – 需要从数据提供器中获取的对应于实体属性的额外分段字段，跟 <<chart_additionalFields,additionalFields>> 属性类似。
+
+* `endField`/`endDateField` – 图表的终止值或者终止时间。
+
+* `startField`/`startDateField` – 图表的起始值或者起始时间。
+
+* `startDate` – 如果值坐标轴的类型是 `date`，定义图表的起始时间。
+
+* `categoryField` – 图表的分类字段。
+--
+
+数据绑定::
++
+--
+可以为图表指定一个 `CollectionContainer` 。在下面的例子中，使用实体的 `start` 和 `end` 属性来为 XML 的 `startDateField` 和 `endDateField` 属性赋值。
+
+[source, xml]
+----
+include::{sourcesdir}/chart/gantt_chart.xml[]
+----
+--
+
+`GanttChart` 事件监听器: ::
++
+--
+* `AxisZoomListener` – 图表坐标轴缩放。
+* `CategoryItemClickListener` – 在分类轴点击一个分类。
+* `ChartClickListener` – 点击画布。
+* `ChartRightClickListener` – 右键点击画布。
+* `CursorPeriodSelectListener` – 用光标选择显示周期。
+* `CursorZoomListener` – 用光标对图表区域进行缩放。
+* `GraphClickListener` – 点击一个图形。
+* `GraphItemClickListener` – 点击图形的条目。
+* `GraphItemRightClickListener` – 右键点击图形的条目。
+* `ZoomListener` – 画布的缩放。
+--
+
+更多细节，参阅 http://docs.amcharts.com/3/javascriptcharts/AmGanttChart[AmCharts 文档]。
+

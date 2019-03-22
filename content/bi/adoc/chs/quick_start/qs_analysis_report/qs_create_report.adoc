@@ -1,0 +1,53 @@
+:sourcesdir: ../../../../source
+
+[[qs_create_report]]
+==== 手动创建数据源和分析报表
+
+创建数据源::
++
+--
+. 点击 *New 数据源*.
+
+. 选择数据源： *Database Table(s)*.
+
+. 在可选的数据库连接里选择 `BIDemo`。
+
+. 选择 *Reporting and Analysis* 作为此数据源的目标。
++
+.数据源向导
+image::pentaho_console.png[]
+
+. 选择我们在 Spoon 中创建的维度表和事实表： `"PENTAHO_DIM_CUSTOMER"`, `"PENTAHO_DIM_PRODUCT"`, `"PENTAHO_FACT_ORDER_LINE"`：
++
+.数据源向导
+image::pentaho_console_2.png[]
+
+. 定义这些表之间的 join：
++
+.数据源向导
+image::pentaho_console_3.png[]
+
+. 自定义维度表结构：
++
+.数据源模型编辑器
+image::pentaho_console_5.png[]
+
+. 保存数据源。在可用数据源选择这个数据源然后导出创建的分析以便将来使用：
++
+.导出数据源
+image::pentaho_console_4.png[]
+--
+
+创建分析报表::
++
+--
+. 点击 New → Saiku Analytics → Create a new query. 选择 `BiDemo` Cube 然后按照这个页面填写 measure, columns, 以及 rows：
++
+.创建查询
+image::bi_pentaho_5.png[]
+
+. 在 `/home/admin` 目录保存报表，名称为 `ProductsByTypeAndLocation`。
+
+现在可以在 <<bi_widget,CUBA 应用>>中打开 Saiku 报表。
+--
+

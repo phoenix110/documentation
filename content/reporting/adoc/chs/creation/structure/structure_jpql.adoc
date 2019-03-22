@@ -1,0 +1,23 @@
+:sourcesdir: ../../../../source
+
+[[structure_jpql]]
+==== JPQL 数据集
+
+*JPQL* 数据集是通过执行 JPQL 查询而生成的。生成的查询字段必须使用 `as` 运算符提供别名。可以在 JPQL 查询中使用报表输入参数和父带区字段，类似于 SQL 查询。
+
+下面是一个使用从 group 父带区获取的 groupId 参数和外部 active 参数的 JPQL 查询示例：
+
+[source, jpql]
+----
+select u.name as userName, u.login as userLogin
+from sec$User u
+where u.group.id = ${group.groupId}
+    and u.active = ${active}
+----
+
+JPQL 查询自动支持软删除并仅返回未删除的记录。
+
+还可以通过选中报表区编辑界面下方的 *Preprocess query as Groovy template* 复选框来激活<<query_preprocessing,查询预处理>>。
+
+默认情况下，JPQL 查询使用映射到主数据库的实体。如果要查询 {main_man_url}/data_store.html[额外数据存储] 中的实体，请在 *Data store* 字段中设置其名称。
+

@@ -1,0 +1,29 @@
+:sourcesdir: ../../../source
+
+[[timer]]
+=== 通过计时器完成任务
+
+要在一定时间间隔后完成任务，应该：
+
+* 将 *Boundary timer event* 节点添加到任务节点。
+* 绘制从计时器节点到另一个所需节点的流。
+* 在计时器节点的 *Time duration* 属性中定义时间间隔的表达式。例如，`PT15M` 是 15 分钟间隔的表达式。
+* 将 *Cancel activity* 属性设置为 true。当计时器被触发时，它将取消当前任务。
+* 在 *Timer outcome* 属性中，定义在计时器完成任务时应使用的任务输出。
+
+.计时器编辑
+image::TimerEdit.png[align="center"]
+
+定义计时器的输出：
+
+[source, xml]
+----
+<boundaryEvent id="managerApprovalTimer" cancelActivity="true" attachedToRef="managerApproval">
+    <extensionElements>
+        <cuba:outcome>approve</cuba:outcome>
+    </extensionElements>
+</boundaryEvent>
+----
+
+默认情况下，处理计时器的 Job 执行器是禁用状态。要启用它，请设置应用程序属性 `bpm.activiti.asyncExecutorEnabled = true`。
+

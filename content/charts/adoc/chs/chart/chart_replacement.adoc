@@ -1,0 +1,19 @@
+:sourcesdir: ../../../source
+
+[[chart_replacement]]
+=== 更换 AmCharts 版本
+
+CUBA 框架包含的 AmCharts 库实例可以用另外一个版本替换。步骤：
+
+. 从 https://www.amcharts.com/download/[AmCharts 网站] 下载图表和股票图。
+. 将两个图表的 `amcharts` 目录合并成一个。
+. 拷贝 `amcharts` 目录至 `{project.rootDir}/modules/web/web/VAADIN/webjars`。
+. 重新部署应用程序。
+
+如果需要使用新版本带的新属性，需要按照下面的方式在界面控制器中设置自定义的 JSON。
+
+[source, java]
+----
+chart.setNativeJson("{\"valueScrollbar\":{\"autoGridCount\":true}}");
+----
+

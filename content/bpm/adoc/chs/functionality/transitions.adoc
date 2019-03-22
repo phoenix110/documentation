@@ -1,0 +1,36 @@
+:sourcesdir: ../../../source
+
+[[transitions]]
+=== 依赖任务输出的流转
+
+BPMN 2.0 表示法没有为用户任务提供定义多个输出的方法。要使流程在需要的方向上继续，请使用 *Exclusive gateway（排它网关）*。排它网关的条件中可以使用前一任务的结果。当用户完成任务时，其结果将写入名为 `[taskId]_result` 的流程变量。变量类型是 `ProcTaskResult`。
+
+`ProcTaskResult` 类的方法：
+
+* `count(String outcomeName): int` - 返回使用给定输出完成任务的用户数。
+* `exists(String outcomeName): boolean` - 如果有用户使用给定输出完成任务，则返回 `true`。
+
+任务完成结果对象用于网关输出流的 *Flow condition（流条件）* 表达式。
+
+*Example*
+
+.任务结果示例
+image::TaskOutcomesExample.png[align="center"]
+
+假设 `approval` 任务被并行分配给多个用户。为任务定义了两个输出：`approve` 和 `reject`。当所有用户完成任务后，该流程将转到排他网关。我们想要实现以下行为：如果有人选择 `reject` 选项，那么转到 `Rejected` 流程; 如果每个人都批准了这项任务，则转到 `Approved` 流程。
+
+在流程输出字段中定义条件::
++
+定义流条件的最简单方法是在流节点的 *Flow outcome* 属性中选择前一任务输出的名称。如果至少有一个任务使用所选输出完成，则该流将被激活。
+
+为流节点定义复杂条件::
++
+如果需要为输出实现更复杂的条件，可以在 *Flow condition* 字段中定义它。例如，“超过 5 个用户选择拒绝选项”条件如下所示：
++
+[source,groovy]
+----
+${approval_result.count('reject') > 5}
+----
+
+include::transitions/flow_order.adoc[]
+

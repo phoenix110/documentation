@@ -1,0 +1,8 @@
+:sourcesdir: ../../../source
+
+[[model_service]]
+=== 模型服务
+
+该服务用于创建和更新 Activiti 内部表中的模型。此外，它可用于处理模型的 JSON 表示。
+
+

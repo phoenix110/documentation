@@ -1,0 +1,9 @@
+:sourcesdir: ../../../source
+
+[[process_messages_service]]
+=== 流程消息服务
+
+该服务用于访问在流程中定义的本地化消息。
+
+要访问中间件的服务功能，请使用 `ProcessMessagesManager` bean。
+

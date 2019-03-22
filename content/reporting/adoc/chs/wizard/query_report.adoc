@@ -1,0 +1,96 @@
+:sourcesdir: ../../../source
+
+[[query_report]]
+=== 查询报表
+
+现在看一下向导提供的最后一种报表类型：通过查询过滤出的实体列表的报表。要演示这种报表类型，可以在前一个示例的基础上进行修改。和前一个示例一样，报表包含一个书籍列表（包括其标题和归属类目），但仅输出特定日期之后添加的书籍。
+
+像上一个示例一样设置报表的详细信息：
+
+* *Entity* - 报表实体 - `library$BookInstance`.
+* *Template type* - 输出文件格式 - XSLX.
+* *Report name* - `Recently added book items`.
+
+然后选择 *Report for list of entities, selected by query* 报表类型。
+
+.查询语句过滤的实体列表报表：第一步
+image::query_step_1.png[align="center"]
+
+选定的报表类型允许我们选择与指定条件匹配的实体列表。要设置查询，请单击下面的 *Set query* 链接。
+
+出现 *Define query* 窗口。正如所见，窗口类似于通用过滤器窗口。在此处指定条件，可将多个条件使用 AND/OR 进行组合。
+
+要添加新查询条件，请单击 *Add*。在出现的窗口中选择 `Created at` 属性。现在该属性被添加到查询条件树中，右侧面板将显示其属性。
+
+在属性面板中，可以设置默认参数值。如果不允许更改报表逻辑，则可以通过选中 *Hidden* 复选框来隐藏此属性。在这种情况下，运行报表时不会要求用户输入此参数。
+
+选择一个运算符(>=)。
+
+.查询参数
+image::query_parameter.png[align="center"]
+
+保存查询后，单击 *Next* 移至 `library$BookInstance` 属性选择界面。我们将 `BookItem.Publication.Book.Name` 和 `BookItem.LibraryDepartment.Name` 属性移到右边。单击 *OK* 完成第一步。
+
+.选择实体属性
+image::list_of_entities_attributes.png[align="center"]
+
+点击 *Next* -> *Save* 以保存报表。
+
+.实体属性
+image::query_step_2.png[align="center"]
+
+该报表如下所示：
+
+.报表数据构成
+image::query_editor.png[align="center"]
+
+在报表编辑器中，可以通过添加新的带区和数据集，以及配置报表模板、本地化和访问权限来创建更复杂的报表。
+
+例如，可以切换到 *Parameters and Formats* 标签页并修改 *Parameters* 列表中的查询参数：使用`Date` 替换标准的 `CreateTs1`。保存更改并关闭报表编辑界面。
+
+.参数和格式标签页
+image::query_parameter_rename.png[align="center"]
+
+执行完上述操作后，添加可直接从图书馆图书类目浏览界面运行报表的 *Report* 按钮。
+
+为此，需要在 `librarydepartment-browse.xml` 界面描述中定义一个按钮：
+
+[source, xml]
+----
+<table id="libraryDepartmentsTable"
+    ...
+    <buttonsPanel id="buttonsPanel">
+        ...
+        <button id="reportBtn"
+                caption="msg://reportBtn"/>
+    </buttonsPanel>
+</table>
+----
+
+之后，在界面控制器中注入按钮：
+
+[source, java]
+----
+@Inject
+private Button reportBtn;
+----
+
+并在 `onInit()` 方法中将 `RunReportAction` 分配给按钮：
+
+[source, java]
+----
+reportBtn.setAction(new RunReportAction("report"));
+----
+
+如同前面的示例，对于每个报表，需要将 `library$LibraryDepartment.browse` 添加到报表编辑界面的 *Roles and Screens* 标签页上的界面列表中。
+
+*Report* 按钮将显示在图书馆图书类目浏览界面中，只需单击一下即可显示系统中所有可用报表的列表。要运行报表，请在列表中选择 *Recently added book items*，指定日期并单击 *Run report*。
+
+.运行报表
+image::query_running.png[align="center"]
+
+输出如下：
+
+.报表输出
+image::query_result.png[align="center"]
+

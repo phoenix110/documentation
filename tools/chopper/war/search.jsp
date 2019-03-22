@@ -52,15 +52,15 @@ long start = System.currentTimeMillis();
             <input type="submit" class="submit" value="">
             </div>
                  <div class="radiobuttons">
-                      case
+                      大小写：
                       <span class="radio-container">
                            <input name="caseSensitive" type="radio" class="radiobutton" value="yes" <%= caseSensitive ? "checked": "" %>>
                            <span class="round"></span>
-                      </span> sensitive
+                      </span> 区分
                       <span class="radio-container">
                            <input name="caseSensitive" type="radio" class="radiobutton" value="no" <%= !caseSensitive ? "checked": "" %>>
                            <span class="round"></span>
-                      </span> insensitive
+                      </span> 不区分
                  </div>
         </form>
         </div>
@@ -78,7 +78,7 @@ long start = System.currentTimeMillis();
 <%
 	if (searchTerms == null || searchTerms.trim().equals("")) {
 		out.println("<p>{{searchTermIsEmpty}}</p>");
-	} else if (searchTerms.length() < 3) {
+	} else if (searchTerms.length() < 1) {
 		out.println("<p>{{searchTermIsTooShort}}</p>");
 	} else {
 		List<SearchResult> results = search.search(searchTerms, caseSensitive);

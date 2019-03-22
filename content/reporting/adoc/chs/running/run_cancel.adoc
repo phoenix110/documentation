@@ -1,0 +1,39 @@
+:sourcesdir: ../../../source
+
+[[run_cancel]]
+=== 取消报表
+
+如果报表以后台任务的方式运行，那么用户就可以中断报表的执行。
+
+
+要添加取消选项，请在 *Administration > Application Properties* 界面中设置 `reporting.useBackgroundReportProcessing` 属性。
+
+[source, groovy]
+----
+reporting.useBackgroundReportProcessing = true
+----
+
+这样，报表在执行时会显示带有进度条和 *Cancel* 按钮的窗口：
+
+.取消报表
+image::run_cancel.png[align="center"]
+
+还可以使用 `reporting.backgroundReportProcessingTimeoutMs` 属性设置处理超时：
+
+[source, groovy]
+----
+reporting.backgroundReportProcessingTimeoutMs = 30000
+----
+
+时间到了，无论结果如何任务都将被取消，用户会接收到错误信息：
+
+.报表错误
+image::run_cancel_2.png[align="center"]
+
+要以编程方式取消报表执行，可以使用 `ReportService` 接口的 `cancelReportExecution()` 方法，该方法需要用户会话和报表的标识：
+
+[source, java]
+----
+reportService.cancelReportExecution(userSessionId, report.getId());
+----
+

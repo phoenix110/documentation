@@ -1,0 +1,60 @@
+:sourcesdir: ../../../../source
+
+[[tomcat_war_deployment_linux]]
+==== 部署 WAR 至 Tomcat Linux 服务
+
+以下示例在 Ubuntu 16.04 测试通过
+
+. 在 <<build.gradle,build.gradle>> 末尾添加 <<build.gradle_buildWar, buildWar>> 任务。可以指定不同的 `context.xml` 文件来设置生产环境数据库连接：
++
+--
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_2_linux.groovy[]
+----
+
+如果目标 Tomcat 服务的参数跟<<fast_deployment,快速部署>>里用到的本地 Tomcat 的参数不同，需要提供相应的应用程序属性。比如，如果目标 Tomcat 运行在 9999 端口，任务定义会是这样：
+
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_3.groovy[]
+----
+--
+
+. 执行 `buildWar` Gradle 任务。会在项目 `build/distributions` 目录生成 `app.war` 文件。
++
+[source, plain]
+----
+gradlew buildWar
+----
+
+. 安装 Tomcat 8 Linux Service:
++
+[source, plain]
+----
+sudo apt-get install tomcat8
+----
+
+. 拷贝项目生成的 `app.war` 文件到 Tomcat 服务的 `/var/lib/tomcat8/webapps` 目录。
++
+[TIP]
+====
+Tomcat 服务默认是使用 `tomcat8` 用户来启动的。所以 `webapps` 目录的所有者也是 `tomcat8`。
+====
+
+. 创建配置文件 `/usr/share/tomcat8/bin/setenv.sh` 包含以下设置：
++
+[source,plain]
+----
+export CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
+----
+
+. 重启 Tomcat 服务:
++
+[source, plain]
+----
+sudo service tomcat8 restart
+----
+
+. 在浏览器打开 `++http://localhost:8080/app++`。
+

@@ -1,0 +1,38 @@
+:sourcesdir: ../../../source
+
+[[recipes__library]]
+=== 添加库
+
+目前 CUBA Polymer UI 模块使用 https://bower.io/[Bower] 作为包管理器。因此，可以引入任何发布在 https://github.com[GitHub] 上的库。
+
+想象下需要在项目中使用 https://www.webcomponents.org/element/PolymerElements/paper-toggle-button[paper-toggle-button]。源代码在 https://github.com/PolymerElements/paper-toggle-button。
+
+有两种方式在项目中添加类库：
+
+. 通过命令行：
++
+[source,bash]
+----
+$ bower install PolymerElements/paper-toggle-button --save
+----
+
+. 手动添加到 `bower.json`:
++
+[source,javascript]
+----
+...
+"dependencies": {
+  ...
+  "paper-toggle-button": "PolymerElements/paper-toggle-button"
+},
+...
+----
+
+类库会被下载到 `bower_components/paper-toggle-button` 目录然后可以在代码中使用。
+
+默认情况下，Bower 使用请求的依赖的默认分之。如果需要使用其它版本，在 `#` 符号后指定：
+
+[source,bash]
+----
+$ bower install PolymerElements/paper-toggle-button#3.0.0-pre.1 --save
+----

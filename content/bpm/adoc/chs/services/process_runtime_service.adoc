@@ -1,0 +1,20 @@
+:sourcesdir: ../../../source
+
+[[process_runtime_service]]
+=== 流程运行时服务
+
+被设计用于与流程实例一起使用。服务方法允许：
+
+* <<task_execution_sample,启动一个流程>>
+* 取消一个流程
+* 完成一个任务
+* 将一个任务分配给用户
+
+当流程启动时，以下流程变量会被自动创建：
+
+* `bpmProcInstanceId` - `ProcInstance` 对象 ID
+* `entityName` - 关联的实体名称
+* `entityId` - 关联的实体 ID
+
+要访问中间件的服务功能，请使用 `ProcessRuntimeManager` bean。
+

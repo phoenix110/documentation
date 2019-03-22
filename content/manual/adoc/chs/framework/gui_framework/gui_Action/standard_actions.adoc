@@ -1,0 +1,49 @@
+:sourcesdir: ../../../../../source
+
+[[standard_actions]]
+===== 标准操作
+
+框架提供了一些标准<<gui_Action,操作>>用于处理常见任务，例如为表格中选择的实体调用编辑界面。通过在 `type` 属性中指定其类型，就可以在界面 XML 描述中声明标准操作，例如：
+
+[source, xml]
+----
+include::{sourcesdir}/gui/std_actions/std_actions_1.xml[]
+----
+
+标准操作根据自身的类型和所关联的组件对自身进行配置，有情况下需要指定额外的配置参数。
+
+标准操作分为两类：
+
+* 对表格或树中显示的实体<<std_list_actions,集合的操作>>。
+
+* <<std_picker_actions,选择器类的字段操作>>。
+
+可以在项目中创建相似的操作或覆盖现有的标准操作类型。
+
+例如，假设需要一个操作来显示表中当前所选实体的实例名称，并且希望通过仅指定其类型在多个界面中使用此操作。以下是创建此类操作的步骤。
+
+. 创建一个操作类添加 `@ActionType` 注解，在这个注解里指定操作名称：
++
+[source, java]
+----
+include::{sourcesdir}/gui/std_actions/std_actions_2.java[]
+----
+
+. 在 `web-spring.xml` 文件中，添加 `<gui:actions>` 元素，其中 `base-packages` 属性指向一个包，在这个包里可以找到带注解的操作类：
++
+[source, xml]
+----
+include::{sourcesdir}/gui/std_actions/std_actions_2_1.xml[]
+----
+
+. 现在，可以通过指定操作类型的名称在界面描述中声明这个操作：
++
+[source, xml]
+----
+include::{sourcesdir}/gui/std_actions/std_actions_2_2.xml[]
+----
+
+include::standard_actions/std_list_actions.adoc[]
+
+include::standard_actions/std_picker_actions.adoc[]
+

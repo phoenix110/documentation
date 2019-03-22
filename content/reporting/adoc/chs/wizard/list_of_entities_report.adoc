@@ -1,0 +1,87 @@
+:sourcesdir: ../../../source
+
+[[list_of_entities_report]]
+=== 实体列表报表
+
+报表向导允许为实体实例列表创建两种类型的报表：
+
+. 手动选择特定实体实例的报表
+. 由特定请求筛选的实体实例报表。
+
+来看看第一种报表类型。假设想要获取图书馆中所有书籍实例(`library$BookInstance` 实体)的列表，列表项中包含书籍的名称和所属类目。
+
+第一步，指定报表详细信息：
+
+* *Entity* - 报表实体 - `library$BookInstance`.
+* *Template type* - 输出格式 - XSLX.
+* *Report name* - 报表名称 - `Book items location`.
+
+然后，选择报表的类型（*Report for list of entities*），然后单击 *Next*。
+
+.实体列表报表：第一步
+image::list_of_entities_step_1.png[align="center"]
+
+按任务要求，在属性选择窗口中选择 `BookItem.Publication.Book.Name` 和 `BookItem.LibraryDepartment.Name`。
+
+.实体列表报表：选择实体属性
+image::list_of_entities_attributes.png[align="center"]
+
+单击 *ОК* 并进入第二步，进行报表带区编辑。
+
+用于实体列表的报表模板被限制为只能有一个以表格形式显示数据的区域。虽然不允许添加新区域，但可以通过单击包含属性列表的链接来编辑现有数据集，或者删除现有区域并重新创建。
+
+目前，不需要进行任何更改。单击 *Next* -> *Save* 保存报表。该报表在报表编辑界面中显示如下：
+
+.报表数据构成
+image::list_of_entities_editor.png[align="center"]
+
+一旦报表被保存，就可以从报表浏览界面运行报表。
+
+此外，可以添加一个按钮来从书籍条目浏览界面运行报表，可以通过单击出版物浏览界面中的 *Show items* 按钮打开该界面。为此，将书籍实例表格的 `multiselect` 属性设置为 `true`，以便能够为报表指定一组记录，然后添加按钮的源代码：
+
+[source, xml]
+----
+<groupTable id="bookInstancesTable"
+            multiselect="true">
+            ...
+    <buttonsPanel>
+    ...
+        <button id="printList"
+                caption="msg://printList"/>
+----
+
+之后，在界面控制器中注入 `Button` 组件：
+
+[source, java]
+----
+@Inject
+private Button printList;
+----
+
+接下来，订阅 `InitEvent` 事件并添加以下代码：
+
+[source, java]
+----
+@Subscribe
+private void onInit(InitEvent event) {
+    TablePrintFormAction action = new TablePrintFormAction("report", bookInstancesTable);
+    bookInstancesTable.addAction(action);
+    printList.setAction(action);
+}
+----
+
+最后，应该将 *Book items location* 报表与图书条目浏览界面相关联。打开报表编辑界面，切换到 *Roles and Screens* 标签页，然后从界面下拉列表中添加 `library$BookInstance.lookup` 界面到下表：
+
+.添加界面
+image::list_of_entities_screens.png[align="center"]
+
+现在，可以从书籍条目浏览界面的表格中选中要打印的条目并点击 *Print list* 按钮来运行报表。*Print selected* 选项导出所选条目，*Print all* 选项打印当前过滤器选择的所有实例。
+
+.打印选中的
+image::list_of_entities_running.png[align="center"]
+
+输出如下：
+
+.报表输出
+image::list_of_entities_result.png[align="center"]
+

@@ -1,0 +1,11 @@
+:sourcesdir: ../../../../source
+
+[[bean_validation]]
+==== Bean 验证
+
+Bean 验证是一种可选机制，可在<<gui_framework,通用 UI>> 和 <<rest_api_v2,REST API>> 中提供中间件上数据的统一验证。它基于 JSR 349 - Bean Validation 1.1 及其参考实现： https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/?v=5.3[Hibernate Validator]。
+
+include::bean_validation/bean_validation_constraints.adoc[]
+
+include::bean_validation/bean_validation_running.adoc[]
+

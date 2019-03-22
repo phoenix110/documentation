@@ -1,0 +1,30 @@
+:sourcesdir: ../../../source
+
+[[index_search_example]]
+=== 索引和搜索示例
+
+考虑一下上面提到的相关联的 `Order` 和 `Customer` 实体的简单情况。
+
+.数据模型
+image::Example1Classes.png[align="center"]
+
+在这种情况下，如果所有对象属性都被编入索引，则对 `Order` 和`Customer` 的两个相关实例建立索引将创建两个 Lucene 文档，其中包含以下内容：
+
+[source, plain]
+----
+id: Order.id = "b671dbfc-c431-4586-adcc-fe8b84ca9617"
+all: Order.number + Order.date + Order.amount = "001^2013-11-14^1000"
+links: Customer.id = "f18e32bb-32c7-477a-980f-06e9cc4e7f40"
+----
+
+[source, plain]
+----
+id: Customer.id = "f18e32bb-32c7-477a-980f-06e9cc4e7f40"
+all: Customer.name + Customer.email = "John Doe^john.doe@mail.com"
+----
+
+假设搜索关键字是 "john"：
+
+* 首先，搜索在两个文档的“all”字段中执行。系统将找到“Customer”实体，并将其包含在搜索结果中。
+* 然后，系统将在所有文档的“links”字段中搜索先前找到的客户的标识符。系统将找到 `Order` 并将其添加到搜索结果中。
+

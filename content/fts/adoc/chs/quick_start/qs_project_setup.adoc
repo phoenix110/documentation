@@ -1,0 +1,48 @@
+:sourcesdir: ../../../source
+
+[[qs_project_setup]]
+=== 项目设置
+
+. https://github.com/cuba-platform/sample-library-cuba7/archive/master.zip[下载] 并解压 *Library* 应用程序的源代码仓库，或者直接从 git 克隆：
++
+----
+  git clone https://github.com/cuba-platform/sample-library-cuba7
+----
+. 按照 {studio_man_url}/index.html[CUBA Studio 用户手册] 中 {studio_man_url}/open_project.html[打开已有项目] 部分的描述打开 Library 项目。
+
+. 在 CUBA Studio中打开 *Project Properties* 编辑器：点击 *CUBA* -> *Project Properties* 主菜单项。在 *App components* 列表中添加 *fts* 应用程序组件。当 Studio 建议重新创建 Gradle 脚本时，确认就可以。
+
+. 装配项目：在 Studio 主菜单点击 *CUBA* -> *Build Tasks* -> *Assemble*。这一步会下载所有需要的依赖库，然后会在项目模块的 `build` 子目录组装项目工件。
+
+. 在本地 *HyperSQL* 服务创建数据库：在主菜单点击 *CUBA* -> *Create database*。
+
+. 按照 {studio_man_url}/index.html[CUBA Studio 用户手册] 中 {studio_man_url}/start_app.html[启动应用程序] 部分的描述启用该应用。
+
+. 打开 *library* 应用程序。
++
+用户名和密码为 `admin` / `admin`。
++
+
+. 要启用全文搜索功能，请在应用程序的主菜单中打开 *Administration* -> *Application properties*，找到并打开表格中的 *`fts`* 属性列表。双击打开 *fts.enabled* 属性并在 *Current value* 字段中选择 *true*。
+
++
+.fts.enabled
+image::fts_enabled_true.png[align="center"]
+
+
+完成上述步骤后，全文搜索功能将被添加到应用程序中并准备工作。如果退出系统然后再次登录，则主应用程序窗口的右上方面板中将显示一个搜索输入框。全文搜索也可以在 link:{main_man_url}/gui_Filter.html#gui_Filter_fts[过滤器] UI 组件中使用。
+
+但是，这时搜索将不会产生任何结果，因为数据尚未编入索引。
+
+
+要启动对当前数据库的(即默认情况下在 FTS 配置文件中列出的实体)进行一次性索引，请打开 *Administration* -> *JMX Console*，找到 `app-core.fts:type=FtsManager` JMX bean 然后首先调用 `reindexAll()`，再调用 `processQueue()`。
+
+.JMX 安装
+image::jmx_fts_setup.png[align="center"]
+
+
+在此之后，搜索 "adm" 字符串则会给出以下结果：
+
+.搜索结果
+image::2.1_project_setup.png[align="center"]
+

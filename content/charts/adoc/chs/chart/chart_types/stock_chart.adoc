@@ -1,0 +1,62 @@
+:sourcesdir: ../../../../source
+
+[[stock_chart]]
+==== 股票图
+
+使用 `StockChartGroup` 组件可以创建股票走势图。
+
+股票图支持多个数据集合并且有开箱即用的数据集合选择器。数据集合可以相互比较。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=stockchart-multiple-datasets" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.有多数据集合的股票图
+image::chart/stock-chart-with-datasets.svg[align="center", width="800"]
+
+股票图可以在图上或者坐标轴上展示不同类型的注释。这些注释称为股票事件。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=stockchart-stock-events" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.有股票事件的股票图
+image::chart/stock-chart-with-stockevents.png[align="center", width="800"]
+
+股票图能支持多个股票面板。每个股票面板可以有任意数量的图。每个股票面板是个基于<<serial_chart,SerialChart>>的单独序列图，所以能做任何SerialChart可做的事。
+
+++++
+<div class="manual-live-demo-container">
+    <a href="https://demo.cuba-platform.com/sampler/open?screen=stockchart-multiple-panels" class="live-demo-btn" target="_blank">在线示例</a>
+</div>
+++++
+
+.带有多个股票面板的股票图
+image::chart/stock-chart-with-panels.png[align="center", width="800"]
+
+`StockChartGroup` 事件监听器::
++
+--
+* `DataSetSelectorCompareListener` – 数据集合选择器比较事件。
+* `DataSetSelectorSelectListener` – 数据集合选择器的选择事件。
+* `DataSetSelectorUnCompareListener` – 数据集合选择器取消比较事件。
+* `PeriodSelectorChangeListener` – 用光标选择显示周期。
+* `StockChartClickListener` – 点击股票图区域。
+* `StockChartRightClickListener` – 右键点击股票图区域。
+* `StockEventClickListener` – 点击股票事件。
+* `StockEventRollOutListener` – 股票事件弹出。
+* `StockEventRollOverListener` – 股票事件翻转。
+* `StockGraphClickListener` – 点击股票图形。
+* `StockGraphItemClickListener` – 点击股票图形条目。
+* `StockGraphItemRightClickListener` – 右键点击股票图形条目。
+* `StockGraphItemRollOutListener` – 股票图形条目弹出事件。
+* `StockGraphItemRollOverListener` – 股票图形条目翻转事件。
+* `StockGraphRollOutListener` – 股票图形弹出事件。
+* `StockGraphRollOverListener` – 股票图形翻转事件。
+* `ZoomListener` – 画布的缩放。
+--
+

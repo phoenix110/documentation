@@ -1,0 +1,37 @@
+:sourcesdir: ../../../../source
+
+[[qs_facts]]
+==== 创建事实表
+
+对于事实度量，使用 Orders 和 Order line。
+
+. 首先，创建 Order Line 变换。拖拽 *Table input* 节点到工作簿（worksheet）并且定义报表需要的字段：`id`、`product_id`、`quantity`  和 `order_id`：
++
+.OrderLine 表输入
+image::star-schema_7.png[]
+
+. 然后创建 order lines 的插入/更新节点：
++
+.插入/更新 OrderLine
+image::star-schema_8.png[]
+
+. 创建 orders 变换：
++
+.Order 变换
+image::star-schema_9.png[]
+
+. 最后，在表中更新 customer ID：
++
+.更新 customers
+image::star-schema_10.png[]
+
+. 现在事实变换创建好了：
++
+.事实变换
+image::star-schema_11.png[]
+
+. 在变换外面套上相应的任务：
++
+.Facts job
+image::star-schema_13.png[]
+

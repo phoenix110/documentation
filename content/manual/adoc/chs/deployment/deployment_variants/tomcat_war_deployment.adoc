@@ -1,0 +1,50 @@
+:sourcesdir: ../../../../source
+
+[[tomcat_war_deployment]]
+==== 部署 WAR 至 Tomcat Windows 服务
+
+. 在 <<build.gradle,build.gradle>> 末尾添加 <<build.gradle_buildWar, buildWar>> 任务：
++
+--
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_2.groovy[]
+----
+
+如果目标 Tomcat 服务的参数跟<<fast_deployment,快速部署>>里用到的本地 Tomcat 的参数不同，需要提供相应的应用程序属性。比如，如果目标 Tomcat 运行在 9999 端口，任务定义会是这样：
+
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_3.groovy[]
+----
+
+可以指定另外一个 `context.xml` 文件用来设置生产环境的数据库，示例：
+
+[source, groovy]
+----
+include::{sourcesdir}/deployment/warDeployment_4.groovy[]
+----
+--
+
+. 执行 `buildWar` Gradle 任务。会在项目 `build/distributions` 目录生成 `app.war` 和 `app-core.war` 文件。
++
+[source, plain]
+----
+gradlew buildWar
+----
+
+. 下载并执行 Tomcat 8 Windows Service Installer。
+
+. 切换到安装好的服务的 `bin` 目录，使用管理员权限执行 `tomcat8w.exe`。
+在 *Java* 标签页，设置 *Maximum memory pool* 为 1024MB。然后在 *General* 标签页重启服务。
++
+image::tomcatPropeties.jpg[align="center"]
+
+. 在 _Java Options_ 字段添加 `-Dfile.encoding=UTF-8`。
+
+. 拷贝项目生成的 `app.war` 和 `app-core.war` 文件到 Tomcat 服务的 `webapps` 目录。
+
+. 启动 Tomcat 服务。
+
+. 在浏览器打开 `++http://localhost:8080/app++`。
+

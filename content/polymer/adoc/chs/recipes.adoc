@@ -1,0 +1,31 @@
+:sourcesdir: ../../source
+
+[[recipes]]
+== 常见任务
+
+从项目到项目，从框架到框架，我们总是面临同样的一些问题：
+
+* 如何做国际化多语言支持？
+
+* 如何构建导航面板？
+
+* 如何在组件中注入服务？
+
+* 以及诸如此类。
+
+Polymer 没有为我们设定解决这些问题的目标。Polymer 的主要目的是提供创建自定义可重用组件的方便的途径。依赖注入，导航等，这些都超出了这个任务的定义。
+
+在这章节，我们将讨论下这些在前端开发中遇到的常见问题，以及为这些问题提供解决方案。注意，我们的建议也不是终极正确的，只是作为解决这些问题的一个可能的方法。
+
+include::recipes/recipes__conventions.adoc[]
+
+include::recipes/recipes__i18n.adoc[]
+
+include::recipes/recipes__fetch.adoc[]
+
+include::recipes/recipes__di.adoc[]
+
+include::recipes/recipes__navigation.adoc[]
+
+include::recipes/recipes__library.adoc[]
+

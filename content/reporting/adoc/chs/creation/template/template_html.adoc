@@ -1,0 +1,123 @@
+:sourcesdir: ../../../../source
+
+[[template_html]]
+==== HTML 模板
+
+HTML 模板在 `.html` 文件（无 `BOM` 的 `UTF-8` 编码）中定义。可以使用 https://github.com/flyingsaucerproject/flyingsaucer[Flying Saucer] 库的 HTML/CSS 功能，其主要指南参考 http://flyingsaucerproject.github.io/flyingsaucer/r8/guide/users-guide-R8.html 。
+
+要控制页面尺寸、页眉和页脚，请使用特殊的 CSS 规则和属性。可以在<<example_html,示例报表>>中找到每页都显示页面/页脚的报表示例。
+
+FreeMarker 标签用于放置数据（FreeMarker 文档可从 https://freemarker.apache.org/docs/ 获取）。
+
+FreeMarker 文档模型的结构如下：
+
+[source, groovy]
+----
+Band { 
+      bands [ bandName : [ band, .. ], .. ]
+      fields [ fieldName : fieldValue, .. ] 
+}
+----
+
+例如，应该使用以下表达式访问 `band` 带区中第一行数据的 `name` 字段：
+
+[source, groovy]
+----
+Root.bands.band[0].fields.name
+----
+
+为方便起见，可以使用变量，例如：
+
+[source, html]
+----
+<#assign headerRow = Root.bands.Header[0]>
+<p>Date: ${headerRow.fields.reportDate}</p>
+----
+
+下面是一个模板示例，它输出一个由两个带区（`Book` 和 `Authors`）组成的报表。第一个区输出书名和分类，第二个区输出本书的作者列表。
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_6.html[]
+----
+
+下面是一个更复杂的例子。假设我们有以下报表带区结构：
+
+[source, groovy]
+----
+Root {
+    HeaderBand {
+        query = return [[ "name" : "Column1" ],[ "name" : "Column2" ]]
+    }
+    Band1 {
+        query = return [
+                ["field1" : "Value 11", "field2" : "Value 12"],
+                ["field1" : "Value 21" , "field2" : "Value 22"]
+        ]
+    }
+    Band2 {
+        query = return [[ "header" : "Header1" ], [ "header" : "Header2" ]]
+        SubBand1 {
+            query = return [["header" : 'SubHeader1'] , [ "header" : 'SubHeader2' ]]
+        }
+    }
+}
+----
+
+* 插入字段：
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_8.html[]
+----
+
+* 插入列表：
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_9.html[]
+----
+
+* 插入表格：
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_10.html[]
+----
+
+* 插入多级列表：
+
+[source, html]
+----
+include::{sourcesdir}/examples_html_11.html[]
+----
+
+*嵌入图片*
+
+目前，CUBA 报表扩展不提供类似于 DOCX/XLSX 报表将图片插入 HTML 报表的方法。图片仍然可以使用 `img` 标签并在 `src` 属性中指定图片链接的方式嵌入。有两种方法可以将图片添加到 HTML 报表中：
+
+* 通过 URL
++
+图片可以托管在 Tomcat 服务或者其他地方，以便用做本地文件引用。例如，托管在 `deploy\tomcat\webapps\ROOT\images` 文件夹中的图片可以被插入：
+[source, html]
+----
+<img src="http://localhost:8080/images/SomeImage.jpg" height="68" width="199" border="0" align="right"/>
+----
+
+* 通过 Bitmap
++
+图片在 `src` 属性中以字节数组形式添加。此方法可以使用实体的 `FileDescriptor` 属性变量。甚至可以将字节数组直接添加到模板中，虽然不建议使用此方法：
+[source, html]
+----
+<img alt="SomePicture.png" src="data:image/png;base64,iVBORw0K ..... AcEP9PwxD0hNKK1FCAAAAAElFTkSuQmCC"/>
+----
+
+*内联编辑器*
+
+HTML 模板支持内联编辑器。可以直接在 *Template editor* 窗口中编辑模板，无需重新上传模板文件即可查看更改。
+
+.HTML 内联编辑器
+image::html_report_editor.png[align="center"]
+
+include::template_html/html_to_pdf.adoc[]
+

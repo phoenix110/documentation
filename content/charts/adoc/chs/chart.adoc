@@ -1,0 +1,25 @@
+:sourcesdir: ../../source
+
+[[chart]]
+== 图表展示
+
+CUBA 框架的图表展示扩展支持多样化的图表类型：饼图，折线图，气泡图，雷达图，漏斗图，股票图等等。图表也支持导出。大部分的图表都支持缩放和滚轮操作。*图表* 只支持 web 客户端。
+
+图表扩展是基于 AmCharts 类库开发的，并且在一定的许可下进行发布使用，如果保留到 AmCharts 网站的链接的话，许可范围内可以免费使用。或者，可以为项目 http://www.amcharts.com/online-store[购买^] AmCharts 的许可，这样可以移除链接。
+
+include::chart/chart_dependency.adoc[]
+
+include::chart/chart_configuration.adoc[]
+
+include::chart/chart_export.adoc[]
+
+include::chart/chart_data_binding.adoc[]
+
+include::chart/chart_listeners.adoc[]
+
+include::chart/chart_types.adoc[]
+
+include::chart/chart_example.adoc[]
+
+include::chart/chart_replacement.adoc[]
+

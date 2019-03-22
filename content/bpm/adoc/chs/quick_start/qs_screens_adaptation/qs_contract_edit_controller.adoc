@@ -1,0 +1,31 @@
+:sourcesdir: ../../../../source
+
+[[qs_contract_edit_controller]]
+==== 合同编辑界面控制器
+
+
+转到 *Controller* 标签页并使用以下代码替换其内容：
+
+[source,java]
+----
+include::{sourcesdir}/quickstart/ContractEdit.java[]
+----
+
+
+点击 *OK* 以保存改变。
+
+
+我们详细了解一下控制器代码。
+
+`ProcActionsFrame` 是显示用户当前可用的流程操作的框架(frame)。在初始化时，框架(frame)通过两个参数搜索相关的 `ProcInstance` 对象：流程代码和实体实例。如果未找到 `ProcInstance` 对象，则创建一个新实例，该界面显示开始流程按钮。如果找到相关的流程实例，则框架(frame)将搜索当前用户的未完成的流程任务，并显示流程任务的操作按钮。有关详细信息，请参阅 <<proc_actions_frame>>。
+
+
+在合同编辑界面中，流程操作框架(frame)的初始化在 `initProcActionsFrame()` 方法中执行。该方法的关键部分是调用  `init(PROCESS_CODE,getItem())`。 `PROCESS_CODE` 是一个流程代码（`contractApproval` - 我们在模型部署期间看到了这个值，参阅（<<qs_process_model_deployment>>）。第二个参数 `getItem()` 是当前合同实体实例。
+
+
+`standard()` 方法返回的初始化器执行以下操作：
+
+*  初始化标准流程操作断言（predicate），这个断言在流程启动前和流程任务完成之前调用。断言提交实体编辑界面。
+
+*  初始化标准监听器，用于显示 "流程开始" 或 "任务完成" 等通知，并在流程启动或流程任务完成后刷新 `procActionsFrame`。
+

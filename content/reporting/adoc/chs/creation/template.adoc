@@ -1,0 +1,60 @@
+:sourcesdir: ../../../source
+
+[[template]]
+=== 报表模板
+
+可以在报表编辑界面的 *Templates* 标签页中为一个报表创建多个模板。必须在 *Report structure* 标签页中选择其中一个作为默认模板。
+
+下面是添加模板的表单：
+
+.模板编辑器
+image::report_template.png[align="center"]
+
+* *Template code* - 作为标识的模板代码。
+
+* *Template file* - 模板文件，从文件系统加载并与报表结构描述一起保存到数据库中。
+
+* *Output type* -报表输出类型。它应该根据<<template_to_output>>中描述的规则与模板文件类型相一致。
+
+* *Output name pattern* - 可选的文件名模板，将用于生成的报表的下载文件名。它可以是常量字符串，也可以包含报表参数变量，例如 `${header.authorName}.xlsx`。可以创建具有若干参数和字符串拼接的更复杂的模板，模板中用到的参数可以在任何报表结构带区使用脚本创建，例如，`${Root.title}.xlsx`，其中 `title` 是在脚本中定义：
++
+[source, groovy]
+----
+[['title' : ('Report for '+params['author'].firstName+' '+params['author'].lastName)]]
+----
+
+* *Is custom* - 表示格式化逻辑是自定义的，不是系统提供的格式化器。
+
+* *Defined by* - 自定义模板的定义方式：可以是<<template_custom,class>>、脚本或 URL。
+
+* *Custom definition* - Java 类的完全限定名称、*core* 模块中 Groovy 脚本的路径或用于创建模板的 URL。
+
+* *Is alterable output* - 定义是否允许用户在运行报表时在对话框窗口中选择报表输出类型。
++
+--
+如果此标志启用，则在运行报表时将显示输出类型选择对话框。如果报表包含多个模板，则还会显示模板选择的下拉列表。
+
+.选择输出类型及模板
+image::report_template_alterable.png[align="center"]
+--
+
+include::template/template_xls.adoc[]
+
+include::template/template_csv.adoc[]
+
+include::template/template_doc.adoc[]
+
+include::template/template_html.adoc[]
+
+include::template/template_jasper.adoc[]
+
+include::template/template_custom.adoc[]
+
+include::template/template_chart.adoc[]
+
+include::template/pivotTable_output.adoc[]
+
+include::template/table_output.adoc[]
+
+include::template/template_to_output.adoc[]
+

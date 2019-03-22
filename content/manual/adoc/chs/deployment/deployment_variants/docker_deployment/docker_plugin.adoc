@@ -1,0 +1,83 @@
+:sourcesdir: ../../../../../source
+
+[[docker_plugin]]
+===== Docker 的 Gradle 插件
+
+本章节介绍使用 Gradle 构建和发布单一 UberJAR 的 Docker 镜像。
+
+市面上有不少 Gradle 的 Docker 插件，这里使用 https://github.com/bmuschko/gradle-docker-plugin[bmuschko/gradle-docker-plugin]。
+
+在 `build.gradle` 文件中引入管理镜像必须的类并且添加 buildscript 依赖：
+
+[source, plain]
+----
+buildscript {
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-docker-plugin:X.Y.Z'
+    }
+}
+
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
+----
+
+`com.bmuschko.docker-remote-api` 插件允许通过远程 API 跟 Docker 交互。可以通过插件提供的自定义任务创建任何能想到的工作流模型的强化任务。需要使用这个插件，在构建脚本添加以下代码片段：
+
+[source, plain]
+----
+apply plugin: 'com.bmuschko.docker-remote-api'
+----
+
+Dockerfile 可以通过自定义的 `Dockerfile` 任务创建。Dockerfile 指令需要按照正确的顺序声明。
+
+[source, groovy]
+----
+task createDockerfile(type: Dockerfile, dependsOn: buildUberJar)  {
+    destFile = project.file('build/distributions/uberJar/Dockerfile')
+    from 'openjdk:8'
+    addFile("app.jar", "/usr/src/cuba-sales/app.jar")
+    defaultCommand("java", "-Dapp.home=/usr/src/cuba-sales/home", "-jar", "/usr/src/cuba-sales/app.jar")
+}
+----
+
+* `from` 属性添加了用来构建镜像的基础 Docker 镜像。
+* `addFile` 属性定义了将要被拷贝到镜像的 JAR 源文件的路径。注意，JAR 源文件需要跟 `Dockerfile` 在一个目录。
+* `defaultCommand` 定义了运行应用程序的命令。
+
+拉取（pull）或者推送（push）镜像到 Docker Hub 仓库或者私有仓库可能会需要登录认证。可以通过 registryCredentials 闭包（closure）来提供用户名密码。在 https://docs.gradle.org/current/userguide/build_environment.html[gradle.properties] 文件设置用户名密码：
+
+[source, groovy]
+----
+dockerHubEmail = 'example@email.com'
+dockerHubPassword = 'docker-hub-password'
+dockerHubUsername = 'docker-hub-username'
+----
+
+可以在构建脚本中访问项目属性，像使用变量一样用这些属性的名称即可：
+
+[source, groovy]
+----
+def dockerRegistryCredentials = new DockerRegistryCredentials()
+dockerRegistryCredentials.email = dockerHubEmail
+dockerRegistryCredentials.password = dockerHubPassword
+dockerRegistryCredentials.username = dockerHubUsername
+----
+
+定义如下两个任务，从 Dockerfile 创建一个 Docker 镜像，以及推送镜像至公共 Docker Hub 仓库：
+
+[source, groovy]
+----
+include::{sourcesdir}/deployment/dockerFile.groovy[]
+----
+按照 <<single_jar_deployment>> 章节的介绍配置单一 Uber JAR。然后执行 `pushImage` 任务，可以通过命令行终端执行。
+
+[source, plain]
+----
+gradle pushImage
+----
+
+这个任务会构建 UberJAR，生成 `Dockerfile`，构建镜像然后推送这个镜像到 Docker Hub 仓库。
+

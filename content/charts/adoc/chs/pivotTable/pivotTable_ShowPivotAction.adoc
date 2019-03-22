@@ -1,0 +1,63 @@
+:sourcesdir: ../../../source
+
+[[pivotTable_ShowPivotAction]]
+=== 使用 ShowPivotAction
+
+`ShowPivotAction` 是一个特殊的操作，可以通过这个操作从继承了 `ListComponent` 的组件中导出数据，比如 `Table`，`Tree` 以及 `DataGrid`，甚至透视表。此操作不需要其它任何额外的应用程序组件就可以提供简单的 BI 分析方法。
+
+这个操作需要在界面控制器中以编程的方式创建并使用，比如，在按钮中：
+
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction.java[]
+----
+
+`ShowPivotAction` 有两种导出模式：所有行和选中行。如果没有选中行，默认会不进行确认导出所有行。
+
+可编辑的 `PivotTable` 组件会显示在新标签页中。默认情况下，包含在组件数据容器视图的所有属性都会被展示，除了下面这些：
+
+* 集合（Collection）类型的属性；
+* 字节（byte）数组类型的属性；
+* UUID 属性；
+* 带有 `@SystemLevel` 注解的属性。
+
+如果需要排除某些属性或者只包含部分属性，可以通过下面的流式 API 方法来实现：
+
+* `withIncludedProperties()`，示例：
++
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction_2.java[]
+----
+
+* `withExcludedProperties()`，示例：
++
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction_3.java[]
+----
+
+这些方法接收属性名称的列表作为输入参数，所有不正确的属性名称将被忽略。
+
+可以使用 `withNativeJson()` 方法修改透视表的默认配置，此方法接收 JSON 字符串作为输入。注意要使用本地化的属性名称：
+
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction_4.java[]
+----
+
+以下是不可编辑透视表的 JSON 结构：
+
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction_5.java[]
+----
+
+这是可编辑透视表的 JSON 结构：
+
+[source, java]
+----
+include::{sourcesdir}/pivot/ShowPivotAction_6.java[]
+----
+
+显示的透视数据可以轻松导出到 Excel（如果支持当前渲染器）。默认情况下，在打开的标签页中将显示相应的导出按钮。

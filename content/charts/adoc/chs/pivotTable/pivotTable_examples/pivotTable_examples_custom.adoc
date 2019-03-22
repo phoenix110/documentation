@@ -1,0 +1,27 @@
+:sourcesdir: ../../../../source
+
+[[pivotTable_examples_custom]]
+==== 自定义聚合器和派生属性
+
+下面是 `pivotTable` 的一个示例，与<<chart_PivotTable_example,上面示例>>的不同之处在于使用了自定义的聚合器以及在界面的 Java 控制器中添加的派生属性。
+
+[source,xml]
+----
+include::{sourcesdir}/pivot/pivot_table_2.xml[]
+----
+
+可以在 XML 描述或 Java 控制器中设置排序和聚合函数。在此例中，JavaScript 函数作为参数传递给 `JsFunction` 类的构造器。
+
+派生属性也可以在界面控制器中定义。
+
+[source,java]
+----
+include::{sourcesdir}/pivot/pivot_table_2.java[]
+----
+
+运行结果：
+
+
+.使用了自定义聚合功能的透视表
+image::pivot/PivotTable_2.png[align="center"]
+

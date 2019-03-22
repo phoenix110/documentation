@@ -1,0 +1,113 @@
+:sourcesdir: ../../../../source
+
+[[structure_groovy]]
+==== Groovy 数据集
+
+*Groovy* 数据集是通过执行 Groovy 脚本而生成的。该脚本返回 `List<Map<String, Object>>` 类型的对象。此列表的每个元素都是 `Map<String, Object>` 类型的对象 - 对应于一个数据集记录。
+
+以下对象将被传递到脚本中：
+
+* `dataManager` - 提供 CRUD 功能的 `com.haulmont.cuba.core.global.DataManager` 类型的对象。例如:
++
+[source, groovy]
+----
+def book = dataManager.load(Book.class).id(bookId).view("book.edit").one;
+----
+
+* `metadata` - `com.haulmont.cuba.core.global.Metadata` 类型的对象，提供对应用程序元数据的访问。例如：
++
+[source, groovy]
+----
+def metaClass = metadata.getClassNN('sec$User')
+----
+
+* `params` - 外部报表参数 map。以下是获取参数值的示例：
++
+[source, groovy]
+----
+def active = params['active']
+----
+
+* `parentBand` - 父带区是 `com.haulmont.yarg.structure.BandData` 类型的对象。此对象允许通过调用 `getParameterValue()` 方法获取父带区字段值，例如：
++
+[source, groovy]
+----
+def groupId = parentBand.getParameterValue('groupId')
+----
+
+* `persistence` - `com.haulmont.cuba.core.Persistence` 类型的对象，允许获取数据源。
++
+默认情况下，使用主数据存储。要使用其它数据存储，请将其名称作为参数传递给 `getDataSource()` 方法：
++
+[source, groovy]
+----
+def sql = new Sql(persistence.getDataSource('myStore'))
+def rows = sql.rows('select e.name from SEC_GROUP e')
+----
+
+* `security` - `com.haulmont.cuba.core.global.Security` 类型的对象，用于检查用户对系统中不同对象的访问权限。例如：
++
+[source, groovy]
+----
+if (security.isEntityOpPermitted(Book.class, EntityOp.READ) {
+    ...
+}
+----
+
+* `timeSource` - 用于获取当前时间的 `com.haulmont.cuba.core.global.TimeSource` 类型的对象。例如：
++
+[source, groovy]
+----
+def currentDate = timeSource.currentTimestamp()
+----
+
+* `transactional` - 将一个应该在新事务中执行的闭包作为参数的方法。当前的 `EntityManager` 成为闭包参数。例如：
++
+[source, groovy]
+----
+transactional { em ->
+    def query = em.createQuery('select g from sec$Group g')
+    ...
+}
+----
++
+下面是一个 Groovy 脚本的示例，该脚本通过父带区输出的组和 `active` 外部参数提取用户：
++
+[source, groovy]
+----
+def result = []
+transactional { em ->
+    def query = em.createQuery('select u from sec$User u where u.group.id = ?1 and u.active = ?2')
+    query.setParameter(1, parentBand.getParameterValue('groupId'))
+    query.setParameter(2, params['active'])
+    query.resultList.each { user ->
+        result.add(['userLogin': user.login, 'userName': user.name])
+    }
+}
+return result
+----
+
+* `userSession` - 与当前通过身份验证的用户关联的 `com.haulmont.cuba.security.global.UserSession` 类型的对象。例如：
++
+[source, groovy]
+----
+def user = userSession.currentOrSubstitutedUser
+----
+
+* `userSessionSource` - `com.haulmont.cuba.core.global.UserSessionSource` 类型的对象，用于获取当前用户会话对象。例如：
++
+[source, groovy]
+----
+def locale = userSessionSource.locale
+----
+
+[TIP]
+====
+可以使用 `AppBeans` 类的静态方法来访问中间层的任何 Spring bean，例如：
+
+[source, groovy]
+----
+def myService = com.haulmont.cuba.core.global.AppBeans.get('sample_MyService')
+----
+====
+

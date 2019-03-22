@@ -1,0 +1,15 @@
+:sourcesdir: ../../source
+
+[[reporting_overview]]
+== 简介
+
+报表扩展旨在简化 CUBA 应用程序中报表的生成。它允许在大多数流行的编辑器（如 *Microsoft Office* 和 *LibreOffice*/*OpenOffice*）中创建报表<<template,模板>>，并在运行时使用 CUBA 数据模型、SQL、JPQL 或脚本定义<<structure,数据源>>。
+
+报表扩展支持的功能：
+
+* 使用逐步<<wizard,向导>>在运行时可视化地构建报表模板；
+* 以 DOC、DOCX、ODT、XLS、XLSX、HTML 或任意文本格式生成报表；
+* 创建复杂的 XLS（X）报表：多层报表、数据聚合报表、<<crosstab_xls,交叉表>>报表；
+* 在 XLS（X）报表中使用图表和公式；
+* 将 office 格式或 HTML 格式的报表转换为 PDF 格式。
+

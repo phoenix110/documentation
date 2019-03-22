@@ -1,0 +1,227 @@
+:sourcesdir: ../../../source
+
+[[mapViewer]]
+=== MapViewer 组件
+
+可以使用 `com.haulmont.charts.gui.components.map.MapViewer` 组件在应用程序界面中展示地图。
+
+要添加该组件，需要在界面 XML 描述的根元素中声明 `chart` 命名空间：
+
+[source, xml]
+----
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        xmlns:chart="http://schemas.haulmont.com/charts/charts.xsd"
+        ...>
+----
+
+该组件的 XML 名称： `mapViewer`。组件声明示例：
+
+[source, xml]
+----
+include::{sourcesdir}/map/mapViewer.xml[]
+----
+
+可以在界面 XML 描述中定义以下组件参数：
+
+* `id`, `width`, `height` - 标准组件属性。
+* `mapType` - 对应于 `MapViewer.Type` 选项的地图类型: `roadmap`, `satellite`, `hybrid`, `terrain`。默认值 `roadmap`。
+* `vendor` - 地图服务提供商。目前只支持唯一的值： `google`。
+
+地图及其组件的主要配置都在界面控制器中进行，只需要注入在 XML 描述中声明的组件：
+
+[source, java]
+----
+include::{sourcesdir}/map/MapViewer.java[]
+----
+
+地图配置方法::
++
+--
+* `fitToBounds()` – 设置最小地图缩放比例为：足以展示由东北和西南坐标限制的区域的最小比例。
+* `removePolygonVertex()` – 删除多边形的顶点。
+* `setCenter()` – 设置地图中心点。
+* `setCenterBoundLimits()` – 设置地图中心可能位置的边界。
+* `setCenterBoundLimitsEnabled()` – 设置是否应限制地图中心的可能位置。
+* `setDraggable()` – 启用/禁用地图拖动模式。
+* `setKeyboardShortcutsEnabled()` – 启用/禁用键盘快捷键。
+* `setMapType()` – 定义地图类型。
+* `setMaxZoom()` – 设置最大可用的地图缩放级别。
+* `setMinZoom()` – 设置最小可用的地图缩放级别。
+* `setRemoveMessage()` – 设置删除顶点的弹出消息。
+* `setScrollWheelEnabled()` – 启用/禁用使用鼠标滚轮缩放地图。
+* `setVertexRemovingEnabled()` – 切换是否可以做顶点删除。
+* `setVisibleAreaBoundLimits()` – 设置地图可见区域的边界。
+* `setVisibleAreaBoundLimitsEnabled()` – 启用可见区域限制模式。
+* `setZoom()` – 设置地图缩放级别。
+--
+
+地图组件接口::
++
+--
+下列接口可以在 `com.haulmont.charts.gui.map.model` 包找到。
+
+[[mapView_Circle]]
+* `Circle` - 展示一个圆圈的组件。`Circle` 属性跟 `Polygon` 属性类似，除了圆需要用两个额外的属性来定义形状：中心（`GeoPoint`）和半径。可以使用 `MapViewer` 接口的 `createCircle()` 和 `addCircle()` 方法来创建此对象并放置在地图上。
++
+[source, java]
+----
+include::{sourcesdir}/map/Circle.java[]
+----
++
+.地图中的圆
+image::map/Circle.png[align="center"]
+
+[[mapView_DrawingOptions]]
+* `DrawingOptions` - 辅助绘图组件。目前仅支持绘制多边形。可以通过给 `MapViewer` 传递 `DrawingOptions` 的实例来启用绘图模式。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/DrawingOptions.java[]
+----
+
+[[mapViewer_GeoPoint]]
+* `GeoPoint` - 辅助组件，未在地图上显示。可以使用此组件将地图参数设置为中心点、边界或用来创建更复杂的地图组件。可以使用 `MapViewer` 接口的 `createGeoPoint()` 方法创建该对象。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/MapGeoPoint.java[]
+----
+
+[[mapView_HeatMapLayer]]
+* `HeatMapLayer` - 展示热力图的地图图层，用于显示不同地理位置的数据密度分布，不同数据密度用不同颜色突出显示。默认情况下，密度较高的区域显示为红色，密度较低的区域显示为绿色。可以使用 `MapViewer` 接口的 `createHeatMapLayer()` 和 `addHeatMapLayer()` 方法来创建此对象并放置在地图上。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/HeatMapLayer.java[]
+----
++
+.热力图层
+image::map/HeatMap.png[align="center"]
++
+可以独立使用 `setData()` 方法更改热图层的数据。这个改动不需要将图层重新添加到地图中。
+
+[[mapView_InfoWindow]]
+* `InfoWindow` - 在弹窗中显示信息的地图组件。可以使用 `MapViewer` 接口的 `createInfoWindow()` 和 `openInfoWindow()` 方法来创建此对象并放置在地图上。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/InfoWindow.java[]
+----
++
+信息窗口可以绑定到标记上，示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/InfoWindow2.java[]
+----
++
+.信息窗口
+image::map/InfoWindow.png[align="center"]
+
+[[mapView_Label]]
+* `Label` - 在地图上显示文本标签的组件。
++
+可以使用 `MapViewer` 接口的 `createLabel()` 和 `addLabel()` 方法来创建 `Label` 对象并放置在地图上。标签可以使用 `removeLabel()` 按顺序删除。样式方面，标签支持 HTML 标签。
++
+`Label` 组件有下列属性：
++
+** `value` - 标签的字符串值。如果标签内容类型设置为 `HTML`，则浏览器将解析标签值。
++
+** `position` - `GeoPoint` 的实现，表示标签的地理位置。
++
+** `contentType` - 设置标签是否可以作为 HTML 来解析。可以有两个可能值： `PLAIN_TEXT` 和 `HTML`。
++
+** `adjustment` - 设置标签相对于 `GeoPoint` 位置标记的调整位置。
++
+** `styleName` - 为标签设置额外的样式名称。
++
+[source, java]
+----
+include::{sourcesdir}/map/MapLabel.java[]
+----
++
+.地图标签
+image::map/MapLabel.png[align="center"]
+
+[[mapView_Marker]]
+* `Marker` - 标记地图上位置的组件。默认情况下，使用地图服务供应商的标准图标。可以使用 `MapViewer` 接口的 `createMarker()` 和 `addMarker()` 方法来创建此对象并放置在地图上。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/MapMarker.java[]
+----
++
+`clearMarkers()` 方法顺序删除地图上的所有标记。
++
+`MarkerImage` 接口用来设置标记图标或者阴影图像。
++
+[source, java]
+----
+include::{sourcesdir}/map/MarkerImage.java[]
+----
++
+.标记图片
+image::map/MarkerImage.png[align="center"]
+
+[[mapView_Polyline]]
+* `Polyline` - 展示折线的组件。可以使用 `MapViewer` 接口的 `createPolyline()` 和 `addPolyline()` 方法来创建此对象并放置在地图上。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/Polyline.java[]
+----
++
+.折线
+image::map/Polyline.png[align="center"]
+
+[[mapView_Polygon]]
+* `Polygon` - 展示多边形的组件。可以使用 `MapViewer` 接口的 `createPolygon()` 和 `addPolygonOverlay()` 方法来创建此对象并放置在地图上。示例：
++
+[source, java]
+----
+include::{sourcesdir}/map/PolygonOverlay.java[]
+----
++
+.多边形
+image::map/Polygon.png[align="center"]
+
+--
+
+[[mapView_listeners]]
+事件监听器::
++
+--
+下列监听器都在 `com.haulmont.charts.gui.map.model.listeners` 包内。
+
+* `CircleCenterChangeListener` - 用户在地图编辑模式改变了圆的中心点位置。
+* `CircleCompleteListener` - 用户在地图编辑模式创建了一个圆。
+* `CircleRadiusChangeListener` - 用户在地图编辑模式改变了一个圆的半径。
+* `InfoWindowClosedListener` - 用户关闭了一个信息窗口。
+* `MapInitListener` - 地图初始化完成。在加载所有图层并且所有坐标可用时，第一次加载地图后调用此监听器一次。
+* `MapMoveListener` - 用户鼠标按下并且拖动了地图。
+* `MarkerDragListener` - 用户拖动了一个标记。
+* `PolygonCompleteListener` - 用户在地图编辑模式创建了一个多边形。
+* `PolygonEditListener` - 用户编辑了多边形（移动或者添加顶点）。
+
+左键点击事件：
+
+* `CircleClickListener` - 用户点击圆。
+* `MapClickListener` - 用户点击地图。
+* `MarkerClickListener` - 用户点击标记。
+* `PolygonClickListener` - 用户点击多边形。
+
+右键点击事件：
+
+* `CircleRightClickListener` - 用户右键点击圆。
+* `MapRightCLickListener` - 用户右键点击地图。
+* `MarkerRightClickListener` - 用户右键点击标记。
+* `PolygonRightClickListener` - 用户右键点击多边形。
+
+双击事件监听器：
+
+* `MarkerDoubleClickListener` - 用户双击标记。
+* `CircleDoubleClickListener` - 用户双击圆。
+--
+
+想了解更多关于地图方法和参数的细节信息，请参阅相应的 JavaDoc 文档。
+

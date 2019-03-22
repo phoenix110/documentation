@@ -1,0 +1,52 @@
+:sourcesdir: ../../../../../source
+
+[[views_creation]]
+===== 创建视图
+
+视图可以通过两种方式创建：
+
+* *编程方式* – 通过创建 `View` 实例，例如：
++
+[source, java]
+----
+include::{sourcesdir}/common/views_1.java[]
+----
++
+通常，这种方式适用于创建在单个业务逻辑中使用的视图。
+
+* *声明式* – 通过创建 XML 描述并将其部署到 `ViewRepository`。部署 XML 描述时，会创建并缓存 `View` 实例。此外，通过 `ViewRepository`（调用时提供实体类和视图名称），可以在应用程序代码的任何部分中获取所需的视图。
+
+下面看看使用声明式方式创建和使用视图的细节。
+
+`ViewRepository` 是一个 Spring bean，所有应用程序 block 都可以访问这个 bean。可以使用注入或通过<<metadata,元数据>>基础接口得到 `ViewRepository` 的引用。然后用 `ViewRepository.getView()` 方法从视图库中获取视图实例。`AbstractViewRepository` 基实现中的 `deployViews()` 方法用于将 XML 描述部署到视图库。
+
+默认情况下，每个实体的视图库中都有三个名为 `++_local++` 、 `++_minimal++` 和 `_base` 的视图：
+
+* `++_local++` 包含所有<<local_attribute,本地>>实体属性。
+
+* `++_minimal++` 包含实体实例名称中包含的属性，这些属性通过<<namePattern_annotation,@NamePattern>>注解指定。如果未在实体中指定 `@NamePattern` 注解，则此视图不包含任何属性。
+
+* `_base` 包括所有本地非系统属性和由 `@NamePattern` 定义的属性（实际上是 `_minimal` + `_local`）。
+
+视图 XML 描述的详细结构说明在<<views.xml,这里>>。
+
+下面的示例展示了 `Order` 实体的视图描述，它提供了所有本地属性、关联的 `Customer` 和 `Items` 集合的加载。
+
+[source, xml]
+----
+include::{sourcesdir}/common/views_2.xml[]
+----
+推荐按照下面方法进行视图描述分组和部署：
+
+* 在 *global* 模块的 `src` 根目录中创建 <<views.xml>>文件，并将所有可全局（即在所有应用程序层）访问的视图描述放入其中。
+
+* 在所有 block 的 <<cuba.viewsConfig,cuba.viewsConfig>>应用程序属性中注册此文件，即 *core* 模块的 `app.properties` 、 *web* 模块的 `web-app.properties`，这将确保在应用程序启动时自动部署视图到视图库中。
+
+* 如果视图仅在一个应用程序 block 中使用，则可以在此 block 的类似文件中定义，例如，`web-views.xml`，然后只在这个 block 的<<cuba.viewsConfig,cuba.viewsConfig>>属性中注册。
++
+如果视图库已经包含某个实体的特定名称的视图，则不会为此实体部署其它同名视图。如果需要使用新的视图替换视图库中的现有视图并保证其部署，需要为新视图指定 `overwrite="true"` 属性。
+[TIP]
+====
+建议为视图提供描述性名称。例如，不仅仅是 "browse"，而是 "customerBrowse"。这样可以简化 XML 描述中视图的搜索。
+====
+

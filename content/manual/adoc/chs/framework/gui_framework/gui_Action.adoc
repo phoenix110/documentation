@@ -1,0 +1,45 @@
+:sourcesdir: ../../../../source
+
+[[gui_Action]]
+==== 操作以及操作接口
+
+++++
+<div class="manual-live-demo-container">
+    <a href="http://files.cuba-platform.com/javadoc/cuba/7.0/com/haulmont/cuba/gui/components/Action.html" class="api-docs-btn" target="_blank">API 文档</a>
+</div>
+++++
+
+`Action` 是一个接口，这个接口是对可视化组件的操作（换句话说，一些功能）的抽象。当从不同的可视化组件中调用相同的操作时（例如，分别从按钮和表格右键菜单中调用同一个操作），它特别有用。此外，此接口允许为操作提供其它属性，例如名称、可访问性和可见性标志等。
+
+下面是 `Action` 接口方法：
+
+* `actionPerform()` - 方法由与此操作关联的可视化组件调用。调用者实例被传递给该方法。
+
+* `getId()`  - 方法返回操作的标识符。标识符通常在实现 `Action` 的类的构造函数中设置，并且在操作对象创建后的整个生命周期中不会更改。
+
+* 获取和设置 `caption` 、 `description`  、 `shortcut` 、 `icon`  、 `enabled` 、 `visible` 属性的方法。通常，相关可视化组件使用所有这些属性来设置其自身相应的属性。
+
+* `addPropertyChangeListener()` 、 `removePropertyChangeListener()` 方法用于添加和删除处理上述属性更改的监听器。监听器接收 `java.beans.PropertyChangeEvent` 类型的通知，其中包含已更改属性的名称 、 旧值和新值。
+
+* `refreshState()` - 一个在特定的操作类中实现的方法，根据一些外部因素（例如用户权限）初始化上述属性。它通常在实现类的构造函数或从相关可视化组件中调用。
+
+* `addOwner()` 、 `removeOwner()` 、  `getOwner()` 、 `getOwners()` – 用于控制操作和可视化组件之间关系的方法。
+
+建议使用<<declarative_actions,声明式创建>>或继承<<baseAction,BaseAction>>类来实现操作。此外，还有一组适用于表格和选择器组件的<<standard_actions,标准操作>>。
+
+与操作关联的可视化组件可以有两种类型：
+
+* 只单个操作的可视化组件，这类组件实现 `Component.ActionOwner` 接口。这类组件有<<gui_Button,Button>>和<<gui_LinkButton,LinkButton>>。
++
+通过调用组件的 `ActionOwner.setAction()` 方法反操作链接到组件。此时，组件使用操作的属性设置自身相应的属性。（有关详细信息，请参阅组件概述）。
+
+* 包含多个操作的可视化组件，这类组件实现 `Component.ActionsHolder` 接口。这类组件有 `Window` 、 `Fragment` 、<<gui_DataGrid,DataGrid>> 、 <<gui_Table,Table>>及其继承者， <<gui_Tree,Tree>> ，<<gui_PopupButton,PopupButton>>，<<gui_PickerField,PickerField>>，<<gui_LookupPickerField,LookupPickerField>>。
++
+`ActionsHolder.addAction()` 方法用于向组件添加操作。在组件中实现此方法会检查它是否已包含具有相同标识符的操作。如果包含，则现有操作将替换为新操作。因此，可以在界面描述中声明标准操作，然后在控制器中创建具有不同属性的新操作，并将其添加到组件中。
+
+include::gui_Action/declarative_actions.adoc[]
+
+include::gui_Action/standard_actions.adoc[]
+
+include::gui_Action/baseAction.adoc[]
+

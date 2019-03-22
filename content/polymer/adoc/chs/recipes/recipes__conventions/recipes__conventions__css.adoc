@@ -1,0 +1,38 @@
+:sourcesdir: ../../../../source
+
+[[recipes__conventions__css]]
+==== 共享 CSS
+
+Polymer 元素使用影子 DOM（Shadow DOM），它们的样式不会互相覆盖。这个功能非常有用，但是有时候我们需要在元素之间共享 CSS。
+
+下面我们看看怎么重用 CSS。
+
+首先我们创建一个元素，包含了通用的样式，这些样式我们希望能在元素间共享。
+
+.src/recipes/convention/css/shared-styles.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/convention/css/shared-styles.html[]
+----
+
+因此，我们声明了一个类以及一个颜色的变量。现在我们可以在其它的组件使用它们。
+
+.src/recipes/convention/css/blue-button.html
+[source, html]
+----
+include::{sourcesdir}/polymer-build/src/recipes/convention/css/blue-button.html[]
+----
+
+重用的 `blue-button` 元素看起来是下面这样：
+
+[subs="none"]
+++++
+
+<link rel="import" href="html/src/recipes/convention/css/blue-button.html">
+
+<div class="polymer-demo-container">
+    <blue-button></blue-button>
+</div>
+
+++++
+

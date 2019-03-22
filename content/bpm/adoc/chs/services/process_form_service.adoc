@@ -1,0 +1,13 @@
+:sourcesdir: ../../../source
+
+[[process_form_service]]
+=== 流程表单服务
+
+该服务用于提供以下信息：
+
+* 任务输出
+* 应该显示输出的表单
+* 用于流程启动和取消的表单
+
+要访问中间件的服务功能，请使用 `ProcessFormManager` bean。
+

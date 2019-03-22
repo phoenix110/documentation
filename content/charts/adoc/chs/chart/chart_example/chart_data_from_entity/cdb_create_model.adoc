@@ -1,0 +1,28 @@
+:sourcesdir: ../../../../../source
+
+[[cdb_create_model]]
+===== 创建一个实体
+
+创建一个 `CountryGrowth` 实体类。
+
+. 在 CUBA 项目树的 *Data Model* 部分，单击 *New -> Entity*。 将弹出 *New CUBA Entity* 对话框窗口。
+
+. 在 *Entity name* 字段中输入实体类的名称 – `CountryGrowth`，选择 *Entity type* 为 `Not persistent`，然后点击 *OK* 按钮。实体设计器界面将显示在工作区。
+
+. 使用 *Entity Designer* 添加如下属性：
+* `country`，类型是 `String`
+* `year2014`，类型是 `Double`
+* `year2015`，类型是 `Double`
+
+. 切换到 *Text* 标签页，这个标签页上显示 `CountryGrowth` 类的源代码。
+
++
+[source,java]
+----
+include::{sourcesdir}/chart/CountryGrowth.java[]
+----
++
+这个类是非持久化实体。这个类的一个实例包含一个国家 2014 和 2015 年的 GDP 增长率。
+
+现在，`CountryGrowth` 实体类就创建完成了。
+
