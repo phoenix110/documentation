@@ -1,0 +1,6 @@
+:sourcesdir: ../../../source
+
+[[audience]]
+=== 目标读者
+
+该手册是为基于 CUBA 平台构建应用程序的开发者准备的。假设读者熟悉 {main_man_url}/index.html[开发者手册] 。

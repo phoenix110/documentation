@@ -17,7 +17,7 @@
 
 `TextArea` 是多行文本编辑字段。
 
-组件对应的 XML 名称： `textArea`
+该组件对应的 XML 名称： `textArea`
 
 `TextArea` 的功能大部分与 <<gui_TextField,TextField>> 组件相同，同时具有以下特有属性:
 
@@ -31,41 +31,11 @@ include::{sourcesdir}/gui_vcl/textarea_1.xml[]
 +
 `width` 和 `height` 的值优先于 `cols` 和 `rows` 的值。
 
-[[gui_TextArea_resizableDirection]]
-* `resizableDirection` – 定义用户更改组件大小的方式，除非为组件设置了百分比大小。
-+
---
-[source, xml]
-----
-include::{sourcesdir}/gui_vcl/textarea_2.xml[]
----- 
-
-image::gui_textField_resizable.png[align="center"]
-
-有四种调整大小的模式可用：
-
-* `BOTH` - 组件可在两个方向上调整大小。如果为组件设置了百分比大小，则组件不可调整大小。
-
-* `NONE` - 不能调整组件大小。
-
-* `VERTICAL` - 只能垂直调整组件大小。如果为组件设置了百分比大小，则无法垂直调整组件大小。
-
-* `HORIZONTAL` - 只能水平调整组件大小。如果为组件设置百分比宽度，则无法水平调整组件的大小。
-
-[[gui_TextArea_ResizeListener]]
-可以使用 `ResizeListener` 接口跟踪组件大小更改事件。例如：
-
-[source, java]
-----
-include::{sourcesdir}/gui_vcl/textarea_6.java[]
-----
---
-
 [[gui_TextArea_wordwrap]]
 * `wordwrap` - 将此属性设置为 `false` 以关闭自动换行。
-
++
 `TextArea` 支持在其父 `TextInputField` 接口中定义的 `TextChangeListener`。文本变化事件在输入时按顺序异步处理，不会阻塞输入。
-
++
 [source, java]
 ----
 include::{sourcesdir}/gui_vcl/textarea_5.java[]
@@ -73,20 +43,26 @@ include::{sourcesdir}/gui_vcl/textarea_5.java[]
 
 image::gui_TextArea_2.png[align="center"]
 
-* `TextChangeEventMode` 定义文本的变化被发送到服务器并触发服务端事件的方式。有 3 种预定义的事件模式：
+[[gui_TextArea_textchangeeventmode]]
 
-* `LAZY` （默认） - 文件输入暂停时触发事件。暂停时间可以通过 `setInputEventTimeout()` 修改。即使用户在输入文本时没有发生暂停，也会在可能发生的 `ValueChangeEvent` 之前强制触发文本更改事件。
+* `textChangeEventMode` 定义文本的变化被发送到服务器并触发服务端事件的方式。有 3 种预定义的事件模式：
 
-* `TIMEOUT` - 超时后触发事件。如果在超时周期内进行了多次更改，则将周期内自最后一次更改后发生的更改发送到服务端。可以使用 `setInputEventTimeout()` 设置超时时长。
+** `LAZY` （默认） - 文件输入暂停时触发事件。暂停时间可以通过 `setTextChangeTimeout()` 或者<<gui_TextArea_textchangetimeout, textChangeTimeout>> 属性修改。即使用户在输入文本时没有发生暂停，也会在可能发生的 `ValueChangeEvent` 之前强制触发文本更改事件。
+
+** `TIMEOUT` - 超时后触发事件。如果在超时周期内进行了多次更改，则将周期内自最后一次更改后发生的更改发送到服务端。可以使用 `setTextChangeTimeout()` 或者<<gui_TextArea_textchangetimeout, textChangeTimeout>> 属性设置超时时长。
 +
 如果在超时期限之前发生 `ValueChangeEvent`，则在它之前触发 `TextChangeEvent`，条件是文本内容自上一个 `TextChangeEvent` 以来已经发生改变。
 
-* `EAGER` - 对于文本内容的每次更改，都会立即触发 `TextChangeEvent` 事件，通常是由按键触发。请求是独立且一个接一个地顺序处理。文本变化事件以异步方式与服务器交互，因此可以在处理事件请求的同时继续输入。
+** `EAGER` - 对于文本内容的每次更改，都会立即触发事件，通常是由按键触发。请求是独立且一个接一个地顺序处理。文本变化事件以异步方式与服务器交互，因此可以在处理事件请求的同时继续输入。
+
+[[gui_TextArea_textchangetimeout]]
+
+* `textChangeTimeout` 当<<gui_TextArea_textchangeeventmode, textChangeEventMode>> 是 `LAZY` 或 `TIMEOUT` 时，定义编辑文本时暂停的时间或者超时时间。
 
 TextArea 样式::
 +
 --
-Web Client 使用 Halo-based 主题时，在 XML 描述或者界面控制器中可以使用 `stylename` 属性给文本区组件设置预定义的样式：
+Web Client 使用 Halo-based 主题时，在 XML 描述或者界面控制器中可以使用 `stylename` 属性给 `TextArea` 组件设置预定义的样式：
 
 [source, xml]
 ----
@@ -131,15 +107,18 @@ textArea 的属性::
 <<gui_attr_height,height>> -
 <<gui_attr_icon,icon>> -
 <<gui_attr_id,id>> -
+<<gui_attr_inputPrompt,inputPrompt>> -
 <<gui_TextField_maxLength,maxLength>> -
 <<gui_attr_property,property>> -
 <<gui_attr_required,required>> -
 <<gui_attr_requiredMessage,requiredMessage>> -
-<<gui_TextArea_resizableDirection,resizableDirection>> -
+<<gui_attr_responsive,responsive>> -
 <<gui_TextArea_cols_rows,rows>> -
 <<gui_attr_settingsEnabled,settingsEnabled>> -
 <<gui_attr_stylename,stylename>> -
 <<gui_attr_tabIndex,tabIndex>> -
+<<gui_TextArea_textchangeeventmode,textChangeEventMode>> -
+<<gui_TextArea_textchangetimeout,textChangeTimeout>> -
 <<gui_TextField_trim,trim>> -
 <<gui_attr_visible,visible>> -
 <<gui_attr_width,width>> -
@@ -155,14 +134,12 @@ textArea 的预定义样式::
 <<gui_attr_stylename_tiny,tiny>>
 
 API::
-<<gui_TextArea_ResizeListener,addResizeListener>> -
 <<gui_TextField_TextChangeListener,addTextChangeListener>> -
 <<gui_api_addValueChangeListener,addValueChangeListener>> -
-<<gui_api_settings,applySettings>> -
+<<gui_validator,addValidator>> -
 <<gui_api_commit,commit>> -
 <<gui_api_discard,discard>> -
 <<gui_api_isModified,isModified>> -
-<<gui_api_settings,saveSettings>> -
 <<gui_api_contextHelp,setContextHelpIconClickHandler>>
 
 '''

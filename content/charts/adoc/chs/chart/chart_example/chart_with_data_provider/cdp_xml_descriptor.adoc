@@ -1,7 +1,7 @@
-:sourcesdir: ../../../../../../source
+:sourcesdir: ../../../../../source
 
 [[cdp_xml_descriptor]]
-====== 界面 XML 描述
+===== 界面 XML 描述
 
 现在我们创建一个新界面来显示图表。
 

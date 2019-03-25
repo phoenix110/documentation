@@ -3,7 +3,7 @@
 [[user_task]]
 === 用户任务
 
-要定义任务受理人，请在 *User task* 节点的 *Process role* 属性中选择一个流程角色。当流程到达用户任务时，将在所有流程操作员中找到给定角色的流程操作员，并将任务分配给它们。
+要定义任务受理人，请在 *User Task* 节点的 *Process role* 属性中选择一个流程角色。当流程到达用户任务时，将在所有流程操作员中找到给定角色的流程操作员，并将任务分配给它们。
 
 任务中的流程角色：
 
@@ -16,9 +16,9 @@
 </process>
 ----
 
-如果要将任务分配给多个用户，请为 *User task* 节点的 *Multi-instance type* 属性设置 `Parallel` 或 `Sequential`。
+如果要将任务分配给多个用户，请为 *User Task* 节点的 *Multi-instance type* 属性设置 `Parallel` 或 `Sequential`。
 
-还可以在用户任务节点的 *assignee* 属性中指定任务受理人。属性值可以是包含一个 CUBA 用户标识符的字符串常量：`da8159cc-757f-7f59-6579-7f629ac02f72`，也可以是一个包含用户 id 字符串的变量： `${varialbeName}`，或者一个调用服务的表达式，在服务中返回用户标识： `${someService.getSomeUserId()}`。请注意，*procRole* 属性必须定义。当流程到达此类用户任务时，将搜索指定用户和流程角色的 ProcActor 实例。如果它不存在，则创建新的 ProcActor 对象。要在模型设计界面中指定受理人，请选择用户任务，单击 *Show advanced properties* 链接，然后点击进入 *Assignments* 属性编辑界面。将出现一个新对话框，在这个界面填写 *Assignee* 属性。
+还可以在 *User Task* 节点的 *assignee* 属性中指定任务受理人。属性值可以是包含一个 CUBA 用户标识符的字符串常量：`da8159cc-757f-7f59-6579-7f629ac02f72`，也可以是一个包含用户 id 字符串的变量： `${varialbeName}`，或者一个调用服务的表达式，在服务中返回用户标识： `${someService.getSomeUserId()}`。请注意，*procRole* 属性必须定义。当流程到达此类用户任务时，将搜索指定用户和流程角色的 `ProcActor` 实例。如果它不存在，则创建新的 `ProcActor` 对象。要在模型设计界面中指定受理人，请选择 *User Task*，单击 *Show advanced properties* 链接，然后点击进入 *Assignments* 属性编辑界面。将出现一个新对话框，在这个界面填写 *Assignee* 属性。
 
 如果不希望将任务立即分配给特定用户，而是显示在该组用户的可用任务列表中，请设置 *Claim allowed* 属性。然后，其中一名候选人将能够领取该任务。任务候选者在具有流程 *Process role* 属性指定的角色的参与者范围内定义。
 

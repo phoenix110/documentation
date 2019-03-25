@@ -7,7 +7,7 @@
 
 此处假设读者对于 CUBA 框架开发者手册都很熟悉，手册地址： https://www.cuba-platform.com/manual 。
 
-如果您有任何关于提高本手册的建议，请在源码仓库提交 issue：https://github.com/cuba-platform/documentation[GitHub]。如果您发现了任何拼写或文字错误、bug 或者任何不一致的地方，请直接 fork 仓库修改。谢谢！
+如果您有任何关于提高本手册的建议，请在源码仓库提交 issue：https://github.com/cubacn/documentation[GitHub]。如果您发现了任何拼写或文字错误、bug 或者任何不一致的地方，请直接 fork 仓库修改。谢谢！
 
 :sectnums:
 

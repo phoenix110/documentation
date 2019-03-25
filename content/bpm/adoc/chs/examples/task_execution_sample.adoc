@@ -5,10 +5,10 @@
 
 此示例演示以下内容：
 
-* 如何使用 `ProcActionsFrame` 以编程方式在流程开始时创建流程参与者
-* 如何使用 `ProcActionsFrame` 将流程变量传递给流程实例
-* 如何获取和修改由 `ProcActionsFrame` 创建的标准流程操作（例如，更改“启动流程”按钮标题）
-* 如何在没有 `ProcActionsFrame` 的情况下以编程方式启动流程
+* 如何使用 `ProcActionsFragment` 以编程方式在流程开始时创建流程参与者
+* 如何使用 `ProcActionsFragment` 将流程变量传递给流程实例
+* 如何获取和修改由 `ProcActionsFragment` 创建的标准流程操作（例如，更改“启动流程”按钮标题）
+* 如何在没有 `ProcActionsFragment` 的情况下以编程方式启动流程
 * 每次流程进行一步时如何使用 `ActivitiEventListener` 自动更新 `processState` 字段
 
 此示例使用 *Task execution - 1* 流程模型：
@@ -16,22 +16,27 @@
 .任务执行模型
 image::examples/TaskExecution1Model.png[align="center"]
 
-要测试示例，请使用 *Application - Tasks* 界面。
+在此示例中，我们不使用 `StandardProcForm` 来分配流程参与者。我们通过 `ProcActionsFragment` 的 _流程开始前断言_ 来完成。请参阅 `setBeforeStartProcessPredicate()` 方法的使用。
 
-在此示例中，我们不使用 `StandardProcForm` 来分配流程参与者。我们通过 `ProcActionsFrame` 的 _流程开始前断言_ 来完成。请参阅 {proj_bpm_samples}/blob/master/modules/web/src/com/company/bpmsamples/web/task/TaskEdit.java[TaskEdit.java] 中使用的 `setBeforeStartProcessPredicate()` 方法
-
-请参阅 {proj_bpm_samples}/blob/master/modules/web/src/com/company/bpmsamples/web/task/TaskEdit.java[TaskEdit.java] 中的 `setStartProcessActionProcessVariablesSupplier()` 方法的用法，作为如何在流程启动时使用 `ProcActionsFrame` 传递流程变量的示例。其中一个流程网关中使用 `acceptanceRequired` 变量决定是否必须由发起者接受任务，或者流程必须完成。
-
-`changeStartProcessBtnCaption()` 演示了如何获取和修改 `ProcActionsFrame` 生成的流程操作。在此方法中，标准按钮标题“启动流程”将由自定义标题替换。
-
-`startProcessProgrammatically()` 方法演示了如何在没有 `ProcActionsFrame` 的情况下启动新的流程实例。
-
+.TaskEdit.java
 [source,java]
 ----
-include::{sourcesdir}/examples/TaskExecution1StartProgrammatically.java[]
+include::{sourcesdir}/examples/TaskEdit.java[]
 ----
 
-{proj_bpm_samples}/blob/master/modules/core/src/com/company/bpmsamples/core/bpm/listeners/UpdateProcessStateListener.java[UpdateProcessStateListener.java] 是 `org.activiti.engine.delegate.event.ActivitiEventListener` 的一个实现。此监听器作为流程级别监听器被注册。它执行以下操作：每次到达新的流程步骤时，相关的 `com.company.bpmsamples.entity.Task` 实体的 `processState` 字段将使用当前流程步骤名称进行更新。
+请参阅 `TaskEdit.java` 中的 `setStartProcessActionProcessVariablesSupplier()` 方法的用法，作为如何在流程启动时使用 `ProcActionsFragment` 传递流程变量的示例。其中一个流程网关中使用 `acceptanceRequired` 变量决定是否必须由发起者接受任务，或者流程必须完成。
+
+`changeStartProcessBtnCaption()` 演示了如何获取和修改 `ProcActionsFragment` 生成的流程操作。在此方法中，标准按钮标题“启动流程”将由自定义标题替换。
+
+`onStartProcessProgrammaticallyBtnClick()` 方法演示了如何在没有 `ProcActionsFragment` 的情况下启动新的流程实例。
+
+`UpdateProcessStateListener.java` 是 `org.activiti.engine.delegate.event.ActivitiEventListener` 的一个实现。此监听器作为流程级别监听器被注册。它执行以下操作：每次到达新的流程步骤时，相关的 `com.company.bpmsamples.entity.Task` 实体的 `processState` 字段将使用当前流程步骤名称进行更新。
+
+.UpdateProcessStateListener.java
+[source,java]
+----
+include::{sourcesdir}/examples/UpdateProcessStateListener.java[]
+----
 
 这是流程模型中流程级事件监听器配置界面。
 
@@ -39,14 +44,3 @@ include::{sourcesdir}/examples/TaskExecution1StartProgrammatically.java[]
 image::examples/TaskExecution1UpdateProcessStateListener.png[align="center"]
 
 要打开此窗口，请单击建模器中的某个位置，单击 *Show advanced properties* 链接，然后配置 *Event listeners* 属性。
-
-有关详细信息，请参阅 GitHub 源代码中的注释。
-
-Task 实体编辑界面 XML 描述：
-{proj_bpm_samples}/blob/master/modules/web/src/com/company/bpmsamples/web/task/task-edit.xml[task-edit.xml]
-
-Task 实体编辑界面 Java 控制器：
-{proj_bpm_samples}/blob/master/modules/web/src/com/company/bpmsamples/web/task/TaskEdit.java[TaskEdit.java]
-
-更新流程状态的 Activiti 事件监听器：
-{proj_bpm_samples}/blob/master/modules/core/src/com/company/bpmsamples/core/bpm/listeners/UpdateProcessStateListener.java[UpdateProcessStateListener.java]

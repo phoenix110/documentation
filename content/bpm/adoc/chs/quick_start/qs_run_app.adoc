@@ -3,13 +3,13 @@
 [[qs_run_app]]
 === 创建数据库并运行应用程序
 
+在主菜单点击 *CUBA > Generate Database Scripts* {main_man_url}/db_update_in_dev.html[创建数据库表] 。然后，会打开 *Database Scripts* 界面。
 
-单击 *Data model* 部分上的 *Generate DB scripts* 按钮。然后在 *Database scripts* 页面上单击 *Create database* 按钮。
+点击 *Save and close* 按钮保存生成的数据库脚本。
 
-.创建数据库
-image::StudioCreateDatabase.png[align="center"]
+如果需要运行数据库更新脚本，使用 *CUBA > Stop application* 命令先停止运行的应用程序，然后在点击 *CUBA > Update database*。
 
-使用 *Run -> Start application server* 菜单命令启动应用程序服务。
+现在看看创建的界面在真实的系统中长什么样。选择 *CUBA > Start application server*。
 
-在 web 浏览器中访问 `++http://localhost:8080/app++` 或通过单击 Studio 状态栏上的链接来打开应用程序。
+在浏览器打开应用程序地址 http://localhost:8080/app 。也可以使用 CUBA 项目树的 *Runs At…*​ 部分的链接打开项目。
 

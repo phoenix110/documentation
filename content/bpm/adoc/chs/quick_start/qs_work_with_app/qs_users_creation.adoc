@@ -3,7 +3,7 @@
 [[qs_users_creation]]
 ==== 创建用户
 
-要演示该流程，请在 *Administration -> Users* 界面中创建三个用户：
+要演示该流程，请在 *Administration > Users* 界面中创建三个用户：
 
 * 用户名: `norman`, 名字: `Tommy`, 姓氏: `Norman`
 * 用户名: `roberts`, 名字: `Casey`, 姓氏: `Roberts`

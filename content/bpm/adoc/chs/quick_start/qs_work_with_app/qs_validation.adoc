@@ -5,29 +5,23 @@
 
 以 `norman` 登录。
 
-
-当流程到达 *User task* 节点时，会创建一个 `ProcTask` 对象。此对象链接到指定的流程参与者。BPM 子系统有一个界面，用于显示用户当前未完成的任务：*BPM -> Process Tasks*。
+当流程到达 *User task* 节点时，会创建一个 `ProcTask` 对象。此对象链接到指定的流程参与者。BPM 扩展组件有一个界面，用于显示用户当前未完成的任务：*BPM > Process Tasks*。
 
 .流程任务浏览界面
 image::ProcTaskBrowse.png[align="center"]
-
 
 我们看到用户 `norman` 有一个未完成的任务：`Contract approval` 流程的 `Validation` 任务。选择它并单击 *Open entity editor* 按钮。将出现合同编辑界面：
 
 .合同编辑验证
 image::ContractEditValidation.png[align="center"]
 
-
-当前用户（`norman`）有一个未完成的任务（ProcTask），因此 `procActionsFrame` 显示可用的流程操作。在定义 `Validation` UserTask 节点时，我们设置了两个可能的输出：`Valid` 和 `Not valid`。这就是为什么两个按钮被添加到 `procActionsFrame`。
-
+当前用户（`norman`）有一个未完成的任务（ProcTask），因此 `procActionsFragment` 显示可用的流程操作。在定义 `Validation` UserTask 节点时，我们设置了两个可能的输出：`Valid` 和 `Not valid`。这就是为什么两个按钮被添加到 `procActionsFragment`。
 
 点击 *Valid* 按钮并在打开的窗口中输入意见：
 
 .验证完成表单
 image::ValidationCompleteForm.png[align="center"]
 
-
 点击 *OK*。
-
 
 成功验证后，合同应进入管理人员并行审批环节。

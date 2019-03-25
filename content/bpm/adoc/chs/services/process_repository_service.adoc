@@ -5,9 +5,9 @@
 
 它旨在用于流程定义。该服务用于：
 
-* 从 XML 加载流程定义
-* 撤销 Activiti 引擎中的流程
-* 将 JSON 模型转换为 BPMN XML
+* 从 XML 加载流程定义；
+* 撤销 Activiti 引擎中的流程；
+* 将 JSON 模型转换为 BPMN XML。
 
 要访问中间件的服务功能，请使用 `ProcessRepositoryManager` bean。
 

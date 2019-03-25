@@ -8,26 +8,26 @@ image::DataModel.png[align="center"]
 
 [TIP]
 ====
-名称以 `*act` 前缀开头的属性存储的是 Activiti 中相关记录的标识符。
+名称以 `act*` 前缀开头的属性存储的是 Activiti 中相关记录的标识符。
 ====
 
 [[ProcModel]]
 * `ProcModel` - 流程模型。模型属性：
 **  `name` - 模型名称。
 **  `description` - 模型描述。
-**  `actModelId` - Activiti 引擎的模型 ID，存储在 ACT_RE_MODEL 表中。
+**  `actModelId` - Activiti 引擎的模型 ID，存储在 `ACT_RE_MODEL` 表中。
 
 [[ProcDefinition]]
-* `ProcDefinition` -流程定义。实体属性：
+* `ProcDefinition` -流程定义。可以从数据模型获取或者直接从 XML 文件加载。实体属性：
 ** `name` - 流程名称。
 ** `code` - 流程代码。它可用于从应用程序代码中确定实体实例。
-** `actId` - Activiti 的流程的 ID。
+** `actId` - Activiti 的流程的 ID。如需访问 BPMN 模型，则必须（它会读取 extensionElements）
 ** `active` - 定义当前流程定义是否允许新的流程实例启动。
 ** `procRoles` - 定义流程参与者的对象集合。
 ** `model` - 模型的引用。
 
 [[ProcRole]]
-* `ProcRole` - 流程角色。在流程部署时会自动创建此类型对象。流程角色定义了流程参与者的类型。实体属性：
+* `ProcRole` - 流程角色。在流程部署时会自动创建此类型对象。流程角色定义了流程参与者的类型。`ProcRole` 定义流程角色类型。实体属性：
 ** `name` - 角色名称。
 ** `code` - 角色代码。它可以被应用程序用于角色识别。
 ** `order` - 序号。应用程序可以使用它以适当的顺序显示角色。
@@ -41,7 +41,7 @@ image::DataModel.png[align="center"]
 ** `startedBy` - 启动流程的用户。
 ** `active` - 标识流程实例是否处理已启动但尚未完成的状态。
 ** `cancelled` - 标识流程是否已经取消。
-** `actProcessInstanceId` - Activiti 的相应流程实例的标识符。
+** `actProcessInstanceId` - Activiti 的相应 `ProcessInstance` 的标识符。
 ** `startComment` - 流程启动时的意见。
 ** `cancelComment` - 流程取消时的意见。
 ** `entityName` - 链接的实体名称。
@@ -69,15 +69,15 @@ image::DataModel.png[align="center"]
 ** `procActor` - 执行人。
 ** `actTaskId` - Activiti 任务 ID。此字段用于报告 Activiti 引擎任务的完成情况。
 ** `actExecutionId` - Activiti 执行 ID。该字段用于读/写流程变量。
-** `actTaskDefinitionKey` - 在流程 XML 中，它是 UserTask 元素的 `id` 属性。它用于构建存储任务结果的变量名称（`[task_id]_result`）。请参阅<<functionality.adoc#transitions>>。
+** `actTaskDefinitionKey` - 在流程 XML 中，它是 `UserTask` 元素的 `id` 属性。用于构建存储任务结果的变量名称（`[task_id]_result`）。请参阅<<functionality.adoc#transitions>>。
 ** `cancelled` - 标识任务是否在以取消的方式完成。
 ** `candidateUsers` - 群组任务的可能的程参与者列表。
 ** `procInstance` - 流程实例的引用。
 
 [[ProcAttachment]]
 * `ProcAttachment` - 流程附件。实体属性：
-** `file` - FileDescriptor 的引用。
-** `type` - 附件类型（ProcAttachmentType）。
+** `file` - `FileDescriptor` 的引用。
+** `type` - 附件类型（`ProcAttachmentType`）。
 ** `comment` - 意见。
 ** `author` - 附件作者的引用。
 ** `procInstance` - 流程实例的引用。

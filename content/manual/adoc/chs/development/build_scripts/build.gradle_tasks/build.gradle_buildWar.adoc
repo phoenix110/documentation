@@ -7,7 +7,7 @@
 
 [TIP]
 ====
-可以通过 Studio 里的 *Deployment > WAR Settings * 界面配置这个任务。
+可以通过 Studio 里的 *Deployment > WAR Settings* 界面配置这个任务。
 ====
 
 任何 CUBA 应用程序包含至少两个 <<app_tiers,block>>：中间件（Middleware）和 web 客户端（Web Client）。所以部署程序最自然的方法就是创建两个单独的 WAR 包：中间件一个，web 客户端一个。这样做的话也可以在用户数量增长的时候方便进行扩展。但是单独的包会重复包含一些两边都依赖的包，因此会增加整个程序的大小。还有就是扩展的部署选择也不常用，反而会使得部署流程更加复杂。`CubaWarBuilding` 任务可以创建这两种类型的 WAR 包：每个 block 一个包，或者包含两个 block 的包，后面这种情况下，应用程序的那些 block 会在一个 web 应用程序里面被不同的类加载器加载。

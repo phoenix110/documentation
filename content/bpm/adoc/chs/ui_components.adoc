@@ -3,9 +3,9 @@
 [[ui_components]]
 == UI 组件
 
-本节包含关于 BPM 子系统提供的用户界面组件的介绍。
+本节包含关于 BPM 扩展组件提供的用户界面组件的介绍。
 
-include::ui_components/proc_actions_frame.adoc[]
+include::ui_components/proc_actions_fragment.adoc[]
 
 include::ui_components/process_forms.adoc[]
 

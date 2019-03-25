@@ -1,0 +1,8 @@
+:sourcesdir: ../../../source
+
+[[feedback]]
+=== 反馈
+
+如果有关于该手册的任何建议或者意见，可以在 https://github.com/cubacn/documentation[GitHub] 上提交 issue。如果发现了拼写或者文字错误、bug 或者不一致的地方，可以直接 fork 我们的 repo 并进行修复。感谢！
+
+:sectnums:

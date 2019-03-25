@@ -3,9 +3,21 @@
 [[qs_standard_screen_creation]]
 === 创建标准界面
 
+现在我们为合同创建界面。
 
-在 *Data model* 部分中选择 `Contract` 实体，然后单击 *New > Generic UI screen*。在界面模板的列表中，选择 *Entity browser and editor screens* 然后单击 *Create*。关闭模板列表。
+在 CUBA 项目树的 *Data Model* 部分，右键点击 `Contract` 实体，然后在右键菜单中选择 *New > Screen* 来创建查看和编辑 `Contract` 实例的标准界面。点击之后，会显示模板浏览界面。
 
-.合同界面
-image::CreateContractScreens.png[align="center"]
+在可用模板列表中选择 *Entity browser and editor screens* 然后点击 *Next*。
+
+弹窗中的所有字段都已经填了默认值，不需要修改。点击 *Finish*。
+
+会在 *Generic UI* 树部分的 *Screens* 部分显示界面文件：
+
+* `contract-browse.xml` – 浏览界面描述文件；
+
+* `ContractBrowse` – 浏览界面控制器；
+
+* `contract-edit.xml` – 编辑界面描述文件；
+
+* `ContractEdit` – 编辑界面控制器。
 

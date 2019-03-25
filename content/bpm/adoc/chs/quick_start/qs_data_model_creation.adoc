@@ -3,31 +3,17 @@
 [[qs_data_model_creation]]
 === 创建数据模型
 
+首先创建 `Contract` 实体类。
 
-转到 *Data model* 标签页并按 *New > Entity*。类名称是 `Contract`。
+. 在 CUBA 项目树的 *Data Model* 部分点击 *New > Entity*。会显示 *New CUBA Entity* 对话框。
 
-.创建合同实体
-image::CreateContractEntity.png[align="center"]
+. 在 *Entity name* 字段输入实体类名称 – `Contract` 并点击 *OK* 按钮。会在工作区显示 *Entity Designer* 界面。
 
+. 使用 *Entity Designer* 添加属性：
+* `number` - `String` 类型
+* `date` - `Date` 类型
+* `state` - `String` 类型
 
-创建以下实体属性：
+切换到 *Instance name editor* 然后在 *Name pattern attributes* 添加 `number` 属性。
 
-
-* `number` (`String` 类型)
-
-
-* `date` (`Date` 类型)
-
-
-* `state` (`String` 类型)
-
-.合同实体属性
-image::ContractEntityAttributes.png[align="center"]
-
-
-转到 *Instance name* 标签页并将 `number` 属性添加到 *Name pattern attributes*。
-
-.实例名称模式
-image::ContractEntityNamePattern.png[align="center"]
-
-按 *OK* 按钮保存实体。
+`Contract` 实体的创建就完成了。

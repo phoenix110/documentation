@@ -2599,6 +2599,24 @@ cuba.web.icons.create.png = font-icon:FILE_O
 可以在 web 客户端 block 使用。
 --
 
+[[cuba.web.unsupportedPagePath]]
+cuba.web.unsupportedPagePath::
++
+--
+定义<<unsupported_browser_page, HTML 界面>>的路径，这个界面用来在应用程序不支持当前浏览器版本时显示。
+
+[source, properties]
+----
+cuba.web.unsupportedPagePath = /com/haulmont/cuba/web/sys/unsupported-page-template.html
+----
+
+默认值： `unsupported-page-template.html`.
+
+配置接口： `WebConfig`.
+
+可以在 web 客户端 block 使用。
+--
+
 [[cuba.web.useInverseHeader]]
 cuba.web.useInverseHeader::
 +
