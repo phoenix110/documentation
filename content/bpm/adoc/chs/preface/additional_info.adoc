@@ -1,0 +1,8 @@
+:sourcesdir: ../../../source
+
+[[additional_info]]
+=== 更多阅读材料
+
+该向导，以及其它 CUBA 平台的文档，可以在 https://www.cuba-platform.com/documentation 访问。
+
+CUBA 业务流程管理扩展组件是基于 Activiti 框架开发的，因此，对于该框架的知识都很有帮助。参阅 http://www.activiti.org 学习更多关于 Activiti 的知识。流程是根据 BPMN 2.0 规范定义的，所以这里假设读者熟悉该标注规范。更多关于 BPMN 2.0 标准可以参阅 http://www.bpmn.org 。

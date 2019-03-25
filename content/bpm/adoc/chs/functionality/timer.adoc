@@ -25,5 +25,8 @@ image::TimerEdit.png[align="center"]
 </boundaryEvent>
 ----
 
+[TIP]
+====
 默认情况下，处理计时器的 Job 执行器是禁用状态。要启用它，请设置应用程序属性 `bpm.activiti.asyncExecutorEnabled = true`。
+====
 

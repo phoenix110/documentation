@@ -13,6 +13,7 @@
 ** `charts.map.defaultZoom` – 地图的默认缩放级别。
 ** `charts.map.defaultLatitude` – 默认地图中心的纬度。
 ** `charts.map.defaultLongitude` – 默认地图中心的经度。
+** `charts.map.apiVersion` – 定义使用 Google Map API 的版本。默认值是 `3.35`。可以设置该属性为 `3`，这样能用上一个发行版的 API。或者设置成 `3.exp`，如果需要使用实验版。访问官方 https://developers.google.com/maps/documentation/javascript/versions[Google Maps API 文档] 了解更多信息。
 
 `web-app.properties` 文件示例：
 

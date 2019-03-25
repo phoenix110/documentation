@@ -13,6 +13,8 @@
 
 <<screen_parameters,传递参数给界面>>
 
+<<screen_return_values,关闭界面后执行代码以及关闭界面返回值>>
+
 '''
 
 [[screens_intf]]
@@ -62,9 +64,7 @@ include::{sourcesdir}/gui/screens/screens_3.java[]
 使用 ScreenBuilders bean::
 +
 --
-`ScreenBuilders` bean 允许打开带有各种参数的任何界面。
-
-有个很常见的需求就是在打开的界面关掉之后需要运行一些代码。下面是在打开任意界面的时候使用 `withAfterCloseListener()` 构建方法的示例：
+通过 `ScreenBuilders` bean 可以使用各种参数打开所有类型的界面。下面是用它打开界面并且在界面关闭之后执行一些代码的例子（更多细节参考<<screen_return_values,这里>>）：
 
 [source, java]
 ----
@@ -186,4 +186,59 @@ include::{sourcesdir}/gui/screens/passing_options_3.java[]
 ----
 include::{sourcesdir}/gui/screens/passing_options_4.java[]
 ----
+--
+
+[[screen_return_values]]
+关闭界面后执行代码以及关闭界面返回值::
++
+--
+每个界面在关闭时都会发送 `AfterCloseEvent` 事件。可以为界面添加监听器，这样可以在界面关闭时收到通知，示例：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_1.java[]
+----
+
+当使用 `ScreenBuilders` 时，可以在 `withAfterCloseListener()` 方法中提供监听器：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_2.java[]
+----
+
+事件对象能提供关于界面是如何关闭的信息：其 `getCloseAction()` 方法返回带 `CloseAction` 接口的对象。界面控制器实现的 `FrameOwner` 接口包含几个常量，定义了框架使用的 `CloseAction` 接口的实现。在应用程序中，可以直接使用这些常量或者创建自己的实现。
+
+看一个简单的自定义界面：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_3.java[]
+----
+<1> - 在点击 "OK" 按钮时，设置一些结果状态，并使用标准的 `WINDOW_COMMIT_AND_CLOSE_ACTION` 操作关闭界面。
+<2> - 在点击 "Cancel" 按钮时，使用默认操作关闭界面。
+
+于是，在 `AfterCloseEvent` 监听器我们能分析界面是如何关闭的，并且如果需要的话可以读取结果：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_4.java[]
+----
+
+从界面返回值的另一个方法是使用自定义的 `CloseAction` 实现。重写一下上面的示例，使用如下操作类：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_5.java[]
+----
+
+然后可以使用该操作类关闭界面：
+
+[source, java]
+----
+include::{sourcesdir}/gui/screens/return_values_6.java[]
+----
+
+可以看到，当使用自定义的 `CloseAction` 返回值时，调用方不需要知道打开的界面类是什么，因为不会调用具体的界面控制器内的方法。所以界面可以只通过其字符串 id 来创建。
+
+当然，在使用 `ScreenBuilders` 打开界面时，也可以使用相同的方式通过关闭操作返回结果。
 --

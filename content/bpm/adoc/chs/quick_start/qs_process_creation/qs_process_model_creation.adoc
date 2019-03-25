@@ -3,7 +3,6 @@
 [[qs_process_model_creation]]
 ==== 创建流程模型
 
-
 流程模型的最终版本将如下所示：
 
 .完整流程
@@ -11,14 +10,14 @@ image::ProcessFull.png[align="center"]
 
 我们看看创建模型所需要的步骤。
 
-在正在运行的应用程序的 web 界面中，打开 *BPM -> Process Models* 界面，然后单击 *Create*。输入 `Contract approval` 作为模型名称，然后单击 *OK*。*Model Editor* 会在新的浏览器标签页中打开。
+在正在运行的应用程序的 web 界面中，打开 *BPM > Process Models* 界面，然后单击 *Create*。输入 `Contract approval` 作为模型名称，然后单击 *OK*。*Model Editor* 会在新的浏览器标签页中打开。
 
 [TIP]
 ====
 在创建或复制流程模型时，在应用程序窗口右下角会显示一个弹窗通知，上面有打开流程模型编辑页面的链接。如果点击 *Edit* 按钮，会在新的标签页中打开流程模型编辑页面。
 ====
 
-在模型属性面板中选择 *Process roles* 属性。会打开流程角色编辑窗口。
+在模型属性面板中选择 *Process roles* 属性。会打开 *Process roles* 编辑窗口。
 
 .流程角色属性
 image::ProcessRolesProperty.png[align="center"]
@@ -78,12 +77,10 @@ image::NotValidFlowOutcome.png[align="center"]
 对于标记为默认的流，*Flow outcome* 下拉列表中不能选择任何值。
 ====
 
-
 接下来，选择 *Exclusive gateway* 并打开其 *Flow order* 属性编辑界面。确保 `Not valid` 流位于列表中第一位，必要时请更改流顺序。
 
 .Validation 流顺序
 image::ValidationFlowOrder.png[align="center"]
-
 
 选中 `Set 'Not valid' state` 节点。在这个任务中需要将 Contract 实体的 `state` 属性设置为 `Not valid` 值。选择节点，将 *Script format* 属性值设置为 `groovy`。单击 *Script* 属性字段 - 将打开脚本编辑界面。复制并粘贴以下代码：
 
@@ -94,10 +91,9 @@ def contract = em.find(com.company.bpmdemo.entity.Contract.class, entityId)
 contract.setState('Not valid')
 ----
 
-在脚本中可以使用流程变量和 `persistence` 以及 `metadata` 平台对象（请参阅开发人员手册）。`entityId` 变量在流程启动时创建并存储关联实体的标识符。
+在脚本中可以使用流程变量和 `persistence` 以及 `metadata` 平台对象（请参阅 {main_man_url}/index.html[开发人员手册] ）。`entityId` 变量在流程启动时创建并存储关联实体的标识符。
 
 合同状态改变之后，应结束该流程。我们将 *End events* 组中的 *End event* 节点添加到工作区并与 `Set 'Not valid' state` 节点连接。
-
 
 返回到 `Approval` 任务。像我们为第一个任务所做的那样为其定义 `manager` 流程角色。为了将任务同时分配给多个管理人员，请将其 *Multi-instance type* 属性设置为 `Parallel（并行）`。
 

@@ -3,13 +3,13 @@
 [[custom_stencils]]
 === 模型设计器中的自定义元素
 
-BPM 子系统允许为流程模型设计器创建自定义元素。基本上，自定义元素就是 `ServiceTask`，它使开发人员不再需要为方法调用输入很长的表达式，例如 `${app_MyBean.someMethod(argument1, 'argument2')}`。下面是自定义元素创建的示例。
+BPM 扩展组件允许为流程模型设计器创建自定义元素。基本上，自定义元素就是 `ServiceTask`，它使开发人员不再需要为方法调用输入很长的表达式，例如 `${app_MyBean.someMethod(argument1, 'argument2')}`。下面是自定义元素创建的示例。
 
 假设有一个名为 `app_DiscountManager` 的中间件 bean。bean 中有一个 `makeDiscount(BigDecimal discountPercent, UUID entityId)` 方法。该方法通过减去折扣来更新合同金额。
 
 在此示例中，我们会创建一个将调用该方法的自定义模型元素。折扣百分比将作为模型元素的参数被定义。
 
-使用菜单项 *BPM -> Model Elements Editor* 打开模型元素编辑界面。
+使用菜单项 *BPM > Model Elements Editor* 打开模型元素编辑界面。
 
 单击 *Add group* 按钮并输入组名称 - *Discounts*。
 
@@ -25,7 +25,7 @@ image::StencilSetAddStencil.png[align="center"]
 
 * 标题: *Contract discount*
 
-* 元素 ID: *contractDiscount*
+* 模型 ID: *contractDiscount*
 
 * 图标：单击 *Upload* 按钮并选择图标文件（可选）
 
@@ -42,7 +42,7 @@ image::StencilSetAddStencil.png[align="center"]
 
 单击 *Save* 按钮保存设置的元素。
 
-打开流程模型编辑界面（*BPM -> Process Models*）。元素列表中有 *Discounts* 组和 *Contract discount* 元素。将新元素拖放到模型中并选中它。将看到折扣百分比字段和存储实体标识符的流程变量名称显示在界面上。
+打开流程模型编辑界面（*BPM > Process Models*）。元素列表中有 *Discounts* 组和 *Contract discount* 元素。将新元素拖放到模型中并选中它。将看到折扣百分比字段和存储实体标识符的流程变量名称显示在界面上。
 
 .设置模型
 image::StencilSetModel.png[align="center"]

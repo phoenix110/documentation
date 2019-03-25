@@ -23,7 +23,7 @@
 
 * Java Servlets
 
-如果有任何关于改进本手册的建议，请提交 issue 到 https://github.com/cuba-platform/documentation[GitHub]。如果发现拼写或者单词错误，缺陷或者不一致的地方，请直接 fork 这个仓库并提交修改。谢谢！
+如果有任何关于改进本手册的建议，请提交 issue 到 https://github.com/cubacn/documentation[GitHub]。如果发现拼写或者单词错误，缺陷或者不一致的地方，请直接 fork 这个仓库并提交修改。谢谢！
 
 :sectnums:
 

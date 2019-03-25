@@ -19,7 +19,6 @@
 
 该组件的 XML 名称： `richTextArea`
 
-
 基本上，`RichTextArea` 与 <<gui_TextField,TextField>> 的功能一致，除了不能为它设置 `datatype`。因此，`RichTextArea` 仅适用于文本和 `String` 类型的实体属性。
 
 image::gui_RichTextAreaInfo.png[align="center"]

@@ -1,0 +1,159 @@
+:sourcesdir: ../../../source
+
+[[proc_actions_fragment]]
+=== ProcActionsFragment
+流程操作 Fragment
+
+`ProcActionsFragment` 用于处理流程操作。fragment 被初始化之后，以下组件会自动显示：
+
+* 启动流程按钮，在流程尚未启动的情况下显示
+* 处理任务按钮，在流程已启动且当前用户具有活动任务的情况下显示
+* 取消流程按钮
+* 任务信息面板（显示任务的名称和创建日期等信息）
+
+可以将断言分配给每个流程操作以检查操作是否可以被执行（例如，断言提交编辑器，如果提交失败，则不执行流程操作）。还可以定义 post-action 监听器（例如，监听器将关闭编辑器并显示一条通知）。
+
+`ProcActionsFragment` 必须与 `ProcInstance` 关联。在 fragment 初始化期间进行关联。
+
+fragment 初始化的一个示例：
+
+[source,java]
+----
+include::{sourcesdir}/quickstart/ProcActionsFragmentInitialization.java[]
+----
+
+* `initializer()` 方法返回一个用于初始化 fragment 的对象。
+
+* `setBeforeStartProcessPredicate` 方法设置将在流程启动之前被执行的断言。如果断言返回 `false`，则流程启动会中断。
+
+* `setAfterStartProcessListener` 方法定义一个在流程启动操作被执行后将被调用的监听器。
+
+* `init` 方法有两个参数：流程代码和实体实例。此方法被调用时，将搜索 `ProcInstance` 对象，这个对象与实体实例关联，并且具有对给定代码的 `ProcDefinition` 的引用。如果这个 `ProcInstance` 对象存在，则将 fragment 关联到它，否则创建一个新的 `ProcInstance` 对象。
+
+初始化 `ProcActionsFragment` 的最简单方法是使用 *standard()* 初始化程序：
+
+[source,java]
+----
+include::{sourcesdir}/quickstart/ProcActionsFragmentStandardInitialization.java[]
+----
+
+标准初始化器执行以下操作：
+
+* 创建在启动流程之前提交实体编辑器和完成任务操作的断言
+
+* 创建显示 “流程启动” 或 “任务完成” 等通知并且刷新 `ProcActionsFragment` 的监听器。
+
+以下是用于自定义 fragment 的方法列表。
+
+流程生命周期::
++
+--
+[[ProcActionsFragment_initializer]]
+* `initializer()` - 返回一个 fragment 初始化器的新实例。
+
+[[ProcActionsFragment_init]]
+* `init()` - 尝试通过指定的流程代码和实体引用来查找流程实例。如果未找到流程实例，则会创建一个新流程实例。然后适用于当前用户和流程实例流程操作 UI 被初始化。
+--
+
+流程配置::
++
+--
+[[ProcActionsFragment_setStartProcessEnabled]]
+* `setStartProcessEnabled()` - 定义是否可以启动该流程。
+
+[[ProcActionsFragment_setCancelProcessEnabled]]
+* `setCancelProcessEnabled()` - 定义是否可以取消该流程。
+
+[[ProcActionsFragment_setCompleteTaskEnabled]]
+* `setCompleteTaskEnabled()` - 定义任务是否可以完成。
+
+[[ProcActionsFragment_setClaimTaskEnabled]]
+* `setClaimTaskEnabled()` - 定义是否可以自己将任务分配给用户。
+
+[[ProcActionsFragment_setTaskInfoEnabled]]
+* `setTaskInfoEnabled()` - 定义是否启用具有本地化任务名称及其开始日期的布局。
+
+[[ProcActionsFragment_setButtonWidth]]
+* `setButtonWidth()` - 设置操作控制按钮的宽度。默认值为 150px。
+
+[[ProcActionsFragment_addActionButton]]
+* `addActionButton()` - 允许在自动生成的按钮旁边给 fragment 添加自定义按钮。
+--
+
+断言::
++
+--
+[[ProcActionsFragment_setBeforeStartProcessPredicate]]
+* `setBeforeStartProcessPredicate()` - 设置在流程启动之前将被执行的断言。如果断言返回 `false`，则流程启动将被中断。
+
+[[ProcActionsFragment_setBeforeCompleteTaskPredicate]]
+* `setBeforeCompleteTaskPredicate()` - 设置在任务完成之前将被执行的断言。如果断言返回 `false`，则任务完成将被中断。
+
+[[ProcActionsFragment_setBeforeClaimTaskPredicate]]
+* `setBeforeClaimTaskPredicate()` - 设置在向用户分配任务之前将被执行的断言。如果断言返回 `false`，则任务分配将被中断。
+
+[[ProcActionsFragment_setBeforeCancelProcessPredicate]]
+* `setBeforeCancelProcessPredicate()` - 设置在任务取消之前将被执行的断言。如果断言返回 `false`，则该任务不会被取消。
+--
+
+流程和任务监听器::
++
+--
+[[ProcActionsFragment_setAfterStartProcessListener]]
+* `setAfterStartProcessListener()` - 定义将在执行流程启动操作后将被调用的监听器。
+
+[[ProcActionsFragment_setAfterCompleteTaskListener]]
+* `setAfterCompleteTaskListener()` - 定义将在执行任务完成操作后将被调用的监听器。
+
+[[ProcActionsFragment_setAfterClaimTaskListener]]
+* `setAfterClaimTaskListener()` - 定义将在执行任务分配操作后将被调用的监听器。
+
+[[ProcActionsFragment_setAfterCancelProcessListener]]
+* `setAfterCancelProcessListener()` - 定义将在执行流程取消操作后将被调用的监听器。
+--
+
+变量和参数提供者::
++
+--
+[[ProcActionsFragment_setStartProcessActionProcessVariablesSupplier]]
+* `setStartProcessActionProcessVariablesSupplier()` - 设置流程变量提供者。流程变量提供者返回流程变量字典，必须在流程启动时将其添加到 Activiti 流程实例。
+
+[[ProcActionsFragment_setCompleteTaskActionProcessVariablesSupplier]]
+* `setCompleteTaskActionProcessVariablesSupplier()` - 设置流程变量提供者。流程变量提供者返回流程变量字典，必须在任务完成时将其添加到 Activiti 流程实例。
+
+[[ProcActionsFragment_setStartProcessActionScreenParametersSupplier]]
+* `setStartProcessActionScreenParametersSupplier()` - 设置流程表单界面参数提供者。这些界面参数提供者返回一个界面参数字典，该字典将传递给通过 `StartProcessAction` 显示的流程表单。
+
+[[ProcActionsFragment_setCompleteTaskActionScreenParametersSupplier]]
+* `setCompleteTaskActionScreenParametersSupplier()` - 设置流程表单界面参数提供者。这些界面参数提供者返回一个界面参数字典，该字典将传递给通过 `CompleteTaskAction` 显示的流程表单。
+--
+
+'''
+
+ProcActionsFragment API::
+<<ProcActionsFragment_addActionButton,addActionButton>> -
+<<ProcActionsFragment_initializer,initializer>>
+
+初始化程序 API::
+<<ProcActionsFragment_init,init>> -
+<<ProcActionsFragment_setAfterCancelProcessListener,setAfterCancelProcessListener>> -
+<<ProcActionsFragment_setAfterClaimTaskListener,setAfterClaimTaskListener>> -
+<<ProcActionsFragment_setAfterCompleteTaskListener,setAfterCompleteTaskListener>> -
+<<ProcActionsFragment_setAfterStartProcessListener,setAfterStartProcessListener>> -
+<<ProcActionsFragment_setBeforeCancelProcessPredicate,setBeforeCancelProcessPredicate>> -
+<<ProcActionsFragment_setBeforeClaimTaskPredicate,setBeforeClaimTaskPredicate>> -
+<<ProcActionsFragment_setBeforeCompleteTaskPredicate,setBeforeCompleteTaskPredicate>> -
+<<ProcActionsFragment_setBeforeStartProcessPredicate,setBeforeStartProcessPredicate>> -
+<<ProcActionsFragment_setButtonWidth,setButtonWidth>> -
+<<ProcActionsFragment_setCancelProcessEnabled,setCancelProcessEnabled>> -
+<<ProcActionsFragment_setClaimTaskEnabled,setClaimTaskEnabled>> -
+<<ProcActionsFragment_setCompleteTaskActionProcessVariablesSupplier,setCompleteTaskActionProcessVariablesSupplier>> -
+<<ProcActionsFragment_setCompleteTaskActionScreenParametersSupplier,setCompleteTaskActionScreenParametersSupplier>> -
+<<ProcActionsFragment_setCompleteTaskEnabled,setCompleteTaskEnabled>> -
+<<ProcActionsFragment_setStartProcessActionProcessVariablesSupplier,setStartProcessActionProcessVariablesSupplier>> -
+<<ProcActionsFragment_setStartProcessActionScreenParametersSupplier,setStartProcessActionScreenParametersSupplier>> -
+<<ProcActionsFragment_setStartProcessEnabled,setStartProcessEnabled>> -
+<<ProcActionsFragment_setTaskInfoEnabled,setTaskInfoEnabled>>
+
+'''
+

@@ -3,7 +3,7 @@
 [[heroku_container]]
 ===== 部署容器至 Heroku
 
-按照<<single_jar_deployment,单一 JAR 部署>>章节介绍的内容配置单一 UberJAR。创建 Heroku 账号然后安装 Heroku CLI，可以参考<<heroku_war_deployment,部署 WAR 至 Heroku>> 章节。
+按照<<docker_deployment>>章节介绍的内容配置单一 UberJAR。创建 Heroku 账号然后安装 Heroku CLI，可以参考<<heroku_war_deployment,部署 WAR 至 Heroku>> 章节。
 
 用以下命令创建应用程序并且连接数据库
 

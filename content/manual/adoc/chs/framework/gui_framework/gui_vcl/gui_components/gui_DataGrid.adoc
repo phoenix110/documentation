@@ -291,7 +291,10 @@ image::gui_dataGrid_15.png[align="center"]
 * `isEditorActive()` - 是否正在行内编辑界面编辑某个数据项。
 
 [[gui_DataGrid_editItem]]
-* `editItem()` - 为某个数据项打开行内编辑界面。如果数据项在当前界面区域不可见，数据网格会将数据项滚动到可视区域。
+* `editItem(Object itemId)`（废弃） - 为提供了 `id` 的数据项打开编辑界面。如果数据项在当前界面区域不可见，数据网格会将数据项滚动到可视区域。
+
+[[gui_DataGrid_edit]]
+* `edit(E item)` - 为指定的数据项打开编辑界面。如果数据项在当前界面区域不可见，数据网格会将数据项滚动到可视区域。
 
 使用以下方法添加/删除行内编辑界面打的监听器：
 
@@ -542,7 +545,7 @@ API::
 <<gui_DataGrid_addGeneratedColumn,addGeneratedColumn>> -
 <<gui_api_settings,applySettings>> -
 <<gui_DataGrid_createRenderer,createRenderer>> -
-<<gui_DataGrid_editItem,editItem>> -
+<<gui_DataGrid_edit,edit>> -
 <<gui_api_settings,saveSettings>> -
 <<gui_DataGrid_scrollTo,getColumns>> -
 <<gui_DataGrid_setDescriptionProvider,setDescriptionProvider>> -

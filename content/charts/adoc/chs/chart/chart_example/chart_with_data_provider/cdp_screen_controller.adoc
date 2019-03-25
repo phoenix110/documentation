@@ -1,7 +1,7 @@
-:sourcesdir: ../../../../../../source
+:sourcesdir: ../../../../../source
 
 [[cdp_screen_controller]]
-====== 界面控制器
+===== 界面控制器
 
 打开 `StackedareaChart` 界面控制器，然后用下面的代码替换其内容：
 

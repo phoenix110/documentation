@@ -32,12 +32,17 @@ align - 对齐::
 box.expandRatio - 箱式占比率::
 +
 --
-设置放置在 `vbox` 或者 `hbox` 内组件的延伸比率，也可参考 <<gui_attr_expand,expand>> 属性。比率值需大于等于 0。
+在 <<gui_BoxLayout_vbox,vbox>> 和 <<gui_BoxLayout_hbox,hbox>> 容器中，组件放置在预定义的槽段里。`box.expandRatio` 属性指定每个槽段的延展比率。比率必须大于等于 0。
 
 [source, xml]
 ----
 include::{sourcesdir}/gui_vcl/expandRatio.xml[]
 ----
+如果我们为一个组件设置 `box.expandRatio=1`，并且它的<<gui_attr_height,高>>或<<gui_attr_width,宽>>是 100% （依据布局样式），该组件会被延展至使用组件放置方向的所有可用空间。
+
+默认情况下，所有放置组件的槽段有相等的宽度或高度（即，`box.expandRatio = 1`）。如果至少有一个组件的该属性设置成别的值，则会忽略所有的隐式值，只考虑设置了的显式值。
+
+也可参阅 <<gui_attr_expand,expand>> 属性。
 --
 
 [[gui_attr_caption]]

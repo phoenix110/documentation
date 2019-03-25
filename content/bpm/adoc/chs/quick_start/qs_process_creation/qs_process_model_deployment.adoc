@@ -17,7 +17,7 @@
 
 image::DeployModelScreen.png[align="center"]
 
-打开界面 *BPM -> Process Definitions*。打开 `Contract approval` 项进行编辑。*Code* 字段值是 `contractApproval`。记住这个值 - 我们将在本章后面用它来识别流程定义。
+打开界面 *BPM > Process Definitions*。打开 `Contract approval` 项进行编辑。*Code* 字段值是 `contractApproval`。记住这个值 - 我们将在本章后面用它来识别流程定义。
 
 .流程定义编辑
 image::ProcDefinitionEdit.png[align="center"]

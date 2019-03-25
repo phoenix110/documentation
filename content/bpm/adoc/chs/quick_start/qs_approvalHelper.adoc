@@ -3,23 +3,18 @@
 [[qs_approvalHelper]]
 === 创建 ApprovalHelper Bean
 
-将在合同审批流程中调用 `ApprovalHelper` bean 的 `updateState()` 方法来设置合同状态。
+按照 {studio_man_url}/index.html[CUBA Studio 用户向导] 中的 {studio_man_url}/middleware_beans.html[创建托管Bean] 部分描述创建 `ApprovalHelper` bean。
 
-方法参数：
-
-
-* `entityId` - 合同实体标识符
-
-
-* `state` - 合同状态
-
-在 IDE 中打开项目。在 `com.company.bpmdemo.core` 包中创建 `ApprovalHelper` 类。
-
-.项目树中的 ApprovalHelper 类
-image::ApprovalHelperProjectTree.png[align="center"]
+用下面的代码替换其内容：
 
 [source,java]
 ----
 include::{sourcesdir}/quickstart/ApprovalHelper.java[]
 ----
 
+将在合同审批流程中调用 `ApprovalHelper` bean 的 `updateState()` 方法来设置合同状态。
+
+方法参数：
+
+* `entityId` - 合同实体标识符
+* `state` - 合同状态

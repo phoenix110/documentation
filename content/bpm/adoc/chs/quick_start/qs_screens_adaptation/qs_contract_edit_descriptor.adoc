@@ -3,19 +3,12 @@
 [[qs_contract_edit_descriptor]]
 ==== 合同编辑界面布局
 
-
-在 Studio 的 *Screens* 面板中找到 `contract-edit.xml` 界面并打开界面进行编辑。切换到 *XML* 标签页，并使用以下代码完全替换其内容：
+在 Studio 中打开 `contract-edit.xml` 界面，并使用以下代码完全替换其内容：
 
 [source,xml]
 ----
 include::{sourcesdir}/quickstart/contract-edit.xml[]
 ----
 
-
-转到 *Layout* 标签页。生成的界面布局如下显示：
-
-.合同编辑界面在 Studio 中的布局
-image::ContractEditStudioLayout.png[align="center"]
-
-该界面包含用于合同编辑的字段组、用于显示流程操作的框架(frame)以及显示流程附件的表格。
+该界面包含用于合同编辑的一些字段、用于显示流程操作的 fragment 以及显示流程附件的表格。
 

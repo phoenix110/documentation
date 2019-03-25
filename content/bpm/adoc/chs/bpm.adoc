@@ -1,4 +1,4 @@
-= CUBA 框架. BPM 子系统
+= CUBA 框架. BPM 扩展组件
 :toc: left
 :toc-title: 目录
 :toclevels: 6
@@ -16,6 +16,8 @@
 :revnumber: 7.0
 :version-label: Version
 :revremark: Copyright (c) 2019 Haulmont (www.haulmont.com)
+:main_man_url: https://doc.cuba-platform.com/manual-{revnumber}-chs
+:studio_man_url: https://doc.cuba-platform.com/studio-chs
 
 :!sectnums:
 

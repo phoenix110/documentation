@@ -34,7 +34,7 @@ cuba.storeImpl_mem1 = sample_InMemoryStore
 
 [TIP]
 ====
-CUBA Studio 允许在 *Project properties > Databases* 标签页上设置其它数据存储。它会自动创建所有必须的应用程序属性和 JDBC 数据源，同时维护额外的 `persistence.xml` 文件。之后，可以在实体设计器的 *Data store* 字段中为实体选择数据存储。当使用 *Generate model* 向导为已有数据库创建实体时，也可以选择数据存储。
+CUBA Studio 允许在 *CUBA Project Properties* 窗口的 *Data Stores* 标签页上设置其它数据存储。它会自动创建所有必须的应用程序属性和 JDBC 数据源，同时维护额外的 `persistence.xml` 文件。之后，可以在实体设计器的 *Data store* 字段中为实体选择数据存储。当使用 *Generate model* 向导为已有数据库创建实体时，也可以选择数据存储。
 ====
 
 [[cross_datastore_ref]]

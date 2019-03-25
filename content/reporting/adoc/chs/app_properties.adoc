@@ -40,6 +40,19 @@ reporting.fontsDir::
 用于 *Middleware* block。
 --
 
+[[reporting.docFormatterTimeout]]
+reporting.docFormatterTimeout::
++
+--
+设置 LibreOffice 转换 DOCX/XLSX 为 HTML/PDF 的超时时限，单位是秒。
+
+当时间用完的时候，用户会收到一个错误消息。
+
+默认值: `20`
+
+用于 *Middleware* block。
+--
+
 [[reporting.openoffice.docx.useOfficeForDocumentConversion]]
 reporting.openoffice.docx.useOfficeForDocumentConversion::
 +

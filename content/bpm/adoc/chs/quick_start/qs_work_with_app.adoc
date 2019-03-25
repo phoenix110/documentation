@@ -3,8 +3,7 @@
 [[qs_work_with_app]]
 === 使用应用程序
 
-
-默认情况下，Studio 中启用了热部署机制，因此界面中的所有更改都应该已应用于正在运行的应用程序。如果禁用热部署，请使用 *Run -> Restart application server* 菜单命令重新启动服务。
+默认情况下，Studio 中启用了热部署机制，因此界面中的所有更改都应该已应用于正在运行的应用程序。如果禁用热部署，请使用 *CUBA > Restart Application Server* 菜单命令重新启动服务。
 
 include::qs_work_with_app/qs_users_creation.adoc[]
 
