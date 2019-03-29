@@ -3,7 +3,7 @@
 [[qs_project_creation]]
 === 创建项目
 
-. 按照 {studio_man_url}/index.html[CUBA Studio 用户向导] 中 {studio_man_url}/create_project.html[创建新项目] 部分的描述在 Cuba Studio 中创建一个新项目：
+. 按照 {studio_man_url}/index.html[CUBA Studio 用户向导] 中 {studio_man_url}/create_project.html[创建新项目] 部分的描述在 CUBA Studio 中创建一个新项目：
 
 * 项目名称：`bpm-demo`
 * 项目命名空间：`demo`

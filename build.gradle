@@ -512,70 +512,6 @@ task deployPolymerChs(dependsOn: warPolymerChs, type: Copy) {
     from warPolymerChs
     into webappsDir
 }
-/* ============= Studio =================*/
-
-task buildStudioEn(type: Asciidoc2Html) {
-    docName = 'studio'
-    docLang = 'en'
-}
-
-task buildStudioChs(type: Asciidoc2Html) {
-    docName = 'studio'
-    docLang = 'chs'
-}
-
-task buildStudioRu(type: Asciidoc2Html) {
-    docName = 'studio'
-    docLang = 'ru'
-}
-
-task chopStudioEn(dependsOn: [buildStudioEn], type: CreateMultiPageDoc) {
-    docName = 'studio'
-    docLang = 'en'
-    properties = ['version': 'IntelliJ Plugin Version 8']
-}
-
-task chopStudioChs(dependsOn: [buildStudioChs], type: CreateMultiPageDoc) {
-    docName = 'studio'
-    docLang = 'chs'
-    properties = ['version': 'IntelliJ Plugin Version 8']
-}
-
-task chopStudioRu(dependsOn: [buildStudioRu], type: CreateMultiPageDoc) {
-    docName = 'studio'
-    docLang = 'ru'
-    properties = ['version': 'IntelliJ Plugin Version 8']
-}
-
-task warStudioEn(dependsOn: [chopStudioEn], type: CreateWar) {
-    docName = 'studio'
-    docLang = 'en'
-}
-
-task warStudioChs(dependsOn: [chopStudioChs], type: CreateWar) {
-    docName = 'studio'
-    docLang = 'chs'
-}
-
-task warStudioRu(dependsOn: [chopStudioRu], type: CreateWar) {
-    docName = 'studio'
-    docLang = 'ru'
-}
-
-task deployStudioEn(dependsOn: warStudioEn, type: Copy) {
-    from warStudioEn
-    into webappsDir
-}
-
-task deployStudioChs(dependsOn: warStudioChs, type: Copy) {
-    from warStudioChs
-    into webappsDir
-}
-
-task deployStudioRu(dependsOn: warStudioRu, type: Copy) {
-    from warStudioRu
-    into webappsDir
-}
 
 /* ============= Release Notes =================*/
 
@@ -588,7 +524,6 @@ task buildRnChs(type: Asciidoc2Html) {
     docName = 'release_notes'
     docLang = 'chs'
 }
-
 
 /* ============= Build all =================*/
 
@@ -622,12 +557,7 @@ task chopBiAll(dependsOn: [chopBiEn, chopBiRu, chopBiChs])
 task warBiAll(dependsOn: [warBiEn, warBiRu, warBiChs])
 task deployBiAll(dependsOn: [deployBiEn, deployBiRu, deployBiChs])
 
-task buildStudioAll(dependsOn: [buildStudioEn, buildStudioRu])
-task chopStudioAll(dependsOn: [chopStudioEn, chopStudioRu])
-task warStudioAll(dependsOn: [warStudioEn, warStudioRu])
-task deployStudioAll(dependsOn: [deployStudioEn, deployStudioRu])
-
-task deployAll(dependsOn: [deployManualAll, deployReportingAll, deployChartsAll, deployFtsAll, deployBpmAll, deployBiAll, deployStudioAll])
+task deployAll(dependsOn: [deployManualAll, deployReportingAll, deployChartsAll, deployFtsAll, deployBpmAll, deployBiAll])
 
 //
 task splitDoc(type: SplitDoc) {

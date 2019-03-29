@@ -6,6 +6,19 @@
 
 本节按字母顺序描述与报表生成器相关的应用程序属性。
 
+[[reporting.backgroundReportProcessingTimeoutMs]]
+reporting.backgroundReportProcessingTimeoutMs::
++
+--
+在 <<reporting.useBackgroundReportProcessing,reporting.useBackgroundReportProcessing>> 设置为 `true` 的情况下，用该参数定义报表执行过程超时的时限，单位为毫秒。
+
+默认值: `10000`
+
+保存在数据库
+
+用于 *Middleware* block。
+--
+
 [[reporting.displayDeviceUnavailable]]
 reporting.displayDeviceUnavailable::
 +
@@ -95,6 +108,19 @@ reporting.putEmptyRowIfNoDataSelected::
 设置当报表带区的数据集没有返回记录时是否仍然将带区显示一次。
 
 默认值: `true`
+
+用于 *Middleware* block。
+--
+
+[[reporting.useBackgroundReportProcessing]]
+reporting.useBackgroundReportProcessing::
++
+--
+允许在后台运行报表执行程序。该属性是为了实现<<run_cancel,取消>>操作选项。
+
+默认值: `false`
+
+保存在数据库
 
 用于 *Middleware* block。
 --

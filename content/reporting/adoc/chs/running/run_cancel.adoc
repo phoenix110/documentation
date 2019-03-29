@@ -5,8 +5,7 @@
 
 如果报表以后台任务的方式运行，那么用户就可以中断报表的执行。
 
-
-要添加取消选项，请在 *Administration > Application Properties* 界面中设置 `reporting.useBackgroundReportProcessing` 属性。
+要添加取消选项，请在 *Administration > Application Properties* 界面中设置 <<reporting.useBackgroundReportProcessing,reporting.useBackgroundReportProcessing>> 属性。
 
 [source, groovy]
 ----
@@ -18,7 +17,7 @@ reporting.useBackgroundReportProcessing = true
 .取消报表
 image::run_cancel.png[align="center"]
 
-还可以使用 `reporting.backgroundReportProcessingTimeoutMs` 属性设置处理超时：
+还可以使用 <<reporting.backgroundReportProcessingTimeoutMs,reporting.backgroundReportProcessingTimeoutMs>> 属性设置处理超时：
 
 [source, groovy]
 ----

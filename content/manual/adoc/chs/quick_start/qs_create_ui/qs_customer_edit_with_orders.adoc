@@ -47,6 +47,8 @@ include::{sourcesdir}/qs/customer-edit.xml[]
 
 打开 `CustomerEdit` 界面控制器。左边栏的 image:quick_start/class_button.png[©] 和 image:quick_start/xml_button.png[<>] 按钮用来在界面描述器和控制器之间快速切换。
 
+首先，我们需要禁止界面自动加载数据，因为我们需要自定义数据加载的过程。从类上删除 `@LoadDataBeforeShow` 就可以禁止自动加载数据了。
+
 在控制器类中<<screen_controller_injection,注入>> orders 数据加载器，可以在类定义中按下 `Alt+Insert` 然后选择 `ordersDl`。或者可以手动输入以下代码：
 
 [source, java]

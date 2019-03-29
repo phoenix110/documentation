@@ -10,7 +10,7 @@ image::ProcessFull.png[align="center"]
 
 我们看看创建模型所需要的步骤。
 
-在正在运行的应用程序的 web 界面中，打开 *BPM > Process Models* 界面，然后单击 *Create*。输入 `Contract approval` 作为模型名称，然后单击 *OK*。*Model Editor* 会在新的浏览器标签页中打开。
+在应用程序的 web 界面中，打开 *BPM > Process Models* 界面，然后单击 *Create*。输入 `Contract approval` 作为模型名称，然后单击 *OK*。*Model Editor* 会在新的浏览器标签页中打开。
 
 [TIP]
 ====
@@ -40,7 +40,7 @@ image::ProcessRolesEditor.png[align="center"]
 image::StartForm.png[align="center"]
 
 
-将 *Activities* 组的 *User task* 节点添加到模型中,并命名为 `Validation`。
+将 *Activities* 组的 *User task* 节点添加到模型中，并命名为 `Validation`。
 
 .模型验证节点
 image::ModelValidationNode.png[align="center"]
@@ -50,7 +50,7 @@ image::ModelValidationNode.png[align="center"]
 .为 Validation 节点选择流程角色
 image::SelectProcRoleForValidation.png[align="center"]
 
-接下来，选择 *Task outcomes* 属性。将打开任务输出编辑窗口。输出(outcome)定义用户接收任务时可能进行的操作。创建两个输出：`Valid` 和 `Not valid`。为两种输出定义 `标准表单`。为 `Not valid` 输出添加表单参数 `commentRequired=true`，因为我们想让用户在选择合同无效时添加意见。
+接下来，选择 *Task outcomes* 属性。将打开任务输出（outcome）编辑窗口。输出定义用户接收任务时可能进行的操作。创建两个输出：`Valid` 和 `Not valid`。为两种输出定义 `标准表单`。为 `Not valid` 输出添加表单参数 `commentRequired=true`，因为我们想让用户在选择合同无效时添加意见。
 
 .验证结果
 image::OutcomesForValidation.png[align="center"]

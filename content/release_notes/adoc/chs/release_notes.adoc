@@ -37,6 +37,7 @@
 
 === 所有解决的问题
 
+* {githubissueslog}/release_7.0.3.md[平台 7.0.3 解决的问题]
 * {githubissueslog}/release_7.0.2.md[平台 7.0.2 解决的问题]
 * {githubissueslog}/release_7.0.1.md[平台 7.0.1 解决的问题]
 
