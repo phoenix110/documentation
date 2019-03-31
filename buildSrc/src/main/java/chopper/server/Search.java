@@ -56,7 +56,7 @@ public class Search {
             term = term.substring(1, term.length() - 1);
             exactMatch = true;
         }
-        if (term.length() < 3) {
+        if (term.length() < 1) {
             return results;
         }
 

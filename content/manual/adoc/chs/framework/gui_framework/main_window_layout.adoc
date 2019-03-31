@@ -61,7 +61,7 @@ include::{sourcesdir}/gui/main_window_2.xml[]
 include::{sourcesdir}/gui/main_window_3.xml[]
 ----
 
-此界面应在<<screens.xml,web-screens.xml>>文件中注册，并带有 `mainWindow` 标识符。
+此界面应在<<screens.xml,web-screens.xml>>文件中注册，并使用 `mainWindow` 标识符。
 
 扩展主界面的最简单方法是在 CUBA Studio 中完成：选中 CUBA 项目视图的 *Generic UI* 部分，在右键菜单中点击 *New > Screen* ，然后在弹出窗口的 *Legacy Screen Templates* 标签页为新的主界面选择模板。会在 Web 模块创建新的 `ext-mainwindow.xml` 文件，并自动注册到 `web-screens.xml` 中。
 
