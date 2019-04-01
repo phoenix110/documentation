@@ -16,9 +16,9 @@ include::{sourcesdir}/gui/data_comp/data_comp_1.xml[]
 
 * `DataContext` 实例。
 
-* 使用 `orderDc` id 的 `InstanceContainer` 以及 `InstanceLoader` 用来加载 `Order` 实体。
+* 使用 `orderDc` 作为 id 的 `InstanceContainer` 以及 `InstanceLoader` ，用来加载 `Order` 实体。
 
-* 为 `OrderLines` 实体创建的使用 `linesDc` id 的 `CollectionPropertyContainer`。绑定到 `Order.lines` 集合属性。
+* 为 `OrderLines` 实体创建的使用 `linesDc` 作为 id 的 `CollectionPropertyContainer`。绑定到 `Order.lines` 集合属性。
 
 * 为 `Customer` 实体创建的使用 `customersDc` id 的 `CollectionContainer`。通过 `CollectionLoader` 使用指定的查询语句加载。
 
