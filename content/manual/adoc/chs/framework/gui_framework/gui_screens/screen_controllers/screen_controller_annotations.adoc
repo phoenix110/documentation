@@ -7,7 +7,7 @@
 
 以下示例演示了常见的界面注解的用法：
 
-[source, java]1
+[source, java]
 ----
 include::{sourcesdir}/gui/screens/screen_annotations_common.java[]
 ----
