@@ -47,11 +47,14 @@ include::{sourcesdir}/development/access_to_repo_01.groovy[]
 include::{sourcesdir}/development/access_to_repo_02.groovy[]
 ----
 
+[TIP]
+====
 上面提到的两个 Premium 插件仓库都需要使用提供给每个开发者的用户名和密码。授权码短横前的前半部分是仓库用户名，后半部分是密码。比如，如果授权码是 `111111222222-abcdefabcdef`，那么用户名是 `111111222222`，密码是 `abcdefabcdef`。如果是使用 Bintray 仓库，用户名需要添加 `@cuba-platform`。
+====
 
 可以按照以下方法之一来提供用户凭证。
 
-* 推荐的方法是创建 `~/.gradle/gradle.properties` 文件，然后在文件内设置属性：
+* 推荐的方法是在用户主目录创建 `~/.gradle/gradle.properties` 文件，然后在文件内设置属性：
 ** 为 `++https://repo.cuba-platform.com/content/groups/premium++` 仓库设置凭证的示例：
 +
 .~/.gradle/gradle.properties
@@ -66,7 +69,7 @@ premiumRepoPass=abcdefabcdef
 .~/.gradle/gradle.properties
 [source]
 ----
-premiumRepoUser=111111222222@cuba-platform
+bintrayPremiumRepoUser=111111222222@cuba-platform
 premiumRepoPass=abcdefabcdef
 ----
 

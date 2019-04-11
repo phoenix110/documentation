@@ -2607,12 +2607,12 @@ cuba.web.unsupportedPagePath::
 
 [source, properties]
 ----
-cuba.web.unsupportedPagePath = /com/haulmont/cuba/web/sys/unsupported-page-template.html
+cuba.web.unsupportedPagePath = /com/company/sales/web/sys/unsupported-browser-page.html
 ----
 
-默认值： `unsupported-page-template.html`.
+默认值： `/com/haulmont/cuba/web/sys/unsupported-page-template.html`
 
-配置接口： `WebConfig`.
+配置接口： `WebConfig`
 
 可以在 web 客户端 block 使用。
 --

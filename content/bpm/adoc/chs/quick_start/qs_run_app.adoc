@@ -7,9 +7,9 @@
 
 点击 *Save and close* 按钮保存生成的数据库脚本。
 
-如果需要运行数据库更新脚本，使用 *CUBA > Stop application* 命令先停止运行的应用程序，然后在点击 *CUBA > Update database*。
+如果需要运行数据库更新脚本，点击 *Debug* 工具窗旁边的 image:stop_button.png[] 按钮先停止运行的应用程序，然后再点击 *CUBA > Update database*。
 
-现在看看创建的界面在真实的系统中长什么样。选择 *CUBA > Start application server*。
+现在看看创建的界面在真实的系统中长什么样。在主工具栏点击 image:run_button.png[] 按钮。
 
 在浏览器打开应用程序地址 http://localhost:8080/app 。也可以使用 CUBA 项目树的 *Runs At…*​ 部分的链接打开项目。
 

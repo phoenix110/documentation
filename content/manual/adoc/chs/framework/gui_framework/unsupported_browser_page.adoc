@@ -10,9 +10,7 @@
 .不支持浏览器界面
 image::unsupported_browser_page.png[align="center", width=800,height=600]
 
-点击通知消息的链接会打开一个带有流行的浏览器最新版链接的新界面。
-
-可以修改或者本地化默认界面的内容。如果需要本地化该界面，可以在 *web* 模块的<<main_message_pack,主消息包>>中覆盖以下键值：
+可以修改或者本地化默认界面的内容。如果需要本地化该界面，可以在 *web* 模块的<<main_message_pack,主消息包>>中使用以下键值：
 
 * `unsupportedPage.captionMessage` – 通知消息标题；
 * `unsupportedPage.descriptionMessage` – 通知消息描述；
