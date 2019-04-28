@@ -19,7 +19,7 @@ include::{sourcesdir}/features/MyController.java[]
 include::{sourcesdir}/rest/rest-dispatcher-spring.xml[]
 ----
 
-. 在模块的属性文件（比如 `portal-app.properties`）里定义一个<<additive_app_properties,可追加>>的属性 `cuba.restSpringContextConfig`：
+. 在模块的属性文件（比如 `portal-app.properties`）里定义一个<<additive_app_properties,累加>>属性 `cuba.restSpringContextConfig`：
 +
 [source, properties]
 ----

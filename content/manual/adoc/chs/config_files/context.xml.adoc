@@ -5,7 +5,7 @@
 
 `context.xml` 文件是应用程序部署到 *Apache Tomcat* 服务描述文件。在部署的程序中，这个文件在 web 应用程序目录或者 WAR 文件的 `META-INF` 目录，比如 `tomcat/webapps/app-core/META-INF/context.xml`。在应用程序项目中，这个文件在 *core*, *web* 和 *portal* 模块的 `/web/META-INF` 目录。
 
-Middleware block 中，此文件的主要目的是用来定义带有 JNDI 名称的 JDBC 数据源，JNDI 名称定义在 <<cuba.dataSourceJndiName,cuba.dataSourceJndiName>> 应用程序属性中。
+Middleware block 中，此文件的主要目的是用来定义使用 JNDI 名称的 JDBC 数据源，JNDI 名称定义在 <<cuba.dataSourceJndiName,cuba.dataSourceJndiName>> 应用程序属性中。
 
 *PostgreSQL* 数据源定义示例：
 
