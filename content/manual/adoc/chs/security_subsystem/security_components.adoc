@@ -28,7 +28,7 @@ _Roles - 角色_ − 用户角色。<<roles,角色>>是一个系统对象，一�
 
 * _Entity Attribute Permissions - 实体属性权限_ − 访问任意实体属性的权限，包括：修改，只读，禁止访问。也可参考 <<entity_attribute_access,>>。
 
-* _Specific Permissions - 特殊权限_ − 对一些定义了的功能的权限。
+* _Specific Permissions - 特殊权限_ − 对一些定义了名称的功能的访问权限控制。
 
 * _UI Permissions - UI 组件权限_ − 控制对于界面元素的访问。
 
