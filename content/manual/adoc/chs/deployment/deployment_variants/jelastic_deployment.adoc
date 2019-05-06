@@ -3,7 +3,7 @@
 [[jelastic_deployment]]
 ==== 部署至 Jelastic Cloud
 
-下面是构建应用程序并部署至 https://jelastic.com/[Jelastic] 云的示例。
+下面是构建应用程序并部署至 Jelastic 云的示例。
 
 [TIP]
 ====
@@ -17,18 +17,13 @@
 image::jelasticEnvironment.png[align="center", width=800,height=600]
 
 * 在显示的窗口中指定配置的值：兼容性强的环境需要有 Java 8，Tomcat 8 以及 PostgreSQL 9.1+（如果项目使用 PostgreSQL 的话）。在 *Environment Name* 字段，设置一个唯一的环境名称并点击 *Create*。
-* 如果创建的环境使用 PostgreSQL，你会收到一封带有数据库连接信息的 email。根据 email 里面的链接打开数据库管理界面，然后创建一个空数据库。数据库名称可以稍后在自定义的 `context.xml` 文件设置。
+* 如果创建的环境使用 PostgreSQL，你会收到一封带有数据库连接信息的 email。使用 email 里面的链接打开数据库管理界面，然后创建一个空数据库。数据库名称可以稍后在自定义的 `context.xml` 文件设置。
 . 使用 CUBA Studio 构建 *Single WAR* 文件：
 * 在主菜单选择 *CUBA > Deployment > WAR Settings*。
 * 勾选 *Build WAR* 复选框。
-* 在 *Application home directory* 字段填写 `${app.home}`。
-+
-[source, properties]
-----
-appHome = '..'
-----
+* 在 *Application home directory* 字段输入 `..` 。
 * 勾选 *Include JDBC driver* 和 *Include Tomcat's context.xml* 复选框。
-* 如果项目使用了 PostgreSQL，点击 *Custom context.xml path* 旁边的 *Generate* 按钮。设置数据库的用户名、密码、主机以及之前使用 email 提供的链接创建的数据库名。
+* 如果项目使用了 PostgreSQL，点击 *Custom context.xml path* 旁边的 *Generate* 按钮。设置数据库的用户名、密码、主机以及之前创建的数据库名。
 +
 image::customContextXml.png[align="center"]
 
@@ -37,7 +32,7 @@ image::customContextXml.png[align="center"]
 +
 image::jelasticWarSettings.png[align="center"]
 
-* 在 *App properties* 字段填写 `${cuba.logDir}`：
+* 在 *App properties* 字段填写 `cuba.logDir` 属性：
 +
 [source, properties]
 ----
@@ -59,7 +54,7 @@ include::{sourcesdir}/deployment/jelasticBuildWar.groovy[]
 include::{sourcesdir}/deployment/jelasticBuildWarHSQL.groovy[]
 ----
 
-* 命令行运行 `buildWar` 启动构建过程。（假设之前已经创建了 Gradle wrapper）：
+* 命令行运行 `buildWar` 启动构建过程：
 +
 [source, plain]
 ----

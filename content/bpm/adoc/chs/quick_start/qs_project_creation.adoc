@@ -10,15 +10,11 @@
 * 根包：`com.company.bpmdemo`
 
 [start=2]
-. 在 CUBA Studio 中打开 *Project Properties* 编辑器：在主菜单项中点击 *CUBA > Project Properties*。在 *App components* 列表中添加 *bpm* 应用程序组件。当 Studio 建议重新创建 Gradle 脚本时，点击确认。
-
-. 组装项目：在 Studio 主菜单选择 *CUBA* > *Build Tasks* > *Assemble*。在这一步，会下载所有的依赖库，并且会在项目 {main_man_url}/app_modules.html[模块] 的 `build` 子文件夹创建项目的 {main_man_url}/glossary.html#artifact[工件] 。
+. 在 CUBA Studio 中打开 *Project Properties* 编辑器：在主菜单项中点击 *CUBA > Project Properties*。在 *App components* 列表中添加 *bpm* 应用程序组件。当 Studio 建议重新创建 Gradle 脚本时，点击确认。Studio 会下载需要的源码和二进制 {main_man_url}/glossary.html#artifact[工件] 。也可以使用 *Build* 工具窗口的 image:refresh_button.png[] 按钮启动 Gradle 同步。
 
 . 在本地 *HyperSQL* 服务创建数据库：主菜单选择 *CUBA* > *Create database*。默认数据库名与项目空间名称相同。
 
-. 选择 *CUBA* > *Build Tasks* > *Deploy* 菜单项。在项目的 `deploy` 子文件夹安装带有部署应用程序的 *Tomcat* 服务。
-
-. 选择 *CUBA* > *Start application server* 菜单项。左侧 CUBA 项目树的 *Runs at...* 部分显示的连接可以用来直接从 Studio 在浏览器打开应用程序。
+. 运行应用程序：点击主工具栏中选中 `CUBA Application` 配置旁边的 image:run_button.png[] 按钮。CUBA 项目树中的 *Runs at...* 部分会显示应用程序的链接，可以用来直接从 Studio 中打开应用程序。
 +
 用户名和密码都是： `admin` / `admin`.
 +

@@ -36,6 +36,14 @@ include::{sourcesdir}/gui_vcl/datefield_1.xml[]
 
 ** 其它情况下，时间控件会显示小时和分钟。时间部分的格式会按照 `time` <<datatype,数据类型>>的格式显示，这个格式从<<main_message_pack,主本地化消息包>>的 `timeFormat` 键获取。
 
+[[gui_DateField_datatype]]
+* 如果该控件不与实体属性相关联（比如没有设置数据容器和属性名称），可以使用 `datatype` 属性设置数据类型。 `DateField` 使用如下数据类型：
+** `date`
+** `dateTime`
+** `localDate`
+** `localDateTime`
+** `offsetDateTime`
+
 [[gui_DateField_dateFormat]]
 * 日期时间格式也可以通过组件的 `dateFormat` 属性来设置。这个属性的值可以是一个定义日期时间格式的字符串或者语言包中的一个键。
 +
@@ -108,6 +116,7 @@ dateField 的属性::
 <<gui_attr_css,css>> -
 <<gui_attr_dataContainer,dataContainer>> -
 <<gui_attr_datasource,datasource>> -
+<<gui_DateField_datatype,datatype>> -
 <<gui_DateField_dateFormat,dateFormat>> -
 <<gui_attr_description,description>> -
 <<gui_attr_descriptionAsHtml,descriptionAsHtml>> -

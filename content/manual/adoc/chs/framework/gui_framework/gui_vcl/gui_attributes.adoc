@@ -10,21 +10,13 @@ align - 对齐::
 定义组件跟父容器的相对位置，可选值有：
 
 * `++TOP_RIGHT++`
-
 * `++TOP_LEFT++`
-
 * `++TOP_CENTER++`
-
 * `++MIDDLE_RIGHT++`
-
 * `++MIDDLE_LEFT++`
-
 * `++MIDDLE_CENTER++`
-
 * `++BOTTOM_RIGHT++`
-
 * `++BOTTOM_LEFT++`
-
 * `++BOTTOM_CENTER++`
 --
 
@@ -193,6 +185,15 @@ datasource - 数据源::
 在 XML 描述的 `dsContext` 段定义一个<<datasources,数据源>>。
 
 当给实现了 `DatasourceComponent` 接口的组件设置 `datasource` 属性的时候，<<gui_attr_property,property>> 属性也需要同时设置。
+--
+
+[[gui_attr_datatype]]
+datatype - 数据类型::
++
+--
+如果控件不与实体属性相关联（比如没有设置数据容器和属性名称），则需要设置数据类型。该属性的值可以是注册在应用程序元数据中的一个数据类型 - 参考 <<datatype>>。
+
+这些组件可以使用该属性： <<gui_TextField,TextField>>, <<gui_DateField,DateField>>, <<gui_DatePicker,DatePicker>>, <<gui_TimeField,TimeField>> 。
 --
 
 [[gui_attr_description]]

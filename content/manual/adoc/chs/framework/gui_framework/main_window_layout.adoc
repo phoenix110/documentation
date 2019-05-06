@@ -50,7 +50,7 @@ include::{sourcesdir}/gui/main_window_1.xml[]
 include::{sourcesdir}/gui/main_window_2.xml[]
 ---- 
 
-在打开第一个应用程序界面时从 `AppWorkArea` 中删除初始界面（`initialLayout`），在所有界面关闭后初始界面又被重新添加上。可以添加 `AppWorkArea.StateChangeListener` 来处理工作区中初始界面和应用程序界面之间切换。例如，这种使用这个监听器刷新初始界面的数据。
+在打开第一个应用程序界面时从 `AppWorkArea` 中删除初始界面（`initialLayout`），在所有界面关闭后初始界面又被重新添加上。可以添加 `AppWorkArea.StateChangeListener` 来处理工作区中初始界面和应用程序界面之间切换。例如，这里使用这个监听器刷新初始界面的数据。
 
 平台提供两个标准主窗口实现。顶部有横向菜单的默认主窗口，其 XML 描述在 `/com/haulmont/cuba/web/app/mainwindow/mainwindow.xml` 中，对应的控制器类是 `AppMainWindow` 。另一个可用的模板包含<<gui_SideMenu, 垂直侧边菜单>>。
 

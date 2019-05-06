@@ -20,7 +20,7 @@ include::{sourcesdir}/gui/url_new_screen_registration.java[]
 
 * `path`（或 `value`）是路由本身的值；
 * `parentPrefix` 用来做路由压缩（squashing）（参阅 <<url_route_squashing,以下>>）。
-* `root` 是一个布尔值属性，定义一个路由是否是为根界面定义的（比如<<login_screen,登录界面>>或者 <<main_window_layout,主界面>>）。默认值为 `false`。
+* `root` 是一个布尔值属性，用来确定一个路由是否是为根界面定义的（比如<<login_screen,登录界面>>或者 <<main_window_layout,主界面>>）。默认值为 `false`。
 
 如果需要为<<screens,旧界面>>定义路由，可以在<<screens.xml,screens.xml>>文件中为界面元素添加 `route` 属性（`routeParentPrefix` 可选，即对应 `parentPrefix` 参数；`rootRoute` 对应 `root` 参数），示例：
 

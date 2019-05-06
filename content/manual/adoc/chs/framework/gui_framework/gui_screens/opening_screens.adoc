@@ -98,13 +98,13 @@ include::{sourcesdir}/gui/screens/screenBuilders_editor_3.java[]
 
 [TIP]
 ====
-默认编辑界面由以下过程确定：
+默认编辑界面的确定过程如下：
 
 . 如果存在使用<<PrimaryEditorScreen_annotation,@PrimaryEditorScreen>>注解的编辑界面，则使用它。
 . 否则，使用 id 是 `++{entity_name}.edit++` 的编辑界面（例如，`sales_Customer.edit`）。
 ====
 
-构建器提供了许多方法来设置被打开界面的可选参数。例如，以下代码以对话框的方式打开的特定编辑界面，同时新建并初始化实体：
+界面构建器提供了许多方法来设置被打开界面的可选参数。例如，以下代码以对话框的方式打开的特定编辑界面，同时新建并初始化实体：
 
 [source, java]
 ----
@@ -129,7 +129,7 @@ include::{sourcesdir}/gui/screens/screenBuilders_lookup_2.java[]
 
 [TIP]
 ====
-默认查找界面由以下过程确定：
+默认查找界面的确定过程如下：
 
 . 如果存在使用<<PrimaryLookupScreen_annotation,@PrimaryLookupScreen>>注解的查找界面，则使用它。
 . 否则，如果存在 id 为 `++{entity_name}.lookup++` 的界面，则使用它（例如，`sales_Customer.lookup`）。
